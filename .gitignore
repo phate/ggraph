@@ -1,0 +1,5 @@
+check.log
+*.a
+*.la
+*.o
+tests/test-runner
