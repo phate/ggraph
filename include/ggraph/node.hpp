@@ -81,6 +81,31 @@ public:
 		successors_.insert(successor);
 	}
 
+	inline void
+	remove_successors()
+	{
+		if (nsuccessors() == 0)
+			return;
+
+		for (size_t n = 0; n < nsuccessors(); n++) {
+			auto s = successor(n);
+			GGRAPH_DEBUG_ASSERT(s->has_predecessor(this));
+			successors_.erase(s);
+			s->predecessors_.erase(this);
+		}
+	}
+
+	inline void
+	divert_predecessors(ggraph::node * new_successor)
+	{
+		for (size_t n = 0; n < npredecessors(); n++) {
+			auto p = predecessor(n);
+			GGRAPH_DEBUG_ASSERT(p->has_successor(this));
+			p->successors_.erase(this);
+			p->add_successor(new_successor);
+		}
+	}
+
 private:
 	std::unique_ptr<ggraph::operation> op_;
 	std::unordered_set<node*> successors_;
