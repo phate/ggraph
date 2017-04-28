@@ -1,2 +1,3 @@
 TESTS += \
+	unit_tests/test-aggregation \
 	unit_tests/test-ggraph \

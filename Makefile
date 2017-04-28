@@ -2,6 +2,7 @@ CPPFLAGS = -Iinclude -DGGRAPH_DEBUG
 CXXFLAGS = -Wall -Werror -g --std=c++14
 
 LIBGGRAPH_SRC = \
+	src/aggregation.cpp \
 	src/fork.cpp \
 	src/grain.cpp \
 	src/graph.cpp \
