@@ -44,21 +44,33 @@ emit_edge(const node * n1, const node * n2)
 	return strfmt((uintptr_t)n1, " -- ", (uintptr_t)n2);
 }
 
+static inline std::string
+to_dot(const node * n, std::unordered_set<const node*> & visited)
+{
+	std::string dot;
+	dot.append(strfmt(emit_node(n), "\n"));
+
+	for (size_t s = 0; s < n->nsuccessors(); s++)
+		dot.append(strfmt(emit_edge(n, n->successor(s)), "\n"));
+
+	visited.insert(n);
+	for (size_t s = 0; s < n->nsuccessors(); s++) {
+		auto successor = n->successor(s);
+		if (visited.find(successor) == visited.end())
+			dot.append(to_dot(successor, visited));
+	}
+
+	return dot;
+}
+
 std::string
 to_dot(const graph & g)
 {
+	std::unordered_set<const node*> visited;
+
 	std::string dot("graph ggraph {");
-	for (size_t n = 0; n < g.nnodes(); n++)
-		dot.append(strfmt(emit_node(g.node(n)), "\n"));
-
-	for (size_t n = 0; n < g.nnodes(); n++) {
-		auto node = g.node(n);
-		for (size_t s = 0; s < node->nsuccessors(); s++)
-			dot.append(strfmt(emit_edge(node, node->successor(s)), "\n"));
-	}
-
+	dot.append(to_dot(g.entry(), visited));
 	dot.append("}\n");
-
 	return dot;
 }
 
