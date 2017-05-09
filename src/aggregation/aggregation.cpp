@@ -4,6 +4,7 @@
 #include <ggraph/join.hpp>
 
 namespace ggraph {
+namespace agg {
 
 /* group operation */
 
@@ -153,4 +154,4 @@ aggregate(ggraph::graph & graph)
 	return graph.entry()->successor(0);
 }
 
-}
+}}

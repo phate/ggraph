@@ -41,7 +41,7 @@ test1()
 
 	view(g, stdout);
 
-	aggregate(g);
+	agg::aggregate(g);
 
 	view(g, stdout);
 
@@ -74,7 +74,7 @@ test2()
 
 	view(g, stdout);
 
-	aggregate(g);
+	agg::aggregate(g);
 
 	view(g, stdout);
 

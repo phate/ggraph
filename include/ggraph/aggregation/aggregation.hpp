@@ -8,6 +8,8 @@ namespace ggraph {
 
 class node;
 
+namespace agg {
+
 class group final : public operation {
 public:
 	virtual
@@ -46,13 +48,13 @@ private:
 static inline node *
 create_group(ggraph::graph & graph, node * entry, node * exit)
 {
-	ggraph::group group(entry, exit);
+	ggraph::agg::group group(entry, exit);
 	return graph.add_node(group, {});
 }
 
 node *
 aggregate(ggraph::graph & graph);
 
-}
+}}
 
 #endif
