@@ -38,6 +38,14 @@ test()
 	assert(g.exit()->npredecessors() == 1);
 	assert(g.exit()->nsuccessors() == 0);
 
+        // TODO: Test these global invariants
+        // - Fork predecessor is either join or grain
+        // - Fork successors are grains
+        // - Join predessors are either grains or joins
+        // - Join successor is either join or fork
+        // - Grain predessor is a fork
+        // - Grain successor is a join
+
 	view(g, stdout);
 
 	return 0;
