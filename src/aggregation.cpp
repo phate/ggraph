@@ -3,6 +3,7 @@
 #include <ggraph/grain.hpp>
 #include <ggraph/join.hpp>
 #include <atomic>
+#include <ggraph/view.hpp>
 
 namespace ggraph {
 
@@ -157,7 +158,9 @@ node *
 create_group(ggraph::graph & graph, node * entry, node * exit)
 {
 	ggraph::group group(entry, exit, std::string("grp") + std::to_string(get_next_group_id()));
-	return graph.add_node(group, {});
+	node* n = graph.add_node(group, {});
+        view(graph, stdout);
+        return n;
 }
 
 node *
