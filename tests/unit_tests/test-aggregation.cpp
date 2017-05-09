@@ -23,21 +23,25 @@ is_aggregated(ggraph::graph & g)
 }
 
 static int
-test1()
+test3()
 {
 	using namespace ggraph;
 
 	graph g;
-	auto grain1 = create_grain(g, g.entry());
-	auto grain2 = create_grain(g, grain1);
+	auto grain1 = create_grain(g, g.entry(), "grn1");
 
-	auto fork = create_fork(g, grain2);
-	auto grain3 = create_grain(g, fork);
-	auto grain4 = create_grain(g, fork);
-	auto join = create_join(g, {grain3, grain4});
+	auto fork1 = create_fork(g, grain1, "f1");
+	auto grain2 = create_grain(g, fork1, "grn2");
 
-	auto grain5 = create_grain(g, join);
-	grain5->add_successor(g.exit());
+	auto fork2 = create_fork(g, grain2, "f2");
+	auto grain3 = create_grain(g, fork2, "grn3");
+	auto grain4 = create_grain(g, fork2, "grn4");
+	auto join2 = create_join(g, {grain3,grain4}, "j2");
+
+	auto grain6 = create_grain(g, fork1, "grn6");
+	auto join3 = create_join(g, {join2, grain6}, "j3");
+
+	join3->add_successor(g.exit());
 
 	view(g, stdout);
 
@@ -51,32 +55,56 @@ test1()
 }
 
 static int
-test2()
+test4()
 {
 	using namespace ggraph;
 
 	graph g;
-	auto fork1 = create_fork(g, g.entry());
-
-	auto fork2 = create_fork(g, fork1);
-	auto grain1 = create_grain(g, fork2);
-	auto grain2 = create_grain(g, fork2);
-	auto join2 = create_join(g, {grain1, grain2});
-
-	auto fork3 = create_fork(g, fork1);
-	auto grain3 = create_grain(g, fork3);
-	auto grain4 = create_grain(g, fork3);
-	auto join3 = create_join(g, {grain3, grain4});
-
-	auto join1 = create_join(g, {join2, join3});
-	auto grain5 = create_grain(g, join1);
-	grain5->add_successor(g.exit());
+	auto grain1 = create_grain(g, g.entry(), "grn1");
+	grain1->add_successor(g.exit());
 
 	view(g, stdout);
 
 	aggregate(g);
 
 	view(g, stdout);
+
+	is_aggregated(g);
+
+	return 0;
+}
+
+static int
+test5()
+{
+	using namespace ggraph;
+
+	graph g;
+	auto grain1 = create_grain(g, g.entry(), "grn1");
+
+	auto fork1 = create_fork(g, grain1, "f1");
+	auto grain2 = create_grain(g, fork1, "grn2");
+
+	auto fork2 = create_fork(g, grain2, "f2");
+	auto grain3 = create_grain(g, fork2, "grn3");
+	auto grain4 = create_grain(g, fork2, "grn4");
+	auto join2 = create_join(g, {grain3,grain4}, "j2");
+
+	auto fork3 = create_fork(g, join2, "f3");
+	auto grain5 = create_grain(g, fork3, "grn5");
+	auto grain6 = create_grain(g, fork3, "grn6");
+	auto grain7 = create_grain(g, fork3, "grn7");
+	auto join3 = create_join(g, {grain5,grain6,grain7}, "j3");
+
+	auto join4 = create_join(g, {join3}, "j4");
+
+	join4->add_successor(g.exit());
+
+	//view(g, stdout);
+
+	aggregate(g);
+
+	//view(g, stdout);
 
 	is_aggregated(g);
 
@@ -86,8 +114,9 @@ test2()
 static int
 test()
 {
-	test1();
-	test2();
+	//test3();
+	//test4();
+	test5();
 
 	return 0;
 }

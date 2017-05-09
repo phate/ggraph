@@ -3,6 +3,7 @@
 
 #include <ggraph/graph.hpp>
 #include <ggraph/operation.hpp>
+#include <string>
 
 namespace ggraph {
 
@@ -11,9 +12,9 @@ public:
 	virtual
 	~join();
 
-	inline constexpr
-	join()
-	: operation()
+	inline
+	join(const std::string arg_name)
+	: operation(), name(arg_name)
 	{}
 
 	virtual std::string
@@ -21,12 +22,15 @@ public:
 
 	virtual std::unique_ptr<operation>
 	copy() const override;
+
+private:
+        std::string name;
 };
 
 static inline node *
-create_join(ggraph::graph & graph, const std::unordered_set<node*> & predecessors)
+create_join(ggraph::graph & graph, const std::unordered_set<node*> & predecessors, std::string name)
 {
-	ggraph::join join;
+	ggraph::join join(name);
 	return graph.add_node(join, predecessors);
 }
 

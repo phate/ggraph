@@ -8,7 +8,7 @@ fork::~fork()
 std::string
 fork::debug_string() const
 {
-	return "fork";
+	return std::string("fork_") + name;
 }
 
 std::unique_ptr<operation>
