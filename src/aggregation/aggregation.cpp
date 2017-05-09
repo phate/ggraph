@@ -1,4 +1,4 @@
-#include <ggraph/aggregation.hpp>
+#include <ggraph/aggregation/aggregation.hpp>
 #include <ggraph/fork.hpp>
 #include <ggraph/grain.hpp>
 #include <ggraph/join.hpp>
