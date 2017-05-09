@@ -2,6 +2,7 @@
 #include <ggraph/fork.hpp>
 #include <ggraph/grain.hpp>
 #include <ggraph/join.hpp>
+#include <atomic>
 
 namespace ggraph {
 
@@ -13,7 +14,7 @@ group::~group()
 std::string
 group::debug_string() const
 {
-	return "group";
+	return std::string("group_") + name;
 }
 
 std::unique_ptr<operation>
@@ -144,6 +145,19 @@ aggregate(ggraph::graph & graph, ggraph::node * node)
 		GGRAPH_DEBUG_ASSERT(node->nsuccessors() == 1);
 		aggregate(graph, node->successor(0));
 	}
+}
+
+std::atomic<int> group_id_cntr(0);
+
+static int get_next_group_id() {
+        return group_id_cntr++;
+}
+
+node *
+create_group(ggraph::graph & graph, node * entry, node * exit)
+{
+	ggraph::group group(entry, exit, std::string("grp") + std::to_string(get_next_group_id()));
+	return graph.add_node(group, {});
 }
 
 node *

@@ -12,12 +12,12 @@ test()
 	using namespace ggraph;
 
 	graph g;
-	auto grain1 = create_grain(g, g.entry());
+	auto grain1 = create_grain(g, g.entry(), "grn1");
 
-	auto fork = create_fork(g, grain1);
-	auto grain3 = create_grain(g, fork);
-	auto grain4 = create_grain(g, fork);
-	auto join = create_join(g, {grain3, grain4});
+	auto fork = create_fork(g, grain1, "f");
+	auto grain3 = create_grain(g, fork, "grn3");
+	auto grain4 = create_grain(g, fork, "grn4");
+	auto join = create_join(g, {grain3, grain4}, "j");
 
 	join->add_successor(g.exit());
 

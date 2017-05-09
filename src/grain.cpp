@@ -8,7 +8,7 @@ grain::~grain()
 std::string
 grain::debug_string() const
 {
-	return "grain";
+	return std::string("grain_") + name;
 }
 
 std::unique_ptr<operation>

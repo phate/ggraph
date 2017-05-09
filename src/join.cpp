@@ -8,7 +8,7 @@ join::~join()
 std::string
 join::debug_string() const
 {
-	return "join";
+	return std::string("join_") + name;
 }
 
 std::unique_ptr<operation>

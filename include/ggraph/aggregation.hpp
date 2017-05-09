@@ -3,6 +3,7 @@
 
 #include <ggraph/graph.hpp>
 #include <ggraph/operation.hpp>
+#include <string>
 
 namespace ggraph {
 
@@ -13,11 +14,12 @@ public:
 	virtual
 	~group();
 
-	inline constexpr
-	group(const node * entry, const node * exit)
+	inline
+	group(const node * entry, const node * exit, const std::string arg_name)
 	: operation()
 	, exit_(exit)
 	, entry_(entry)
+        , name(arg_name)
 	{}
 
 	inline const node *
@@ -41,14 +43,12 @@ public:
 private:
 	const node * exit_;
 	const node * entry_;
+        std::string name;
 };
 
-static inline node *
-create_group(ggraph::graph & graph, node * entry, node * exit)
-{
-	ggraph::group group(entry, exit);
-	return graph.add_node(group, {});
-}
+
+node *
+create_group(ggraph::graph & graph, node * entry, node * exit);
 
 node *
 aggregate(ggraph::graph & graph);
