@@ -100,11 +100,11 @@ test5()
 
 	join4->add_successor(g.exit());
 
-	view(g, stdout);
+	//view(g, stdout);
 
 	aggregate(g);
 
-	view(g, stdout);
+	//view(g, stdout);
 
 	is_aggregated(g);
 
@@ -114,8 +114,8 @@ test5()
 static int
 test()
 {
-	test3();
-	test4();
+	//test3();
+	//test4();
 	test5();
 
 	return 0;

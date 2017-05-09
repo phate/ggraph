@@ -1,5 +1,5 @@
 CPPFLAGS = -Iinclude -DGGRAPH_DEBUG
-CXXFLAGS = -Wall -Werror -g --std=c++14
+CXXFLAGS = -Wall -Werror -g --std=c++14 -Wno-unused-function
 
 LIBGGRAPH_SRC = \
 	src/aggregation.cpp \
