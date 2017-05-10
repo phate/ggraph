@@ -1,25 +1,50 @@
 #include "test-registry.hpp"
 
 #include <ggraph/aggregation/aggregation.hpp>
+#include <ggraph/aggregation/view.hpp>
 #include <ggraph/fork.hpp>
 #include <ggraph/grain.hpp>
 #include <ggraph/join.hpp>
 #include <ggraph/graph.hpp>
 #include <ggraph/view.hpp>
 
-static inline void
-is_aggregated(ggraph::graph & g)
+static inline bool
+is_linear_node(const ggraph::agg::node * n)
 {
-	assert(g.entry()->npredecessors() == 0);
-	assert(g.entry()->nsuccessors() == 1);
+	return dynamic_cast<const ggraph::agg::linear_node*>(n) != nullptr;
+}
 
-	auto s = g.entry()->successor(0);
-	assert(s->npredecessors() == 1);
-	assert(s->nsuccessors() == 1);
+static inline bool
+is_forkjoin_node(const ggraph::agg::node * n)
+{
+	return dynamic_cast<const ggraph::agg::forkjoin_node*>(n) != nullptr;
+}
 
-	s = s->successor(0);
-	assert(s == g.exit());
-	assert(g.exit()->nsuccessors() == 0);
+static inline bool
+is_grain_node(const ggraph::agg::node * n)
+{
+	return dynamic_cast<const ggraph::agg::grain_node*>(n) != nullptr;
+}
+
+static inline void
+check_grain_node(const ggraph::agg::node * n)
+{
+	assert(is_grain_node(n));
+	assert(n->nchildren() == 0);
+}
+
+static inline void
+check_forkjoin_node(const ggraph::agg::node * n, size_t nchildren)
+{
+	assert(is_forkjoin_node(n));
+	assert(n->nchildren() == nchildren);
+}
+
+static inline void
+check_linear_node(const ggraph::agg::node * n, size_t nchildren)
+{
+	assert(is_linear_node(n));
+	assert(n->nchildren() == nchildren);
 }
 
 static int
@@ -41,11 +66,27 @@ test1()
 
 	view(g, stdout);
 
-	agg::aggregate(g);
+	auto root = agg::aggregate(g);
 
-	view(g, stdout);
+	agg::view(*root, stdout);
 
-	is_aggregated(g);
+	check_linear_node(root.get(), 2);
+
+	auto child1 = root->child(0);
+	check_linear_node(child1, 2);
+	check_grain_node(child1->child(0));
+	check_grain_node(child1->child(1));
+
+	auto child2 = root->child(1);
+	check_linear_node(child2, 2);
+
+	auto grandchild1 = child2->child(0);
+	check_forkjoin_node(grandchild1, 2);
+	check_grain_node(grandchild1->child(0));
+	check_grain_node(grandchild1->child(1));
+
+	auto grandchild2 = child2->child(1);
+	check_grain_node(grandchild2);
 
 	return 0;
 }
@@ -74,11 +115,27 @@ test2()
 
 	view(g, stdout);
 
-	agg::aggregate(g);
+	auto root = agg::aggregate(g);
 
-	view(g, stdout);
+	agg::view(*root, stdout);
 
-	is_aggregated(g);
+	check_linear_node(root.get(), 2);
+
+	auto child1 = root->child(0);
+	check_forkjoin_node(child1, 2);
+
+	auto grandchild1 = child1->child(0);
+	check_forkjoin_node(grandchild1, 2);
+	check_grain_node(grandchild1->child(0));
+	check_grain_node(grandchild1->child(1));
+
+	auto grandchild2 = child1->child(1);
+	check_forkjoin_node(grandchild2, 2);
+	check_grain_node(grandchild2->child(0));
+	check_grain_node(grandchild2->child(1));
+
+	auto child2 = root->child(1);
+	check_grain_node(child2);
 
 	return 0;
 }
