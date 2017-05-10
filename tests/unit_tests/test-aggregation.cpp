@@ -54,17 +54,17 @@ test1()
 
 	graph g;
 	auto grain1 = create_grain(g, g.entry());
-	auto grain2 = create_grain(g, grain1);
 
-	auto fork = create_fork(g, grain2);
+	auto fork = create_fork(g, grain1);
 	auto grain3 = create_grain(g, fork);
 	auto grain4 = create_grain(g, fork);
 	auto join = create_join(g, {grain3, grain4});
 
-	auto grain5 = create_grain(g, join);
-	grain5->add_successor(g.exit());
+	join->add_successor(g.exit());
 
 	view(g, stdout);
+
+	assert(ggraph::is_valid(g));
 
 	auto root = agg::aggregate(g);
 
@@ -73,20 +73,12 @@ test1()
 	check_linear_node(root.get(), 2);
 
 	auto child1 = root->child(0);
-	check_linear_node(child1, 2);
-	check_grain_node(child1->child(0));
-	check_grain_node(child1->child(1));
+	check_grain_node(child1);
 
 	auto child2 = root->child(1);
-	check_linear_node(child2, 2);
-
-	auto grandchild1 = child2->child(0);
-	check_forkjoin_node(grandchild1, 2);
-	check_grain_node(grandchild1->child(0));
-	check_grain_node(grandchild1->child(1));
-
-	auto grandchild2 = child2->child(1);
-	check_grain_node(grandchild2);
+	check_forkjoin_node(child2, 2);
+	check_grain_node(child2->child(0));
+	check_grain_node(child2->child(1));
 
 	return 0;
 }
@@ -96,6 +88,7 @@ test2()
 {
 	using namespace ggraph;
 
+	/* FIXME: this graph is not valid */
 	graph g;
 	auto fork1 = create_fork(g, g.entry());
 
