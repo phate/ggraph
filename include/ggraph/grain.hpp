@@ -23,6 +23,12 @@ public:
 	copy() const override;
 };
 
+static inline bool
+is_grain(const ggraph::node * n) noexcept
+{
+	return dynamic_cast<const ggraph::grain*>(&n->operation()) != nullptr;
+}
+
 static inline node *
 create_grain(ggraph::graph & graph, node * parent)
 {

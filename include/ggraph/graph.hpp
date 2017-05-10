@@ -9,6 +9,8 @@
 
 namespace ggraph {
 
+/* entry node */
+
 class entry final : public operation {
 public:
 	virtual
@@ -26,6 +28,14 @@ public:
 	copy() const override;
 };
 
+static inline bool
+is_entry(const ggraph::node * n) noexcept
+{
+	return dynamic_cast<const ggraph::entry*>(&n->operation()) != nullptr;
+}
+
+/* exit node */
+
 class exit final : public operation {
 public:
 	virtual
@@ -42,6 +52,12 @@ public:
 	virtual std::unique_ptr<operation>
 	copy() const override;
 };
+
+static inline bool
+is_exit(const ggraph::node * n) noexcept
+{
+	return dynamic_cast<const ggraph::exit*>(&n->operation()) != nullptr;
+}
 
 class graph final {
 public:

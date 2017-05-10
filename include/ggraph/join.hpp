@@ -23,6 +23,12 @@ public:
 	copy() const override;
 };
 
+static inline bool
+is_join(const ggraph::node * n) noexcept
+{
+	return dynamic_cast<const ggraph::join*>(&n->operation()) != nullptr;
+}
+
 static inline node *
 create_join(ggraph::graph & graph, const std::unordered_set<node*> & predecessors)
 {

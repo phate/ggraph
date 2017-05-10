@@ -23,6 +23,12 @@ public:
 	copy() const override;
 };
 
+static inline bool
+is_fork(const ggraph::node * n) noexcept
+{
+	return dynamic_cast<const ggraph::fork*>(&n->operation()) != nullptr;
+}
+
 static inline node *
 create_fork(ggraph::graph & graph, node * parent)
 {

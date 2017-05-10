@@ -64,39 +64,9 @@ create_group(ggraph::graph & graph, ggraph::node * entry, ggraph::node * exit)
 /* aggregation */
 
 static inline bool
-is_grain(const ggraph::node * n)
-{
-	return dynamic_cast<const grain*>(&n->operation()) != nullptr;
-}
-
-static inline bool
-is_fork(const ggraph::node * n)
-{
-	return dynamic_cast<const fork*>(&n->operation()) != nullptr;
-}
-
-static inline bool
-is_join(const ggraph::node * n)
-{
-	return dynamic_cast<const join*>(&n->operation()) != nullptr;
-}
-
-static inline bool
 is_group(const ggraph::node * n)
 {
 	return dynamic_cast<const group*>(&n->operation()) != nullptr;
-}
-
-static inline bool
-is_entry(const ggraph::node * n)
-{
-	return dynamic_cast<const entry*>(&n->operation()) != nullptr;
-}
-
-static inline bool
-is_exit(const ggraph::node * n)
-{
-	return dynamic_cast<const exit*>(&n->operation()) != nullptr;
 }
 
 static inline bool
