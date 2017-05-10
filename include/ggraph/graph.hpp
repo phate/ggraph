@@ -127,6 +127,9 @@ private:
 	std::unordered_set<std::unique_ptr<ggraph::node>> nodes_;
 };
 
+bool
+is_valid(const ggraph::graph & g);
+
 }
 
 #endif
