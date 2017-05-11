@@ -11,8 +11,14 @@ class node;
 std::string
 to_str(const node & n);
 
+std::string
+to_graphml(const node & n);
+
 void
-view(const node & n, FILE *);
+view_str(const node & n, FILE *);
+
+void
+view_graphml(const node & n, FILE *);
 
 }}
 

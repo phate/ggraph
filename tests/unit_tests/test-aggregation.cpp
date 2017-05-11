@@ -50,7 +50,8 @@ test1()
 
 	auto root = agg::aggregate(g);
 
-	agg::view(*root, stdout);
+	agg::view_str(*root, stdout);
+	agg::view_graphml(*root, stdout);
 
 	check_linear_node(root.get(), 2);
 
@@ -92,7 +93,8 @@ test2()
 
 	auto root = agg::aggregate(g);
 
-	agg::view(*root, stdout);
+	agg::view_str(*root, stdout);
+	agg::view_graphml(*root, stdout);
 
 	check_linear_node(root.get(), 2);
 
