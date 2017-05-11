@@ -135,6 +135,12 @@ private:
 	ggraph::join join_;
 };
 
+static inline bool
+is_forkjoin_node(const node * n) noexcept
+{
+	return dynamic_cast<const forkjoin_node*>(n) != nullptr;
+}
+
 class linear_node final : public node {
 public:
 	inline
@@ -164,6 +170,12 @@ public:
 	virtual std::string
 	debug_string() const override;
 };
+
+static inline bool
+is_linear_node(const node * n) noexcept
+{
+	return dynamic_cast<const linear_node*>(n) != nullptr;
+}
 
 class grain_node final : public node {
 public:
@@ -207,6 +219,12 @@ public:
 private:
 	ggraph::grain grain_;
 };
+
+static inline bool
+is_grain_node(const node * n) noexcept
+{
+	return dynamic_cast<const grain_node*>(n) != nullptr;
+}
 
 }}
 

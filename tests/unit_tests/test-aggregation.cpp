@@ -8,24 +8,6 @@
 #include <ggraph/graph.hpp>
 #include <ggraph/view.hpp>
 
-static inline bool
-is_linear_node(const ggraph::agg::node * n)
-{
-	return dynamic_cast<const ggraph::agg::linear_node*>(n) != nullptr;
-}
-
-static inline bool
-is_forkjoin_node(const ggraph::agg::node * n)
-{
-	return dynamic_cast<const ggraph::agg::forkjoin_node*>(n) != nullptr;
-}
-
-static inline bool
-is_grain_node(const ggraph::agg::node * n)
-{
-	return dynamic_cast<const ggraph::agg::grain_node*>(n) != nullptr;
-}
-
 static inline void
 check_grain_node(const ggraph::agg::node * n)
 {
