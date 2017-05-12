@@ -7,7 +7,7 @@
 #include <ggraph/view.hpp>
 
 static int
-test()
+test(const std::vector<std::string>&)
 {
 	using namespace ggraph;
 
@@ -26,4 +26,4 @@ test()
 	return 0;
 }
 
-GGRAPH_TEST_REGISTER("unit_tests/test-is_valid", test);
+GGRAPH_TEST_REGISTER("unit_tests/test-is_valid", {}, test);

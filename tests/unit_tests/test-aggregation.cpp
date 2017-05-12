@@ -118,7 +118,7 @@ test2()
 }
 
 static int
-test()
+test(const std::vector<std::string> &)
 {
 	test1();
 	test2();
@@ -126,4 +126,4 @@ test()
 	return 0;
 }
 
-GGRAPH_TEST_REGISTER("unit_tests/test-aggregation", test);
+GGRAPH_TEST_REGISTER("unit_tests/test-aggregation", {}, test);

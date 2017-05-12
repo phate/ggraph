@@ -6,25 +6,34 @@
 
 class unit_test final{
 public:
-	inline constexpr
-	unit_test(int (*r)())
-	: run(r)
+	inline
+	unit_test(
+		const std::vector<std::string> & f,
+		int (*r)(const std::vector<std::string>&))
+	: files(f)
+	, run(r)
 	{}
 
-	int (*run)();
+	std::vector<std::string> files;
+	int (*run)(const std::vector<std::string>&);
 };
 
 static std::unordered_map<std::string, std::unique_ptr<unit_test>> test_map;
 
 void
-register_test(const std::string & name, int (*test)())
+register_test(
+	const std::string & name,
+	const std::vector<std::string> & files,
+	int (*test)(const std::vector<std::string>&))
 {
-	test_map.insert(std::make_pair(name, std::make_unique<unit_test>(test)));
+	assert(test_map.find(name) == test_map.end());
+	test_map.insert(std::make_pair(name, std::make_unique<unit_test>(files, test)));
 }
 
 int
 run_test(const std::string & name)
 {
 	assert(test_map.find(name) != test_map.end());
-	return test_map[name]->run();
+	auto test = std::move(test_map[name]);
+	return test->run(test->files);
 }
