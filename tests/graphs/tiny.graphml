@@ -1,0 +1,1334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+<!-- Created by igraph -->
+  <key id="v_name" for="node" attr.name="name" attr.type="string"/>
+  <key id="v_label" for="node" attr.name="label" attr.type="string"/>
+  <key id="v_shape" for="node" attr.name="shape" attr.type="string"/>
+  <key id="v_type" for="node" attr.name="type" attr.type="string"/>
+  <key id="v_lineage" for="node" attr.name="lineage" attr.type="string"/>
+  <key id="v_task" for="node" attr.name="task" attr.type="double"/>
+  <key id="v_parent" for="node" attr.name="parent" attr.type="double"/>
+  <key id="v_joins_at" for="node" attr.name="joins_at" attr.type="double"/>
+  <key id="v_cpu_id" for="node" attr.name="cpu_id" attr.type="double"/>
+  <key id="v_child_number" for="node" attr.name="child_number" attr.type="double"/>
+  <key id="v_num_children" for="node" attr.name="num_children" attr.type="double"/>
+  <key id="v_exec_cycles" for="node" attr.name="exec_cycles" attr.type="double"/>
+  <key id="v_creation_cycles" for="node" attr.name="creation_cycles" attr.type="double"/>
+  <key id="v_overhead_cycles" for="node" attr.name="overhead_cycles" attr.type="double"/>
+  <key id="v_queue_size" for="node" attr.name="queue_size" attr.type="double"/>
+  <key id="v_create_instant" for="node" attr.name="create_instant" attr.type="double"/>
+  <key id="v_exec_end_instant" for="node" attr.name="exec_end_instant" attr.type="double"/>
+  <key id="v_tag" for="node" attr.name="tag" attr.type="string"/>
+  <key id="v_outline_function" for="node" attr.name="outline_function" attr.type="double"/>
+  <key id="v_wait_instants" for="node" attr.name="wait_instants" attr.type="string"/>
+  <key id="v_PAPI_TLB_DM_sd" for="node" attr.name="PAPI_TLB_DM_sd" attr.type="double"/>
+  <key id="v_PAPI_RES_STL_sd" for="node" attr.name="PAPI_RES_STL_sd" attr.type="double"/>
+  <key id="v_PAPI_TLB_DM_mean" for="node" attr.name="PAPI_TLB_DM_mean" attr.type="double"/>
+  <key id="v_PAPI_RES_STL_mean" for="node" attr.name="PAPI_RES_STL_mean" attr.type="double"/>
+  <key id="v_PAPI_TLB_DM_sum" for="node" attr.name="PAPI_TLB_DM_sum" attr.type="double"/>
+  <key id="v_PAPI_RES_STL_sum" for="node" attr.name="PAPI_RES_STL_sum" attr.type="double"/>
+  <key id="v_work_cycles" for="node" attr.name="work_cycles" attr.type="double"/>
+  <key id="v_mem_hier_util" for="node" attr.name="mem_hier_util" attr.type="double"/>
+  <key id="v_parent_ind" for="node" attr.name="parent_ind" attr.type="double"/>
+  <key id="v_source_line" for="node" attr.name="source_line" attr.type="string"/>
+  <key id="v_parent_overhead_cycles" for="node" attr.name="parent_overhead_cycles" attr.type="double"/>
+  <key id="v_sync_cycles_per_child" for="node" attr.name="sync_cycles_per_child" attr.type="double"/>
+  <key id="v_parallel_benefit" for="node" attr.name="parallel_benefit" attr.type="double"/>
+  <key id="v_sibling_work_balance" for="node" attr.name="sibling_work_balance" attr.type="double"/>
+  <key id="v_sibling_scatter" for="node" attr.name="sibling_scatter" attr.type="double"/>
+  <key id="v_num_siblings" for="node" attr.name="num_siblings" attr.type="double"/>
+  <key id="v_work_cycles_left" for="node" attr.name="work_cycles_left" attr.type="double"/>
+  <key id="v_work_cycles_right" for="node" attr.name="work_cycles_right" attr.type="double"/>
+  <key id="v_work_deviation" for="node" attr.name="work_deviation" attr.type="double"/>
+  <key id="v_color" for="node" attr.name="color" attr.type="string"/>
+  <key id="v_width" for="node" attr.name="width" attr.type="string"/>
+  <key id="v_height" for="node" attr.name="height" attr.type="double"/>
+  <key id="v_root_dist" for="node" attr.name="root_dist" attr.type="double"/>
+  <key id="v_depth" for="node" attr.name="depth" attr.type="double"/>
+  <key id="v_on_crit_path" for="node" attr.name="on_crit_path" attr.type="double"/>
+  <key id="e_type" for="edge" attr.name="type" attr.type="string"/>
+  <key id="e_color" for="edge" attr.name="color" attr.type="string"/>
+  <key id="e_weight" for="edge" attr.name="weight" attr.type="double"/>
+  <key id="e_on_crit_path" for="edge" attr.name="on_crit_path" attr.type="double"/>
+  <graph id="G" edgedefault="directed">
+    <node id="n0">
+      <data key="v_name">E</data>
+      <data key="v_label">E</data>
+      <data key="v_shape">rectangle</data>
+      <data key="v_type">end</data>
+      <data key="v_lineage">NA</data>
+      <data key="v_tag">NA</data>
+      <data key="v_wait_instants">NA</data>
+      <data key="v_source_line">NA</data>
+      <data key="v_color">#DEB887</data>
+      <data key="v_width">15</data>
+      <data key="v_height">15</data>
+      <data key="v_root_dist">5923000</data>
+      <data key="v_depth">16</data>
+      <data key="v_on_crit_path">1</data>
+    </node>
+    <node id="n1">
+      <data key="v_name">j.0.0</data>
+      <data key="v_label">*</data>
+      <data key="v_shape">circle</data>
+      <data key="v_type">join</data>
+      <data key="v_lineage">NA</data>
+      <data key="v_tag">NA</data>
+      <data key="v_wait_instants">NA</data>
+      <data key="v_source_line">NA</data>
+      <data key="v_color">#FF7F50</data>
+      <data key="v_width">10</data>
+      <data key="v_height">10</data>
+      <data key="v_root_dist">5923000</data>
+      <data key="v_depth">15</data>
+      <data key="v_on_crit_path">1</data>
+    </node>
+    <node id="n2">
+      <data key="v_name">j.1.0</data>
+      <data key="v_label">*</data>
+      <data key="v_shape">circle</data>
+      <data key="v_type">join</data>
+      <data key="v_lineage">NA</data>
+      <data key="v_tag">NA</data>
+      <data key="v_wait_instants">NA</data>
+      <data key="v_source_line">NA</data>
+      <data key="v_color">#FF7F50</data>
+      <data key="v_width">10</data>
+      <data key="v_height">10</data>
+      <data key="v_root_dist">5923000</data>
+      <data key="v_depth">14</data>
+      <data key="v_on_crit_path">1</data>
+    </node>
+    <node id="n3">
+      <data key="v_name">j.2.0</data>
+      <data key="v_label">*</data>
+      <data key="v_shape">circle</data>
+      <data key="v_type">join</data>
+      <data key="v_lineage">NA</data>
+      <data key="v_tag">NA</data>
+      <data key="v_wait_instants">NA</data>
+      <data key="v_source_line">NA</data>
+      <data key="v_color">#FF7F50</data>
+      <data key="v_width">10</data>
+      <data key="v_height">10</data>
+      <data key="v_root_dist">5923000</data>
+      <data key="v_depth">13</data>
+      <data key="v_on_crit_path">1</data>
+    </node>
+    <node id="n4">
+      <data key="v_name">j.3.0</data>
+      <data key="v_label">*</data>
+      <data key="v_shape">circle</data>
+      <data key="v_type">join</data>
+      <data key="v_lineage">NA</data>
+      <data key="v_tag">NA</data>
+      <data key="v_wait_instants">NA</data>
+      <data key="v_source_line">NA</data>
+      <data key="v_color">#FF7F50</data>
+      <data key="v_width">10</data>
+      <data key="v_height">10</data>
+      <data key="v_root_dist">5923000</data>
+      <data key="v_depth">12</data>
+      <data key="v_on_crit_path">1</data>
+    </node>
+    <node id="n5">
+      <data key="v_name">j.5.0</data>
+      <data key="v_label">*</data>
+      <data key="v_shape">circle</data>
+      <data key="v_type">join</data>
+      <data key="v_lineage">NA</data>
+      <data key="v_tag">NA</data>
+      <data key="v_wait_instants">NA</data>
+      <data key="v_source_line">NA</data>
+      <data key="v_color">#FF7F50</data>
+      <data key="v_width">10</data>
+      <data key="v_height">10</data>
+      <data key="v_root_dist">5923000</data>
+      <data key="v_depth">11</data>
+      <data key="v_on_crit_path">1</data>
+    </node>
+    <node id="n6">
+      <data key="v_name">j.6.0</data>
+      <data key="v_label">*</data>
+      <data key="v_shape">circle</data>
+      <data key="v_type">join</data>
+      <data key="v_lineage">NA</data>
+      <data key="v_tag">NA</data>
+      <data key="v_wait_instants">NA</data>
+      <data key="v_source_line">NA</data>
+      <data key="v_color">#FF7F50</data>
+      <data key="v_width">10</data>
+      <data key="v_height">10</data>
+      <data key="v_root_dist">3667846</data>
+      <data key="v_depth">11</data>
+      <data key="v_on_crit_path">0</data>
+    </node>
+    <node id="n7">
+      <data key="v_name">j.4.0</data>
+      <data key="v_label">*</data>
+      <data key="v_shape">circle</data>
+      <data key="v_type">join</data>
+      <data key="v_lineage">NA</data>
+      <data key="v_tag">NA</data>
+      <data key="v_wait_instants">NA</data>
+      <data key="v_source_line">NA</data>
+      <data key="v_color">#FF7F50</data>
+      <data key="v_width">10</data>
+      <data key="v_height">10</data>
+      <data key="v_root_dist">3632584</data>
+      <data key="v_depth">12</data>
+      <data key="v_on_crit_path">0</data>
+    </node>
+    <node id="n8">
+      <data key="v_name">j.7.0</data>
+      <data key="v_label">*</data>
+      <data key="v_shape">circle</data>
+      <data key="v_type">join</data>
+      <data key="v_lineage">NA</data>
+      <data key="v_tag">NA</data>
+      <data key="v_wait_instants">NA</data>
+      <data key="v_source_line">NA</data>
+      <data key="v_color">#FF7F50</data>
+      <data key="v_width">10</data>
+      <data key="v_height">10</data>
+      <data key="v_root_dist">3632584</data>
+      <data key="v_depth">11</data>
+      <data key="v_on_crit_path">0</data>
+    </node>
+    <node id="n9">
+      <data key="v_name">j.8.0</data>
+      <data key="v_label">*</data>
+      <data key="v_shape">circle</data>
+      <data key="v_type">join</data>
+      <data key="v_lineage">NA</data>
+      <data key="v_tag">NA</data>
+      <data key="v_wait_instants">NA</data>
+      <data key="v_source_line">NA</data>
+      <data key="v_color">#FF7F50</data>
+      <data key="v_width">10</data>
+      <data key="v_height">10</data>
+      <data key="v_root_dist">2359830</data>
+      <data key="v_depth">11</data>
+      <data key="v_on_crit_path">0</data>
+    </node>
+    <node id="n10">
+      <data key="v_name">f.0.0</data>
+      <data key="v_label">^</data>
+      <data key="v_shape">circle</data>
+      <data key="v_type">fork</data>
+      <data key="v_lineage">NA</data>
+      <data key="v_tag">NA</data>
+      <data key="v_wait_instants">NA</data>
+      <data key="v_source_line">NA</data>
+      <data key="v_color">#2E8B57</data>
+      <data key="v_width">10</data>
+      <data key="v_height">10</data>
+      <data key="v_root_dist">0</data>
+      <data key="v_depth">1</data>
+      <data key="v_on_crit_path">1</data>
+    </node>
+    <node id="n11">
+      <data key="v_name">f.1.0</data>
+      <data key="v_label">^</data>
+      <data key="v_shape">circle</data>
+      <data key="v_type">fork</data>
+      <data key="v_lineage">NA</data>
+      <data key="v_tag">NA</data>
+      <data key="v_wait_instants">NA</data>
+      <data key="v_source_line">NA</data>
+      <data key="v_color">#2E8B57</data>
+      <data key="v_width">10</data>
+      <data key="v_height">10</data>
+      <data key="v_root_dist">20332</data>
+      <data key="v_depth">3</data>
+      <data key="v_on_crit_path">1</data>
+    </node>
+    <node id="n12">
+      <data key="v_name">f.2.0</data>
+      <data key="v_label">^</data>
+      <data key="v_shape">circle</data>
+      <data key="v_type">fork</data>
+      <data key="v_lineage">NA</data>
+      <data key="v_tag">NA</data>
+      <data key="v_wait_instants">NA</data>
+      <data key="v_source_line">NA</data>
+      <data key="v_color">#2E8B57</data>
+      <data key="v_width">10</data>
+      <data key="v_height">10</data>
+      <data key="v_root_dist">36524</data>
+      <data key="v_depth">5</data>
+      <data key="v_on_crit_path">1</data>
+    </node>
+    <node id="n13">
+      <data key="v_name">f.3.0</data>
+      <data key="v_label">^</data>
+      <data key="v_shape">circle</data>
+      <data key="v_type">fork</data>
+      <data key="v_lineage">NA</data>
+      <data key="v_tag">NA</data>
+      <data key="v_wait_instants">NA</data>
+      <data key="v_source_line">NA</data>
+      <data key="v_color">#2E8B57</data>
+      <data key="v_width">10</data>
+      <data key="v_height">10</data>
+      <data key="v_root_dist">51448</data>
+      <data key="v_depth">7</data>
+      <data key="v_on_crit_path">1</data>
+    </node>
+    <node id="n14">
+      <data key="v_name">f.5.0</data>
+      <data key="v_label">^</data>
+      <data key="v_shape">circle</data>
+      <data key="v_type">fork</data>
+      <data key="v_lineage">NA</data>
+      <data key="v_tag">NA</data>
+      <data key="v_wait_instants">NA</data>
+      <data key="v_source_line">NA</data>
+      <data key="v_color">#2E8B57</data>
+      <data key="v_width">10</data>
+      <data key="v_height">10</data>
+      <data key="v_root_dist">65028</data>
+      <data key="v_depth">9</data>
+      <data key="v_on_crit_path">1</data>
+    </node>
+    <node id="n15">
+      <data key="v_name">f.6.0</data>
+      <data key="v_label">^</data>
+      <data key="v_shape">circle</data>
+      <data key="v_type">fork</data>
+      <data key="v_lineage">NA</data>
+      <data key="v_tag">NA</data>
+      <data key="v_wait_instants">NA</data>
+      <data key="v_source_line">NA</data>
+      <data key="v_color">#2E8B57</data>
+      <data key="v_width">10</data>
+      <data key="v_height">10</data>
+      <data key="v_root_dist">66954</data>
+      <data key="v_depth">9</data>
+      <data key="v_on_crit_path">0</data>
+    </node>
+    <node id="n16">
+      <data key="v_name">f.4.0</data>
+      <data key="v_label">^</data>
+      <data key="v_shape">circle</data>
+      <data key="v_type">fork</data>
+      <data key="v_lineage">NA</data>
+      <data key="v_tag">NA</data>
+      <data key="v_wait_instants">NA</data>
+      <data key="v_source_line">NA</data>
+      <data key="v_color">#2E8B57</data>
+      <data key="v_width">10</data>
+      <data key="v_height">10</data>
+      <data key="v_root_dist">51920</data>
+      <data key="v_depth">7</data>
+      <data key="v_on_crit_path">0</data>
+    </node>
+    <node id="n17">
+      <data key="v_name">f.7.0</data>
+      <data key="v_label">^</data>
+      <data key="v_shape">circle</data>
+      <data key="v_type">fork</data>
+      <data key="v_lineage">NA</data>
+      <data key="v_tag">NA</data>
+      <data key="v_wait_instants">NA</data>
+      <data key="v_source_line">NA</data>
+      <data key="v_color">#2E8B57</data>
+      <data key="v_width">10</data>
+      <data key="v_height">10</data>
+      <data key="v_root_dist">85284</data>
+      <data key="v_depth">9</data>
+      <data key="v_on_crit_path">0</data>
+    </node>
+    <node id="n18">
+      <data key="v_name">f.8.0</data>
+      <data key="v_label">^</data>
+      <data key="v_shape">circle</data>
+      <data key="v_type">fork</data>
+      <data key="v_lineage">NA</data>
+      <data key="v_tag">NA</data>
+      <data key="v_wait_instants">NA</data>
+      <data key="v_source_line">NA</data>
+      <data key="v_color">#2E8B57</data>
+      <data key="v_width">10</data>
+      <data key="v_height">10</data>
+      <data key="v_root_dist">108920</data>
+      <data key="v_depth">9</data>
+      <data key="v_on_crit_path">0</data>
+    </node>
+    <node id="n19">
+      <data key="v_name">0</data>
+      <data key="v_label">S</data>
+      <data key="v_shape">rectangle</data>
+      <data key="v_type">start</data>
+      <data key="v_lineage">NA</data>
+      <data key="v_tag">NA</data>
+      <data key="v_wait_instants">NA</data>
+      <data key="v_source_line">NA</data>
+      <data key="v_color">#DEB887</data>
+      <data key="v_width">15</data>
+      <data key="v_height">15</data>
+      <data key="v_root_dist">0</data>
+      <data key="v_depth">0</data>
+      <data key="v_on_crit_path">1</data>
+    </node>
+    <node id="n20">
+      <data key="v_name">1</data>
+      <data key="v_label">1</data>
+      <data key="v_shape">rectangle</data>
+      <data key="v_type">task</data>
+      <data key="v_lineage">R-1</data>
+      <data key="v_task">1</data>
+      <data key="v_parent">0</data>
+      <data key="v_joins_at">0</data>
+      <data key="v_cpu_id">0</data>
+      <data key="v_child_number">1</data>
+      <data key="v_num_children">1</data>
+      <data key="v_exec_cycles">27942</data>
+      <data key="v_creation_cycles">21720</data>
+      <data key="v_overhead_cycles">7610</data>
+      <data key="v_queue_size">0</data>
+      <data key="v_create_instant">0</data>
+      <data key="v_exec_end_instant">103306294</data>
+      <data key="v_tag">GOMP_parallel_task</data>
+      <data key="v_outline_function">4203392</data>
+      <data key="v_wait_instants">[0;25634]</data>
+      <data key="v_PAPI_TLB_DM_sd">6.36396103067893</data>
+      <data key="v_PAPI_RES_STL_sd">601.747870789752</data>
+      <data key="v_PAPI_TLB_DM_mean">6.5</data>
+      <data key="v_PAPI_RES_STL_mean">1486.5</data>
+      <data key="v_PAPI_TLB_DM_sum">13</data>
+      <data key="v_PAPI_RES_STL_sum">2973</data>
+      <data key="v_work_cycles">20332</data>
+      <data key="v_mem_hier_util">0.146222703128074</data>
+      <data key="v_source_line">fib.c:?</data>
+      <data key="v_sibling_work_balance">1</data>
+      <data key="v_num_siblings">1</data>
+      <data key="v_work_cycles_left">20332</data>
+      <data key="v_work_cycles_right">29264</data>
+      <data key="v_work_deviation">0.694778567523237</data>
+      <data key="v_color">#00E5FFFF</data>
+      <data key="v_width">30</data>
+      <data key="v_height">30</data>
+      <data key="v_root_dist">0</data>
+      <data key="v_depth">2</data>
+      <data key="v_on_crit_path">1</data>
+    </node>
+    <node id="n21">
+      <data key="v_name">2</data>
+      <data key="v_label">2</data>
+      <data key="v_shape">rectangle</data>
+      <data key="v_type">task</data>
+      <data key="v_lineage">R-1-1</data>
+      <data key="v_task">2</data>
+      <data key="v_parent">1</data>
+      <data key="v_joins_at">0</data>
+      <data key="v_cpu_id">0</data>
+      <data key="v_child_number">1</data>
+      <data key="v_num_children">2</data>
+      <data key="v_exec_cycles">23108</data>
+      <data key="v_creation_cycles">4110</data>
+      <data key="v_overhead_cycles">6916</data>
+      <data key="v_queue_size">0</data>
+      <data key="v_create_instant">7896</data>
+      <data key="v_exec_end_instant">103297142</data>
+      <data key="v_tag">0x7ffe57cebd18</data>
+      <data key="v_outline_function">4205344</data>
+      <data key="v_wait_instants">[0;21826]</data>
+      <data key="v_PAPI_TLB_DM_sd">8.48528137423857</data>
+      <data key="v_PAPI_RES_STL_sd">647.709811566878</data>
+      <data key="v_PAPI_TLB_DM_mean">7</data>
+      <data key="v_PAPI_RES_STL_mean">885</data>
+      <data key="v_PAPI_TLB_DM_sum">14</data>
+      <data key="v_PAPI_RES_STL_sum">1770</data>
+      <data key="v_work_cycles">16192</data>
+      <data key="v_mem_hier_util">0.109313241106719</data>
+      <data key="v_parent_ind">1</data>
+      <data key="v_source_line">fib.c:?</data>
+      <data key="v_parent_overhead_cycles">7610</data>
+      <data key="v_sync_cycles_per_child">3500</data>
+      <data key="v_parallel_benefit">2.12772667542707</data>
+      <data key="v_sibling_work_balance">1</data>
+      <data key="v_num_siblings">1</data>
+      <data key="v_work_cycles_left">16192</data>
+      <data key="v_work_cycles_right">15718</data>
+      <data key="v_work_deviation">1.03015650846164</data>
+      <data key="v_color">#00E5FFFF</data>
+      <data key="v_width">30</data>
+      <data key="v_height">30</data>
+      <data key="v_root_dist">20332</data>
+      <data key="v_depth">4</data>
+      <data key="v_on_crit_path">1</data>
+    </node>
+    <node id="n22">
+      <data key="v_name">3</data>
+      <data key="v_label">3</data>
+      <data key="v_shape">rectangle</data>
+      <data key="v_type">task</data>
+      <data key="v_lineage">R-1-1-1</data>
+      <data key="v_task">3</data>
+      <data key="v_parent">2</data>
+      <data key="v_joins_at">0</data>
+      <data key="v_cpu_id">0</data>
+      <data key="v_child_number">1</data>
+      <data key="v_num_children">2</data>
+      <data key="v_exec_cycles">23840</data>
+      <data key="v_creation_cycles">4516</data>
+      <data key="v_overhead_cycles">8916</data>
+      <data key="v_queue_size">0</data>
+      <data key="v_create_instant">6402</data>
+      <data key="v_exec_end_instant">103289094</data>
+      <data key="v_tag">0x7ffe57cebbd8</data>
+      <data key="v_outline_function">4205360</data>
+      <data key="v_wait_instants">[0;22730]</data>
+      <data key="v_PAPI_TLB_DM_sd">7.77817459305202</data>
+      <data key="v_PAPI_RES_STL_sd">147.785317267988</data>
+      <data key="v_PAPI_TLB_DM_mean">5.5</data>
+      <data key="v_PAPI_RES_STL_mean">443.5</data>
+      <data key="v_PAPI_TLB_DM_sum">11</data>
+      <data key="v_PAPI_RES_STL_sum">887</data>
+      <data key="v_work_cycles">14924</data>
+      <data key="v_mem_hier_util">0.0594344679710533</data>
+      <data key="v_parent_ind">2</data>
+      <data key="v_source_line">fib.c:?</data>
+      <data key="v_parent_overhead_cycles">6916</data>
+      <data key="v_sync_cycles_per_child">472</data>
+      <data key="v_parallel_benefit">2.99198075380914</data>
+      <data key="v_sibling_work_balance">1.0155672823219</data>
+      <data key="v_sibling_scatter">0</data>
+      <data key="v_num_siblings">2</data>
+      <data key="v_work_cycles_left">14924</data>
+      <data key="v_work_cycles_right">14790</data>
+      <data key="v_work_deviation">1.00906017579446</data>
+      <data key="v_color">#00E5FFFF</data>
+      <data key="v_width">30</data>
+      <data key="v_height">30</data>
+      <data key="v_root_dist">36524</data>
+      <data key="v_depth">6</data>
+      <data key="v_on_crit_path">1</data>
+    </node>
+    <node id="n23">
+      <data key="v_name">5</data>
+      <data key="v_label">5</data>
+      <data key="v_shape">rectangle</data>
+      <data key="v_type">task</data>
+      <data key="v_lineage">R-1-1-1-1</data>
+      <data key="v_task">5</data>
+      <data key="v_parent">3</data>
+      <data key="v_joins_at">0</data>
+      <data key="v_cpu_id">0</data>
+      <data key="v_child_number">1</data>
+      <data key="v_num_children">2</data>
+      <data key="v_exec_cycles">19106</data>
+      <data key="v_creation_cycles">1470</data>
+      <data key="v_overhead_cycles">5526</data>
+      <data key="v_queue_size">0</data>
+      <data key="v_create_instant">3050</data>
+      <data key="v_exec_end_instant">103273108</data>
+      <data key="v_tag">0x7ffe57ceba98</data>
+      <data key="v_outline_function">4205360</data>
+      <data key="v_wait_instants">[0;18008]</data>
+      <data key="v_PAPI_TLB_DM_sd">2.82842712474619</data>
+      <data key="v_PAPI_RES_STL_sd">115.965512114594</data>
+      <data key="v_PAPI_TLB_DM_mean">2</data>
+      <data key="v_PAPI_RES_STL_mean">562</data>
+      <data key="v_PAPI_TLB_DM_sum">4</data>
+      <data key="v_PAPI_RES_STL_sum">1124</data>
+      <data key="v_work_cycles">13580</data>
+      <data key="v_mem_hier_util">0.0827687776141384</data>
+      <data key="v_parent_ind">3</data>
+      <data key="v_source_line">fib.c:?</data>
+      <data key="v_parent_overhead_cycles">8916</data>
+      <data key="v_sync_cycles_per_child">351</data>
+      <data key="v_parallel_benefit">7.45744096650192</data>
+      <data key="v_sibling_work_balance">1.06621742419033</data>
+      <data key="v_sibling_scatter">0</data>
+      <data key="v_num_siblings">2</data>
+      <data key="v_work_cycles_left">13580</data>
+      <data key="v_work_cycles_right">15178</data>
+      <data key="v_work_deviation">0.894716036368428</data>
+      <data key="v_color">#00E5FFFF</data>
+      <data key="v_width">30</data>
+      <data key="v_height">30</data>
+      <data key="v_root_dist">51448</data>
+      <data key="v_depth">8</data>
+      <data key="v_on_crit_path">1</data>
+    </node>
+    <node id="n24">
+      <data key="v_name">6</data>
+      <data key="v_label">6</data>
+      <data key="v_shape">rectangle</data>
+      <data key="v_type">task</data>
+      <data key="v_lineage">R-1-1-1-2</data>
+      <data key="v_task">6</data>
+      <data key="v_parent">3</data>
+      <data key="v_joins_at">0</data>
+      <data key="v_cpu_id">0</data>
+      <data key="v_child_number">2</data>
+      <data key="v_num_children">2</data>
+      <data key="v_exec_cycles">21030</data>
+      <data key="v_creation_cycles">6744</data>
+      <data key="v_overhead_cycles">5524</data>
+      <data key="v_queue_size">0</data>
+      <data key="v_create_instant">11168</data>
+      <data key="v_exec_end_instant">103265712</data>
+      <data key="v_tag">0x7ffe57ceba88</data>
+      <data key="v_outline_function">4205392</data>
+      <data key="v_wait_instants">[0;19746]</data>
+      <data key="v_PAPI_TLB_DM_sd">2.82842712474619</data>
+      <data key="v_PAPI_RES_STL_sd">171.826947828331</data>
+      <data key="v_PAPI_TLB_DM_mean">3</data>
+      <data key="v_PAPI_RES_STL_mean">729.5</data>
+      <data key="v_PAPI_TLB_DM_sum">6</data>
+      <data key="v_PAPI_RES_STL_sum">1459</data>
+      <data key="v_work_cycles">15506</data>
+      <data key="v_mem_hier_util">0.0940926093125242</data>
+      <data key="v_parent_ind">3</data>
+      <data key="v_source_line">fib.c:?</data>
+      <data key="v_parent_overhead_cycles">8916</data>
+      <data key="v_sync_cycles_per_child">351</data>
+      <data key="v_parallel_benefit">2.18548273431994</data>
+      <data key="v_sibling_work_balance">1.06621742419033</data>
+      <data key="v_sibling_scatter">0</data>
+      <data key="v_num_siblings">2</data>
+      <data key="v_work_cycles_left">15506</data>
+      <data key="v_work_cycles_right">15184</data>
+      <data key="v_work_deviation">1.02120653319283</data>
+      <data key="v_color">#00E5FFFF</data>
+      <data key="v_width">30</data>
+      <data key="v_height">30</data>
+      <data key="v_root_dist">51448</data>
+      <data key="v_depth">8</data>
+      <data key="v_on_crit_path">0</data>
+    </node>
+    <node id="n25">
+      <data key="v_name">4</data>
+      <data key="v_label">4</data>
+      <data key="v_shape">rectangle</data>
+      <data key="v_type">task</data>
+      <data key="v_lineage">R-1-1-2</data>
+      <data key="v_task">4</data>
+      <data key="v_parent">2</data>
+      <data key="v_joins_at">0</data>
+      <data key="v_cpu_id">0</data>
+      <data key="v_child_number">2</data>
+      <data key="v_num_children">2</data>
+      <data key="v_exec_cycles">20848</data>
+      <data key="v_creation_cycles">1456</data>
+      <data key="v_overhead_cycles">5452</data>
+      <data key="v_queue_size">0</data>
+      <data key="v_create_instant">9608</data>
+      <data key="v_exec_end_instant">103281732</data>
+      <data key="v_tag">0x7ffe57cebbc8</data>
+      <data key="v_outline_function">4205392</data>
+      <data key="v_wait_instants">[0;19522]</data>
+      <data key="v_PAPI_TLB_DM_sd">3.53553390593274</data>
+      <data key="v_PAPI_RES_STL_sd">175.362481734264</data>
+      <data key="v_PAPI_TLB_DM_mean">2.5</data>
+      <data key="v_PAPI_RES_STL_mean">732</data>
+      <data key="v_PAPI_TLB_DM_sum">5</data>
+      <data key="v_PAPI_RES_STL_sum">1464</data>
+      <data key="v_work_cycles">15396</data>
+      <data key="v_mem_hier_util">0.0950896336710834</data>
+      <data key="v_parent_ind">2</data>
+      <data key="v_source_line">fib.c:?</data>
+      <data key="v_parent_overhead_cycles">6916</data>
+      <data key="v_sync_cycles_per_child">472</data>
+      <data key="v_parallel_benefit">7.98547717842324</data>
+      <data key="v_sibling_work_balance">1.0155672823219</data>
+      <data key="v_sibling_scatter">0</data>
+      <data key="v_num_siblings">2</data>
+      <data key="v_work_cycles_left">15396</data>
+      <data key="v_work_cycles_right">15230</data>
+      <data key="v_work_deviation">1.01089954038083</data>
+      <data key="v_color">#00E5FFFF</data>
+      <data key="v_width">30</data>
+      <data key="v_height">30</data>
+      <data key="v_root_dist">36524</data>
+      <data key="v_depth">6</data>
+      <data key="v_on_crit_path">0</data>
+    </node>
+    <node id="n26">
+      <data key="v_name">7</data>
+      <data key="v_label">7</data>
+      <data key="v_shape">rectangle</data>
+      <data key="v_type">task</data>
+      <data key="v_lineage">R-1-1-2-1</data>
+      <data key="v_task">7</data>
+      <data key="v_parent">4</data>
+      <data key="v_joins_at">0</data>
+      <data key="v_cpu_id">0</data>
+      <data key="v_child_number">1</data>
+      <data key="v_num_children">2</data>
+      <data key="v_exec_cycles">38690</data>
+      <data key="v_creation_cycles">1270</data>
+      <data key="v_overhead_cycles">5326</data>
+      <data key="v_queue_size">0</data>
+      <data key="v_create_instant">2146</data>
+      <data key="v_exec_end_instant">103257054</data>
+      <data key="v_tag">0x7ffe57ceb958</data>
+      <data key="v_outline_function">4205360</data>
+      <data key="v_wait_instants">[0;36776]</data>
+      <data key="v_PAPI_TLB_DM_sd">2.12132034355964</data>
+      <data key="v_PAPI_RES_STL_sd">103.944696834422</data>
+      <data key="v_PAPI_TLB_DM_mean">3.5</data>
+      <data key="v_PAPI_RES_STL_mean">594.5</data>
+      <data key="v_PAPI_TLB_DM_sum">7</data>
+      <data key="v_PAPI_RES_STL_sum">1189</data>
+      <data key="v_work_cycles">33364</data>
+      <data key="v_mem_hier_util">0.0356372137633377</data>
+      <data key="v_parent_ind">4</data>
+      <data key="v_source_line">fib.c:?</data>
+      <data key="v_parent_overhead_cycles">5452</data>
+      <data key="v_sync_cycles_per_child">343</data>
+      <data key="v_parallel_benefit">20.684438933664</data>
+      <data key="v_sibling_work_balance">1.26156433978133</data>
+      <data key="v_sibling_scatter">0</data>
+      <data key="v_num_siblings">2</data>
+      <data key="v_work_cycles_left">33364</data>
+      <data key="v_work_cycles_right">15412</data>
+      <data key="v_work_deviation">2.16480664417337</data>
+      <data key="v_color">#00E5FFFF</data>
+      <data key="v_width">30</data>
+      <data key="v_height">30</data>
+      <data key="v_root_dist">51920</data>
+      <data key="v_depth">8</data>
+      <data key="v_on_crit_path">0</data>
+    </node>
+    <node id="n27">
+      <data key="v_name">8</data>
+      <data key="v_label">8</data>
+      <data key="v_shape">rectangle</data>
+      <data key="v_type">task</data>
+      <data key="v_lineage">R-1-1-2-2</data>
+      <data key="v_task">8</data>
+      <data key="v_parent">4</data>
+      <data key="v_joins_at">0</data>
+      <data key="v_cpu_id">0</data>
+      <data key="v_child_number">2</data>
+      <data key="v_num_children">2</data>
+      <data key="v_exec_cycles">1565390</data>
+      <data key="v_creation_cycles">3496</data>
+      <data key="v_overhead_cycles">1508390</data>
+      <data key="v_queue_size">0</data>
+      <data key="v_create_instant">7004</data>
+      <data key="v_exec_end_instant">103230094</data>
+      <data key="v_tag">0x7ffe57ceb948</data>
+      <data key="v_outline_function">4205392</data>
+      <data key="v_wait_instants">[0;1559226]</data>
+      <data key="v_PAPI_TLB_DM_sd">18.3357574154983</data>
+      <data key="v_PAPI_RES_STL_sd">639.22241825518</data>
+      <data key="v_PAPI_TLB_DM_mean">8.2</data>
+      <data key="v_PAPI_RES_STL_mean">537.6</data>
+      <data key="v_PAPI_TLB_DM_sum">41</data>
+      <data key="v_PAPI_RES_STL_sum">2688</data>
+      <data key="v_work_cycles">57000</data>
+      <data key="v_mem_hier_util">0.0471578947368421</data>
+      <data key="v_parent_ind">4</data>
+      <data key="v_source_line">fib.c:?</data>
+      <data key="v_parent_overhead_cycles">5452</data>
+      <data key="v_sync_cycles_per_child">343</data>
+      <data key="v_parallel_benefit">14.8476165668143</data>
+      <data key="v_sibling_work_balance">1.26156433978133</data>
+      <data key="v_sibling_scatter">0</data>
+      <data key="v_num_siblings">2</data>
+      <data key="v_work_cycles_left">57000</data>
+      <data key="v_work_cycles_right">106042</data>
+      <data key="v_work_deviation">0.537522868297467</data>
+      <data key="v_color">#00E5FFFF</data>
+      <data key="v_width">30</data>
+      <data key="v_height">30</data>
+      <data key="v_root_dist">51920</data>
+      <data key="v_depth">8</data>
+      <data key="v_on_crit_path">0</data>
+    </node>
+    <node id="n28">
+      <data key="v_name">9</data>
+      <data key="v_label">9</data>
+      <data key="v_shape">rectangle</data>
+      <data key="v_type">task</data>
+      <data key="v_lineage">R-1-1-1-1-1</data>
+      <data key="v_task">9</data>
+      <data key="v_parent">5</data>
+      <data key="v_joins_at">0</data>
+      <data key="v_cpu_id">1</data>
+      <data key="v_child_number">1</data>
+      <data key="v_num_children">0</data>
+      <data key="v_exec_cycles">5857972</data>
+      <data key="v_creation_cycles">1232</data>
+      <data key="v_overhead_cycles">0</data>
+      <data key="v_queue_size">0</data>
+      <data key="v_create_instant">2090</data>
+      <data key="v_exec_end_instant">95390766</data>
+      <data key="v_tag">0x7ffe57ceb818</data>
+      <data key="v_outline_function">4205360</data>
+      <data key="v_wait_instants">[0]</data>
+      <data key="v_PAPI_TLB_DM_mean">5</data>
+      <data key="v_PAPI_RES_STL_mean">1126195</data>
+      <data key="v_PAPI_TLB_DM_sum">5</data>
+      <data key="v_PAPI_RES_STL_sum">1126195</data>
+      <data key="v_work_cycles">5857972</data>
+      <data key="v_mem_hier_util">0.192249980027218</data>
+      <data key="v_parent_ind">5</data>
+      <data key="v_source_line">fib.c:?</data>
+      <data key="v_parent_overhead_cycles">5526</data>
+      <data key="v_sync_cycles_per_child">394</data>
+      <data key="v_parallel_benefit">3602.68880688807</data>
+      <data key="v_sibling_work_balance">1.24081000837307</data>
+      <data key="v_sibling_scatter">1</data>
+      <data key="v_num_siblings">2</data>
+      <data key="v_work_cycles_left">5857972</data>
+      <data key="v_work_cycles_right">7347388</data>
+      <data key="v_work_deviation">0.79728632814818</data>
+      <data key="v_color">#4C00FFFF</data>
+      <data key="v_width">30</data>
+      <data key="v_height">300</data>
+      <data key="v_root_dist">65028</data>
+      <data key="v_depth">10</data>
+      <data key="v_on_crit_path">1</data>
+    </node>
+    <node id="n29">
+      <data key="v_name">10</data>
+      <data key="v_label">10</data>
+      <data key="v_shape">rectangle</data>
+      <data key="v_type">task</data>
+      <data key="v_lineage">R-1-1-1-1-2</data>
+      <data key="v_task">10</data>
+      <data key="v_parent">5</data>
+      <data key="v_joins_at">0</data>
+      <data key="v_cpu_id">0</data>
+      <data key="v_child_number">2</data>
+      <data key="v_num_children">0</data>
+      <data key="v_exec_cycles">3584202</data>
+      <data key="v_creation_cycles">3506</data>
+      <data key="v_overhead_cycles">0</data>
+      <data key="v_queue_size">0</data>
+      <data key="v_create_instant">6936</data>
+      <data key="v_exec_end_instant">93120354</data>
+      <data key="v_tag">0x7ffe57ceb808</data>
+      <data key="v_outline_function">4205392</data>
+      <data key="v_wait_instants">[0]</data>
+      <data key="v_PAPI_TLB_DM_mean">0</data>
+      <data key="v_PAPI_RES_STL_mean">682463</data>
+      <data key="v_PAPI_TLB_DM_sum">0</data>
+      <data key="v_PAPI_RES_STL_sum">682463</data>
+      <data key="v_work_cycles">3584202</data>
+      <data key="v_mem_hier_util">0.190408632102767</data>
+      <data key="v_parent_ind">5</data>
+      <data key="v_source_line">fib.c:?</data>
+      <data key="v_parent_overhead_cycles">5526</data>
+      <data key="v_sync_cycles_per_child">394</data>
+      <data key="v_parallel_benefit">919.026153846154</data>
+      <data key="v_sibling_work_balance">1.24081000837307</data>
+      <data key="v_sibling_scatter">1</data>
+      <data key="v_num_siblings">2</data>
+      <data key="v_work_cycles_left">3584202</data>
+      <data key="v_work_cycles_right">3851740</data>
+      <data key="v_work_deviation">0.930541002248334</data>
+      <data key="v_color">#00E5FFFF</data>
+      <data key="v_width">30</data>
+      <data key="v_height">210</data>
+      <data key="v_root_dist">65028</data>
+      <data key="v_depth">10</data>
+      <data key="v_on_crit_path">0</data>
+    </node>
+    <node id="n30">
+      <data key="v_name">11</data>
+      <data key="v_label">11</data>
+      <data key="v_shape">rectangle</data>
+      <data key="v_type">task</data>
+      <data key="v_lineage">R-1-1-1-2-1</data>
+      <data key="v_task">11</data>
+      <data key="v_parent">6</data>
+      <data key="v_joins_at">0</data>
+      <data key="v_cpu_id">0</data>
+      <data key="v_child_number">1</data>
+      <data key="v_num_children">0</data>
+      <data key="v_exec_cycles">3600892</data>
+      <data key="v_creation_cycles">1256</data>
+      <data key="v_overhead_cycles">0</data>
+      <data key="v_queue_size">0</data>
+      <data key="v_create_instant">2262</data>
+      <data key="v_exec_end_instant">96736962</data>
+      <data key="v_tag">0x7ffe57ceb6d8</data>
+      <data key="v_outline_function">4205360</data>
+      <data key="v_wait_instants">[0]</data>
+      <data key="v_PAPI_TLB_DM_mean">1</data>
+      <data key="v_PAPI_RES_STL_mean">680194</data>
+      <data key="v_PAPI_TLB_DM_sum">1</data>
+      <data key="v_PAPI_RES_STL_sum">680194</data>
+      <data key="v_work_cycles">3600892</data>
+      <data key="v_mem_hier_util">0.18889597355322</data>
+      <data key="v_parent_ind">6</data>
+      <data key="v_source_line">fib.c:?</data>
+      <data key="v_parent_overhead_cycles">5524</data>
+      <data key="v_sync_cycles_per_child">346</data>
+      <data key="v_parallel_benefit">2247.74781523096</data>
+      <data key="v_sibling_work_balance">1.19636845931295</data>
+      <data key="v_sibling_scatter">1</data>
+      <data key="v_num_siblings">2</data>
+      <data key="v_work_cycles_left">3600892</data>
+      <data key="v_work_cycles_right">3863846</data>
+      <data key="v_work_deviation">0.931945010230739</data>
+      <data key="v_color">#00E5FFFF</data>
+      <data key="v_width">30</data>
+      <data key="v_height">210</data>
+      <data key="v_root_dist">66954</data>
+      <data key="v_depth">10</data>
+      <data key="v_on_crit_path">0</data>
+    </node>
+    <node id="n31">
+      <data key="v_name">12</data>
+      <data key="v_label">12</data>
+      <data key="v_shape">rectangle</data>
+      <data key="v_type">task</data>
+      <data key="v_lineage">R-1-1-1-2-2</data>
+      <data key="v_task">12</data>
+      <data key="v_parent">6</data>
+      <data key="v_joins_at">0</data>
+      <data key="v_cpu_id">1</data>
+      <data key="v_child_number">2</data>
+      <data key="v_num_children">0</data>
+      <data key="v_exec_cycles">2418812</data>
+      <data key="v_creation_cycles">3576</data>
+      <data key="v_overhead_cycles">0</data>
+      <data key="v_queue_size">0</data>
+      <data key="v_create_instant">7182</data>
+      <data key="v_exec_end_instant">97825360</data>
+      <data key="v_tag">0x7ffe57ceb6c8</data>
+      <data key="v_outline_function">4205392</data>
+      <data key="v_wait_instants">[0]</data>
+      <data key="v_PAPI_TLB_DM_mean">14</data>
+      <data key="v_PAPI_RES_STL_mean">437674</data>
+      <data key="v_PAPI_TLB_DM_sum">14</data>
+      <data key="v_PAPI_RES_STL_sum">437674</data>
+      <data key="v_work_cycles">2418812</data>
+      <data key="v_mem_hier_util">0.180945852757469</data>
+      <data key="v_parent_ind">6</data>
+      <data key="v_source_line">fib.c:?</data>
+      <data key="v_parent_overhead_cycles">5524</data>
+      <data key="v_sync_cycles_per_child">346</data>
+      <data key="v_parallel_benefit">616.729219785824</data>
+      <data key="v_sibling_work_balance">1.19636845931295</data>
+      <data key="v_sibling_scatter">1</data>
+      <data key="v_num_siblings">2</data>
+      <data key="v_work_cycles_left">2418812</data>
+      <data key="v_work_cycles_right">2407230</data>
+      <data key="v_work_deviation">1.00481133917407</data>
+      <data key="v_color">#4C00FFFF</data>
+      <data key="v_width">30</data>
+      <data key="v_height">150</data>
+      <data key="v_root_dist">66954</data>
+      <data key="v_depth">10</data>
+      <data key="v_on_crit_path">0</data>
+    </node>
+    <node id="n32">
+      <data key="v_name">13</data>
+      <data key="v_label">13</data>
+      <data key="v_shape">rectangle</data>
+      <data key="v_type">task</data>
+      <data key="v_lineage">R-1-1-2-1-1</data>
+      <data key="v_task">13</data>
+      <data key="v_parent">7</data>
+      <data key="v_joins_at">0</data>
+      <data key="v_cpu_id">0</data>
+      <data key="v_child_number">1</data>
+      <data key="v_num_children">0</data>
+      <data key="v_exec_cycles">3547300</data>
+      <data key="v_creation_cycles">1256</data>
+      <data key="v_overhead_cycles">0</data>
+      <data key="v_queue_size">0</data>
+      <data key="v_create_instant">2326</data>
+      <data key="v_exec_end_instant">100298006</data>
+      <data key="v_tag">0x7ffe57ceb598</data>
+      <data key="v_outline_function">4205360</data>
+      <data key="v_wait_instants">[0]</data>
+      <data key="v_PAPI_TLB_DM_mean">3</data>
+      <data key="v_PAPI_RES_STL_mean">683038</data>
+      <data key="v_PAPI_TLB_DM_sum">3</data>
+      <data key="v_PAPI_RES_STL_sum">683038</data>
+      <data key="v_work_cycles">3547300</data>
+      <data key="v_mem_hier_util">0.192551518055986</data>
+      <data key="v_parent_ind">7</data>
+      <data key="v_source_line">fib.c:?</data>
+      <data key="v_parent_overhead_cycles">5326</data>
+      <data key="v_sync_cycles_per_child">344</data>
+      <data key="v_parallel_benefit">2217.0625</data>
+      <data key="v_sibling_work_balance">1.2338074296264</data>
+      <data key="v_sibling_scatter">1</data>
+      <data key="v_num_siblings">2</data>
+      <data key="v_work_cycles_left">3547300</data>
+      <data key="v_work_cycles_right">3618068</data>
+      <data key="v_work_deviation">0.980440389732863</data>
+      <data key="v_color">#00E5FFFF</data>
+      <data key="v_width">30</data>
+      <data key="v_height">210</data>
+      <data key="v_root_dist">85284</data>
+      <data key="v_depth">10</data>
+      <data key="v_on_crit_path">0</data>
+    </node>
+    <node id="n33">
+      <data key="v_name">14</data>
+      <data key="v_label">14</data>
+      <data key="v_shape">rectangle</data>
+      <data key="v_type">task</data>
+      <data key="v_lineage">R-1-1-2-1-2</data>
+      <data key="v_task">14</data>
+      <data key="v_parent">7</data>
+      <data key="v_joins_at">0</data>
+      <data key="v_cpu_id">1</data>
+      <data key="v_child_number">2</data>
+      <data key="v_num_children">0</data>
+      <data key="v_exec_cycles">2202868</data>
+      <data key="v_creation_cycles">3382</data>
+      <data key="v_overhead_cycles">0</data>
+      <data key="v_queue_size">0</data>
+      <data key="v_create_instant">7046</data>
+      <data key="v_exec_end_instant">100047340</data>
+      <data key="v_tag">0x7ffe57ceb588</data>
+      <data key="v_outline_function">4205392</data>
+      <data key="v_wait_instants">[0]</data>
+      <data key="v_PAPI_TLB_DM_mean">4</data>
+      <data key="v_PAPI_RES_STL_mean">419873</data>
+      <data key="v_PAPI_TLB_DM_sum">4</data>
+      <data key="v_PAPI_RES_STL_sum">419873</data>
+      <data key="v_work_cycles">2202868</data>
+      <data key="v_mem_hier_util">0.19060288678214</data>
+      <data key="v_parent_ind">7</data>
+      <data key="v_source_line">fib.c:?</data>
+      <data key="v_parent_overhead_cycles">5326</data>
+      <data key="v_sync_cycles_per_child">344</data>
+      <data key="v_parallel_benefit">591.215244229737</data>
+      <data key="v_sibling_work_balance">1.2338074296264</data>
+      <data key="v_sibling_scatter">1</data>
+      <data key="v_num_siblings">2</data>
+      <data key="v_work_cycles_left">2202868</data>
+      <data key="v_work_cycles_right">2199228</data>
+      <data key="v_work_deviation">1.00165512625339</data>
+      <data key="v_color">#4C00FFFF</data>
+      <data key="v_width">30</data>
+      <data key="v_height">120</data>
+      <data key="v_root_dist">85284</data>
+      <data key="v_depth">10</data>
+      <data key="v_on_crit_path">0</data>
+    </node>
+    <node id="n34">
+      <data key="v_name">15</data>
+      <data key="v_label">15</data>
+      <data key="v_shape">rectangle</data>
+      <data key="v_type">task</data>
+      <data key="v_lineage">R-1-1-2-2-1</data>
+      <data key="v_task">15</data>
+      <data key="v_parent">8</data>
+      <data key="v_joins_at">0</data>
+      <data key="v_cpu_id">1</data>
+      <data key="v_child_number">1</data>
+      <data key="v_num_children">0</data>
+      <data key="v_exec_cycles">2250910</data>
+      <data key="v_creation_cycles">1496</data>
+      <data key="v_overhead_cycles">0</data>
+      <data key="v_queue_size">0</data>
+      <data key="v_create_instant">2484</data>
+      <data key="v_exec_end_instant">102321116</data>
+      <data key="v_tag">0x7ffe57ceb458</data>
+      <data key="v_outline_function">4205360</data>
+      <data key="v_wait_instants">[0]</data>
+      <data key="v_PAPI_TLB_DM_mean">0</data>
+      <data key="v_PAPI_RES_STL_mean">425742</data>
+      <data key="v_PAPI_TLB_DM_sum">0</data>
+      <data key="v_PAPI_RES_STL_sum">425742</data>
+      <data key="v_work_cycles">2250910</data>
+      <data key="v_mem_hier_util">0.189142169167137</data>
+      <data key="v_parent_ind">8</data>
+      <data key="v_source_line">fib.c:?</data>
+      <data key="v_parent_overhead_cycles">1508390</data>
+      <data key="v_sync_cycles_per_child">752834</data>
+      <data key="v_parallel_benefit">2.98398578871316</data>
+      <data key="v_sibling_work_balance">1.23379111316964</data>
+      <data key="v_sibling_scatter">1</data>
+      <data key="v_num_siblings">2</data>
+      <data key="v_work_cycles_left">2250910</data>
+      <data key="v_work_cycles_right">2236424</data>
+      <data key="v_work_deviation">1.00647730484023</data>
+      <data key="v_color">#4C00FFFF</data>
+      <data key="v_width">30</data>
+      <data key="v_height">120</data>
+      <data key="v_root_dist">108920</data>
+      <data key="v_depth">10</data>
+      <data key="v_on_crit_path">0</data>
+    </node>
+    <node id="n35">
+      <data key="v_name">16</data>
+      <data key="v_label">16</data>
+      <data key="v_shape">rectangle</data>
+      <data key="v_type">task</data>
+      <data key="v_lineage">R-1-1-2-2-2</data>
+      <data key="v_task">16</data>
+      <data key="v_parent">8</data>
+      <data key="v_joins_at">0</data>
+      <data key="v_cpu_id">0</data>
+      <data key="v_child_number">2</data>
+      <data key="v_num_children">0</data>
+      <data key="v_exec_cycles">1397860</data>
+      <data key="v_creation_cycles">1226</data>
+      <data key="v_overhead_cycles">0</data>
+      <data key="v_queue_size">0</data>
+      <data key="v_create_instant">5264</data>
+      <data key="v_exec_end_instant">101709108</data>
+      <data key="v_tag">0x7ffe57ceb448</data>
+      <data key="v_outline_function">4205392</data>
+      <data key="v_wait_instants">[0]</data>
+      <data key="v_PAPI_TLB_DM_mean">0</data>
+      <data key="v_PAPI_RES_STL_mean">271215</data>
+      <data key="v_PAPI_TLB_DM_sum">0</data>
+      <data key="v_PAPI_RES_STL_sum">271215</data>
+      <data key="v_work_cycles">1397860</data>
+      <data key="v_mem_hier_util">0.194021575837351</data>
+      <data key="v_parent_ind">8</data>
+      <data key="v_source_line">fib.c:?</data>
+      <data key="v_parent_overhead_cycles">1508390</data>
+      <data key="v_sync_cycles_per_child">752834</data>
+      <data key="v_parallel_benefit">1.85377821393523</data>
+      <data key="v_sibling_work_balance">1.23379111316964</data>
+      <data key="v_sibling_scatter">1</data>
+      <data key="v_num_siblings">2</data>
+      <data key="v_work_cycles_left">1397860</data>
+      <data key="v_work_cycles_right">1358654</data>
+      <data key="v_work_deviation">1.02885650062488</data>
+      <data key="v_color">#00E5FFFF</data>
+      <data key="v_width">30</data>
+      <data key="v_height">90</data>
+      <data key="v_root_dist">108920</data>
+      <data key="v_depth">10</data>
+      <data key="v_on_crit_path">0</data>
+    </node>
+    <edge source="n10" target="n20">
+      <data key="e_type">create</data>
+      <data key="e_color">#FF0000</data>
+      <data key="e_weight">0</data>
+      <data key="e_on_crit_path">1</data>
+    </edge>
+    <edge source="n11" target="n21">
+      <data key="e_type">create</data>
+      <data key="e_color">#FF0000</data>
+      <data key="e_weight">0</data>
+      <data key="e_on_crit_path">1</data>
+    </edge>
+    <edge source="n12" target="n22">
+      <data key="e_type">create</data>
+      <data key="e_color">#FF0000</data>
+      <data key="e_weight">0</data>
+      <data key="e_on_crit_path">1</data>
+    </edge>
+    <edge source="n13" target="n23">
+      <data key="e_type">create</data>
+      <data key="e_color">#FF0000</data>
+      <data key="e_weight">0</data>
+      <data key="e_on_crit_path">1</data>
+    </edge>
+    <edge source="n14" target="n28">
+      <data key="e_type">create</data>
+      <data key="e_color">#FF0000</data>
+      <data key="e_weight">0</data>
+      <data key="e_on_crit_path">1</data>
+    </edge>
+    <edge source="n14" target="n29">
+      <data key="e_type">create</data>
+      <data key="e_color">#2E8B57</data>
+      <data key="e_weight">0</data>
+    </edge>
+    <edge source="n13" target="n24">
+      <data key="e_type">create</data>
+      <data key="e_color">#2E8B57</data>
+      <data key="e_weight">0</data>
+    </edge>
+    <edge source="n15" target="n30">
+      <data key="e_type">create</data>
+      <data key="e_color">#2E8B57</data>
+      <data key="e_weight">0</data>
+    </edge>
+    <edge source="n15" target="n31">
+      <data key="e_type">create</data>
+      <data key="e_color">#2E8B57</data>
+      <data key="e_weight">0</data>
+    </edge>
+    <edge source="n12" target="n25">
+      <data key="e_type">create</data>
+      <data key="e_color">#2E8B57</data>
+      <data key="e_weight">0</data>
+    </edge>
+    <edge source="n16" target="n26">
+      <data key="e_type">create</data>
+      <data key="e_color">#2E8B57</data>
+      <data key="e_weight">0</data>
+    </edge>
+    <edge source="n17" target="n32">
+      <data key="e_type">create</data>
+      <data key="e_color">#2E8B57</data>
+      <data key="e_weight">0</data>
+    </edge>
+    <edge source="n17" target="n33">
+      <data key="e_type">create</data>
+      <data key="e_color">#2E8B57</data>
+      <data key="e_weight">0</data>
+    </edge>
+    <edge source="n16" target="n27">
+      <data key="e_type">create</data>
+      <data key="e_color">#2E8B57</data>
+      <data key="e_weight">0</data>
+    </edge>
+    <edge source="n18" target="n34">
+      <data key="e_type">create</data>
+      <data key="e_color">#2E8B57</data>
+      <data key="e_weight">0</data>
+    </edge>
+    <edge source="n18" target="n35">
+      <data key="e_type">create</data>
+      <data key="e_color">#2E8B57</data>
+      <data key="e_weight">0</data>
+    </edge>
+    <edge source="n19" target="n10">
+      <data key="e_type">scope</data>
+      <data key="e_color">#FF0000</data>
+      <data key="e_weight">0</data>
+      <data key="e_on_crit_path">1</data>
+    </edge>
+    <edge source="n20" target="n11">
+      <data key="e_type">scope</data>
+      <data key="e_color">#FF0000</data>
+      <data key="e_weight">-20332</data>
+      <data key="e_on_crit_path">1</data>
+    </edge>
+    <edge source="n21" target="n12">
+      <data key="e_type">scope</data>
+      <data key="e_color">#FF0000</data>
+      <data key="e_weight">-16192</data>
+      <data key="e_on_crit_path">1</data>
+    </edge>
+    <edge source="n22" target="n13">
+      <data key="e_type">scope</data>
+      <data key="e_color">#FF0000</data>
+      <data key="e_weight">-14924</data>
+      <data key="e_on_crit_path">1</data>
+    </edge>
+    <edge source="n23" target="n14">
+      <data key="e_type">scope</data>
+      <data key="e_color">#FF0000</data>
+      <data key="e_weight">-13580</data>
+      <data key="e_on_crit_path">1</data>
+    </edge>
+    <edge source="n24" target="n15">
+      <data key="e_type">scope</data>
+      <data key="e_color">#000000</data>
+      <data key="e_weight">-15506</data>
+    </edge>
+    <edge source="n25" target="n16">
+      <data key="e_type">scope</data>
+      <data key="e_color">#000000</data>
+      <data key="e_weight">-15396</data>
+    </edge>
+    <edge source="n26" target="n17">
+      <data key="e_type">scope</data>
+      <data key="e_color">#000000</data>
+      <data key="e_weight">-33364</data>
+    </edge>
+    <edge source="n27" target="n18">
+      <data key="e_type">scope</data>
+      <data key="e_color">#000000</data>
+      <data key="e_weight">-57000</data>
+    </edge>
+    <edge source="n28" target="n5">
+      <data key="e_type">sync</data>
+      <data key="e_color">#FF0000</data>
+      <data key="e_weight">-5857972</data>
+      <data key="e_on_crit_path">1</data>
+    </edge>
+    <edge source="n29" target="n5">
+      <data key="e_type">sync</data>
+      <data key="e_color">#FF7F50</data>
+      <data key="e_weight">-3584202</data>
+    </edge>
+    <edge source="n30" target="n6">
+      <data key="e_type">sync</data>
+      <data key="e_color">#FF7F50</data>
+      <data key="e_weight">-3600892</data>
+    </edge>
+    <edge source="n31" target="n6">
+      <data key="e_type">sync</data>
+      <data key="e_color">#FF7F50</data>
+      <data key="e_weight">-2418812</data>
+    </edge>
+    <edge source="n32" target="n8">
+      <data key="e_type">sync</data>
+      <data key="e_color">#FF7F50</data>
+      <data key="e_weight">-3547300</data>
+    </edge>
+    <edge source="n33" target="n8">
+      <data key="e_type">sync</data>
+      <data key="e_color">#FF7F50</data>
+      <data key="e_weight">-2202868</data>
+    </edge>
+    <edge source="n34" target="n9">
+      <data key="e_type">sync</data>
+      <data key="e_color">#FF7F50</data>
+      <data key="e_weight">-2250910</data>
+    </edge>
+    <edge source="n35" target="n9">
+      <data key="e_type">sync</data>
+      <data key="e_color">#FF7F50</data>
+      <data key="e_weight">-1397860</data>
+    </edge>
+    <edge source="n1" target="n0">
+      <data key="e_type">continue</data>
+      <data key="e_color">#FF0000</data>
+      <data key="e_weight">0</data>
+      <data key="e_on_crit_path">1</data>
+    </edge>
+    <edge source="n2" target="n1">
+      <data key="e_type">continue</data>
+      <data key="e_color">#FF0000</data>
+      <data key="e_weight">0</data>
+      <data key="e_on_crit_path">1</data>
+    </edge>
+    <edge source="n3" target="n2">
+      <data key="e_type">continue</data>
+      <data key="e_color">#FF0000</data>
+      <data key="e_weight">0</data>
+      <data key="e_on_crit_path">1</data>
+    </edge>
+    <edge source="n4" target="n3">
+      <data key="e_type">continue</data>
+      <data key="e_color">#FF0000</data>
+      <data key="e_weight">0</data>
+      <data key="e_on_crit_path">1</data>
+    </edge>
+    <edge source="n5" target="n4">
+      <data key="e_type">continue</data>
+      <data key="e_color">#FF0000</data>
+      <data key="e_weight">0</data>
+      <data key="e_on_crit_path">1</data>
+    </edge>
+    <edge source="n6" target="n4">
+      <data key="e_type">continue</data>
+      <data key="e_color">#000000</data>
+      <data key="e_weight">0</data>
+    </edge>
+    <edge source="n7" target="n3">
+      <data key="e_type">continue</data>
+      <data key="e_color">#000000</data>
+      <data key="e_weight">0</data>
+    </edge>
+    <edge source="n8" target="n7">
+      <data key="e_type">continue</data>
+      <data key="e_color">#000000</data>
+      <data key="e_weight">0</data>
+    </edge>
+    <edge source="n9" target="n7">
+      <data key="e_type">continue</data>
+      <data key="e_color">#000000</data>
+      <data key="e_weight">0</data>
+    </edge>
+  </graph>
+</graphml>

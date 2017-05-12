@@ -7,7 +7,7 @@ TEST_SOURCES = \
 	tests/test-registry.cpp \
 	$(patsubst %, tests/%.cpp, $(TESTS))
 
-tests/test-runner: LDFLAGS+=-L. -lggraph
+tests/test-runner: LDFLAGS+=-L. -lggraph -ligraph
 tests/test-runner: %: $(patsubst %.cpp, %.o, $(TEST_SOURCES)) libggraph.a
 	$(CXX) -o $@ $(filter %.o, $^) $(LDFLAGS)
 

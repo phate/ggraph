@@ -11,6 +11,7 @@ LIBGGRAPH_SRC = \
 	src/join.cpp \
 	src/node.cpp \
 	src/operation.cpp \
+	src/read.cpp \
 	src/view.cpp \
 
 all: check
