@@ -1,3 +1,4 @@
 TESTS += \
 	unit_tests/test-aggregation \
 	unit_tests/test-ggraph \
+	unit_tests/test-is_valid \

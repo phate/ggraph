@@ -100,10 +100,10 @@ is_valid_fork(const ggraph::node * n)
 	if (n->npredecessors() != 1)
 		return false;
 
-	if (!is_grain(n->predecessor(0)) && !is_join(n->predecessor(0)))
+	if (!is_grain(n->predecessor(0)) && !is_join(n->predecessor(0)) && !is_entry(n->predecessor(0)))
 		return false;
 
-	if (n->nsuccessors() <= 1)
+	if (n->nsuccessors() == 0)
 		return false;
 
 	for (size_t s = 0; s < n->nsuccessors(); s++) {
@@ -119,7 +119,7 @@ is_valid_join(const ggraph::node * n)
 {
 	GGRAPH_DEBUG_ASSERT(is_join(n));
 
-	if (n->npredecessors() <= 1)
+	if (n->npredecessors() == 0)
 		return false;
 
 	for (size_t p = 0; p < n->npredecessors(); p++) {
