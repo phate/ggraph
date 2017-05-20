@@ -19,6 +19,7 @@ public:
 
 	inline
 	node() noexcept
+	: parent_(nullptr)
 	{}
 
 	node(const node &) = delete;
@@ -44,6 +45,26 @@ public:
 		return children_[n].get();
 	}
 
+	inline const node *
+	parent() const noexcept
+	{
+		return parent_;
+	}
+
+	inline bool
+	is_ancestor(const node * n) const noexcept
+	{
+		auto p = parent();
+		while (p) {
+			if (p == n)
+				return true;
+
+			p = p->parent();
+		}
+
+		return false;
+	}
+
 	virtual std::string
 	debug_string() const = 0;
 
@@ -51,10 +72,14 @@ protected:
 	inline void
 	add_child(std::unique_ptr<node> n)
 	{
+		GGRAPH_DEBUG_ASSERT(n->parent() == nullptr);
+
 		children_.emplace_back(std::move(n));
+		children_.back()->parent_ = this;
 	}
 
 private:
+	const node * parent_;
 	std::vector<std::unique_ptr<node>> children_;
 };
 
