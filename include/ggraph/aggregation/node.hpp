@@ -23,31 +23,13 @@ public:
 
 	node(const node &) = delete;
 
-	inline
-	node(node && other)
-	{
-		children_.clear();
-		for (auto & child : children_)
-			children_.emplace_back(std::move(child));
-		other.children_.clear();
-	}
+	node(node && other) = delete;
 
 	node &
 	operator=(const node &) = delete;
 
 	node &
-	operator=(node && other)
-	{
-		if (this == &other)
-			return *this;
-
-		children_.clear();
-		for (auto & child : children_)
-			children_.emplace_back(std::move(child));
-		other.children_.clear();
-
-		return *this;
-	}
+	operator=(node && other) = delete;
 
 	inline size_t
 	nchildren() const noexcept
@@ -86,28 +68,13 @@ public:
 
 	forkjoin_node(const forkjoin_node &) = delete;
 
-	inline
-	forkjoin_node(forkjoin_node && other)
-	: node(std::move(other))
-	, fork_(std::move(other.fork_))
-	, join_(std::move(other.join_))
-	{}
+	forkjoin_node(forkjoin_node && other) = delete;
 
 	forkjoin_node &
 	operator=(const forkjoin_node &) = delete;
 
 	forkjoin_node &
-	operator=(forkjoin_node && other)
-	{
-		if (this == &other)
-			return *this;
-
-		node::operator=(std::move(other));
-		fork_ = std::move(other.fork_);
-		join_ = std::move(other.join_);
-
-		return *this;
-	}
+	operator=(forkjoin_node && other) = delete;
 
 	virtual std::string
 	debug_string() const override;
@@ -153,19 +120,13 @@ public:
 
 	linear_node(const linear_node &) = delete;
 
-	inline
-	linear_node(linear_node && other)
-	: node(std::move(other))
-	{}
+	linear_node(linear_node && other) = delete;
 
 	linear_node &
 	operator=(const linear_node &) = delete;
 
 	linear_node &
-	operator=(linear_node && other)
-	{
-		return *static_cast<linear_node*>(&node::operator=(std::move(other)));
-	}
+	operator=(linear_node && other) = delete;
 
 	virtual std::string
 	debug_string() const override;
@@ -187,25 +148,13 @@ public:
 
 	grain_node(const grain_node &) = delete;
 
-	inline
-	grain_node(grain_node && other)
-	: node(std::move(other))
-	, grain_(std::move(other.grain_))
-	{}
+	grain_node(grain_node && other) = delete;
 
 	grain_node &
 	operator=(const grain_node &) = delete;
 
 	grain_node &
-	operator=(grain_node && other)
-	{
-		if (this == &other)
-			return *this;
-
-		node::operator=(std::move(other));
-		grain_ = std::move(other.grain_);
-		return *this;
-	}
+	operator=(grain_node && other) = delete;
 
 	inline const ggraph::grain &
 	grain() const noexcept
