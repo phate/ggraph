@@ -1,6 +1,7 @@
 #ifndef GGRAPH_AGGREGATION_NODE_HPP
 #define GGRAPH_AGGREGATION_NODE_HPP
 
+#include <ggraph/aggregation/type.hpp>
 #include <ggraph/fork.hpp>
 #include <ggraph/grain.hpp>
 #include <ggraph/join.hpp>
@@ -12,14 +13,16 @@
 namespace ggraph {
 namespace agg {
 
-class node {
+class node final {
 public:
-	virtual
-	~node();
+	inline
+	~node()
+	{}
 
 	inline
-	node() noexcept
+	node(std::unique_ptr<ggraph::agg::type> type) noexcept
 	: parent_(nullptr)
+	, type_(std::move(type))
 	{}
 
 	node(const node &) = delete;
@@ -65,10 +68,12 @@ public:
 		return false;
 	}
 
-	virtual std::string
-	debug_string() const = 0;
+	inline const ggraph::agg::type &
+	type() const noexcept
+	{
+		return *type_;
+	}
 
-protected:
 	inline void
 	add_child(std::unique_ptr<node> n)
 	{
@@ -80,124 +85,29 @@ protected:
 
 private:
 	const node * parent_;
+	std::unique_ptr<ggraph::agg::type> type_;
 	std::vector<std::unique_ptr<node>> children_;
 };
 
-class forkjoin_node final : public node {
-public:
-	inline
-	forkjoin_node(const ggraph::fork & fork, const ggraph::join & join)
-	: fork_(fork)
-	, join_(join)
-	{}
-
-	forkjoin_node(const forkjoin_node &) = delete;
-
-	forkjoin_node(forkjoin_node && other) = delete;
-
-	forkjoin_node &
-	operator=(const forkjoin_node &) = delete;
-
-	forkjoin_node &
-	operator=(forkjoin_node && other) = delete;
-
-	virtual std::string
-	debug_string() const override;
-
-	inline const ggraph::fork &
-	fork() const noexcept
-	{
-		return fork_;
-	}
-
-	inline const ggraph::join &
-	join() const noexcept
-	{
-		return join_;
-	}
-
-	inline void
-	add_sibling(std::unique_ptr<node> n)
-	{
-		add_child(std::move(n));
-	}
-
-private:
-	ggraph::fork fork_;
-	ggraph::join join_;
-};
-
-static inline bool
-is_forkjoin_node(const node * n) noexcept
+static inline std::unique_ptr<node>
+create_forkjoin_node(const ggraph::fork & fork, const ggraph::join & join)
 {
-	return dynamic_cast<const forkjoin_node*>(n) != nullptr;
+	return std::make_unique<node>(std::make_unique<forkjoin_type>(fork, join));
 }
 
-class linear_node final : public node {
-public:
-	inline
-	linear_node(std::unique_ptr<node> n1, std::unique_ptr<node> n2)
-	: node()
-	{
-		add_child(std::move(n1));
-		add_child(std::move(n2));
-	}
-
-	linear_node(const linear_node &) = delete;
-
-	linear_node(linear_node && other) = delete;
-
-	linear_node &
-	operator=(const linear_node &) = delete;
-
-	linear_node &
-	operator=(linear_node && other) = delete;
-
-	virtual std::string
-	debug_string() const override;
-};
-
-static inline bool
-is_linear_node(const node * n) noexcept
+static inline std::unique_ptr<node>
+create_linear_node(std::unique_ptr<node> n1, std::unique_ptr<node> n2)
 {
-	return dynamic_cast<const linear_node*>(n) != nullptr;
+	std::unique_ptr<node> ln(new node(std::make_unique<linear_type>()));
+	ln->add_child(std::move(n1));
+	ln->add_child(std::move(n2));
+	return ln;
 }
 
-class grain_node final : public node {
-public:
-	inline
-	grain_node(const ggraph::grain & grain)
-	: node()
-	, grain_(grain)
-	{}
-
-	grain_node(const grain_node &) = delete;
-
-	grain_node(grain_node && other) = delete;
-
-	grain_node &
-	operator=(const grain_node &) = delete;
-
-	grain_node &
-	operator=(grain_node && other) = delete;
-
-	inline const ggraph::grain &
-	grain() const noexcept
-	{
-		return grain_;
-	}
-
-	virtual std::string
-	debug_string() const override;
-
-private:
-	ggraph::grain grain_;
-};
-
-static inline bool
-is_grain_node(const node * n) noexcept
+static inline std::unique_ptr<node>
+create_grain_node(const ggraph::grain & grain)
 {
-	return dynamic_cast<const grain_node*>(n) != nullptr;
+	return std::make_unique<node>(std::make_unique<grain_type>(grain));
 }
 
 }}

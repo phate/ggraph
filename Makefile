@@ -3,7 +3,6 @@ CXXFLAGS = -Wall -Werror -g --std=c++14
 
 LIBGGRAPH_SRC = \
 	src/aggregation/aggregation.cpp \
-	src/aggregation/node.cpp \
 	src/aggregation/type.cpp \
 	src/aggregation/view.cpp \
 	src/fork.cpp \

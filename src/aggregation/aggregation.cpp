@@ -106,9 +106,9 @@ reduce_fork(
 
 	auto f = static_cast<const ggraph::fork*>(&fork->operation());
 	auto j = static_cast<const ggraph::join*>(&join->operation());
-	auto forkjoin = std::move(std::make_unique<forkjoin_node>(*f, *j));
+	auto forkjoin = create_forkjoin_node(*f, *j);
 	for (size_t n = 0; n < fork->nsuccessors(); n++)
-		forkjoin->add_sibling(std::move(map[fork->successor(n)]));
+		forkjoin->add_child(std::move(map[fork->successor(n)]));
 	map[group] = std::move(forkjoin);
 
 	return group;
@@ -136,7 +136,7 @@ reduce_grain_or_group(
 	group->add_successor(exit->successor(0));
 	exit->remove_successors();
 
-	map[group] = std::make_unique<linear_node>(std::move(map[entry]), std::move(map[exit]));
+	map[group] = create_linear_node(std::move(map[entry]), std::move(map[exit]));
 
 	return group;
 }
@@ -187,7 +187,7 @@ aggregate(ggraph::graph & graph)
 		auto node = graph.node(n);
 		if (is_grain(node)) {
 			auto grain = static_cast<const ggraph::grain*>(&node->operation());
-			map[node] = std::make_unique<grain_node>(*grain);
+			map[node] = create_grain_node(*grain);
 		}
 	}
 

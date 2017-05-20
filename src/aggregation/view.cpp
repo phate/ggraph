@@ -18,7 +18,7 @@ to_str(const node & n)
 		size_t depth
 	) {
 		std::string subtree(depth, '-');
-		subtree += n.debug_string() + "\n";
+		subtree += n.type().debug_string() + "\n";
 
 		for (size_t c = 0; c < n.nchildren(); c++)
 			subtree += f(*n.child(c), depth+1);
@@ -101,21 +101,21 @@ public:
 	inline std::string
 	group_id(const node * n) noexcept
 	{
-		GGRAPH_DEBUG_ASSERT(is_forkjoin_node(n));
+		GGRAPH_DEBUG_ASSERT(is_forkjoin_type(n->type()));
 		return "g::" + node_id(n);
 	}
 
 	inline std::string
 	fork_id(const node * n) noexcept
 	{
-		GGRAPH_DEBUG_ASSERT(is_forkjoin_node(n));
+		GGRAPH_DEBUG_ASSERT(is_forkjoin_type(n->type()));
 		return "f::" + node_id(n);
 	}
 
 	inline std::string
 	join_id(const node * n) noexcept
 	{
-		GGRAPH_DEBUG_ASSERT(is_forkjoin_node(n));
+		GGRAPH_DEBUG_ASSERT(is_forkjoin_type(n->type()));
 		return "j::" + node_id(n);
 	}
 
@@ -232,7 +232,7 @@ visit_grain_node(
 	const node * n,
 	graphml_context & ctx)
 {
-	GGRAPH_DEBUG_ASSERT(is_grain_node(n));
+	GGRAPH_DEBUG_ASSERT(is_grain_type(n->type()));
 
 	std::string subgraph;
 	subgraph += node_tag(n, ctx);
@@ -247,7 +247,7 @@ visit_forkjoin_node(
 	const node * n,
 	graphml_context & ctx)
 {
-	GGRAPH_DEBUG_ASSERT(is_forkjoin_node(n));
+	GGRAPH_DEBUG_ASSERT(is_forkjoin_type(n->type()));
 	std::string subgraph = group_starttag(n, ctx);
 
 	ctx.push_nesting();
@@ -275,7 +275,7 @@ visit_linear_node(
 	const node * n,
 	graphml_context & ctx)
 {
-	GGRAPH_DEBUG_ASSERT(is_linear_node(n));
+	GGRAPH_DEBUG_ASSERT(is_linear_type(n->type()));
 
 	std::string subgraph;
 	for (size_t c = 0; c < n->nchildren(); c++)
@@ -293,12 +293,12 @@ visit_node(
 		const node*,
 		graphml_context & ctx
 	)>> map({
-	  {std::type_index(typeid(ggraph::agg::grain_node)), visit_grain_node}
-	,	{std::type_index(typeid(ggraph::agg::forkjoin_node)), visit_forkjoin_node}
-	, {std::type_index(typeid(ggraph::agg::linear_node)), visit_linear_node}
+	  {std::type_index(typeid(ggraph::agg::grain_type)), visit_grain_node}
+	, {std::type_index(typeid(ggraph::agg::forkjoin_type)), visit_forkjoin_node}
+	, {std::type_index(typeid(ggraph::agg::linear_type)), visit_linear_node}
 	});
 
-	auto it = map.find(std::type_index(typeid(*n)));
+	auto it = map.find(std::type_index(typeid(n->type())));
 	GGRAPH_DEBUG_ASSERT(it != map.end());
 	return it->second(n, ctx);
 }
