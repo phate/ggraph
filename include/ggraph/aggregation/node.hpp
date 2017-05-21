@@ -241,6 +241,9 @@ create_grain_node(const ggraph::grain & grain)
 	return std::make_unique<node>(std::make_unique<grain_type>(grain));
 }
 
+void
+prune(ggraph::agg::node & n);
+
 }}
 
 #endif
