@@ -186,6 +186,24 @@ public:
 		}
 	}
 
+	inline void
+	add_next_sibling(std::unique_ptr<node> n)
+	{
+		GGRAPH_DEBUG_ASSERT(parent() != nullptr);
+		GGRAPH_DEBUG_ASSERT(n->parent() == nullptr);
+		auto ns = n.release();
+
+		parent_->nchildren_++;
+		ns->parent_ = parent_;
+		ns->sibling.prev = this;
+		ns->sibling.next = sibling.next;
+		sibling.next = ns;
+		if (ns->sibling.next)
+			ns->sibling.next->sibling.prev = ns;
+		else
+			parent_->children.last = ns;
+	}
+
 	inline std::unique_ptr<node>
 	detach()
 	{
