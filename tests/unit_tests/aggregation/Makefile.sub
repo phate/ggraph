@@ -1,0 +1,2 @@
+TESTS += \
+	unit_tests/aggregation/test-aggregation \

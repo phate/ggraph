@@ -126,4 +126,4 @@ test(const std::vector<std::string> &)
 	return 0;
 }
 
-GGRAPH_TEST_REGISTER("unit_tests/test-aggregation", {}, test);
+GGRAPH_TEST_REGISTER("unit_tests/aggregation/test-aggregation", {}, test);
