@@ -117,20 +117,6 @@ public:
 	}
 
 	inline const node *
-	child(size_t n) const noexcept
-	{
-		GGRAPH_DEBUG_ASSERT(n < nchildren());
-		size_t tmp = 0;
-		auto node  = children.first;
-		while (tmp != n) {
-			tmp++;
-			node = node->sibling.next;
-		}
-
-		return node;
-	}
-
-	inline const node *
 	parent() const noexcept
 	{
 		return parent_;

@@ -20,8 +20,8 @@ to_str(const node & n)
 		std::string subtree(depth, '-');
 		subtree += n.type().debug_string() + "\n";
 
-		for (size_t c = 0; c < n.nchildren(); c++)
-			subtree += f(*n.child(c), depth+1);
+		for (const auto & child : n)
+			subtree += f(child, depth+1);
 
 		return subtree;
 	};
@@ -255,9 +255,9 @@ visit_forkjoin_node(
 	subgraph += edge_tag(ctx.last_id(), ctx.fork_id(n), ctx);
 
 	ctx.push_ancestor(n);
-	for (size_t c = 0; c < n->nchildren(); c++) {
+	for (const auto & child : *n) {
 		ctx.set_last_id(ctx.fork_id(n));
-		subgraph += visit_node(n->child(c), ctx);
+		subgraph += visit_node(&child, ctx);
 		subgraph += edge_tag(ctx.last_id(), ctx.join_id(n), ctx);
 	}
 	ctx.pop_ancestor();
@@ -278,8 +278,8 @@ visit_linear_node(
 	GGRAPH_DEBUG_ASSERT(is_linear_type(n->type()));
 
 	std::string subgraph;
-	for (size_t c = 0; c < n->nchildren(); c++)
-		subgraph += visit_node(n->child(c), ctx);
+	for (const auto & child : *n)
+		subgraph += visit_node(&child, ctx);
 
 	return subgraph;
 }

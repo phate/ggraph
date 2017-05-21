@@ -55,13 +55,13 @@ test1()
 
 	check_linear_node(root.get(), 2);
 
-	auto child1 = root->child(0);
+	auto child1 = root->first_child();
 	check_grain_node(child1);
 
-	auto child2 = root->child(1);
+	auto child2 = root->last_child();
 	check_forkjoin_node(child2, 2);
-	check_grain_node(child2->child(0));
-	check_grain_node(child2->child(1));
+	check_grain_node(child2->first_child());
+	check_grain_node(child2->last_child());
 
 	return 0;
 }
@@ -98,20 +98,20 @@ test2()
 
 	check_linear_node(root.get(), 2);
 
-	auto child1 = root->child(0);
+	auto child1 = root->first_child();
 	check_forkjoin_node(child1, 2);
 
-	auto grandchild1 = child1->child(0);
+	auto grandchild1 = child1->first_child();
 	check_forkjoin_node(grandchild1, 2);
-	check_grain_node(grandchild1->child(0));
-	check_grain_node(grandchild1->child(1));
+	check_grain_node(grandchild1->first_child());
+	check_grain_node(grandchild1->last_child());
 
-	auto grandchild2 = child1->child(1);
+	auto grandchild2 = child1->last_child();
 	check_forkjoin_node(grandchild2, 2);
-	check_grain_node(grandchild2->child(0));
-	check_grain_node(grandchild2->child(1));
+	check_grain_node(grandchild2->first_child());
+	check_grain_node(grandchild2->last_child());
 
-	auto child2 = root->child(1);
+	auto child2 = root->last_child();
 	check_grain_node(child2);
 
 	return 0;
