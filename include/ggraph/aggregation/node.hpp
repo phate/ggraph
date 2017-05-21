@@ -14,6 +14,62 @@ namespace ggraph {
 namespace agg {
 
 class node final {
+	class const_iterator final {
+	public:
+		inline
+		const_iterator(ggraph::agg::node * n)
+		: node_(n)
+		{}
+
+		inline const ggraph::agg::node *
+		node() const noexcept
+		{
+			return node_;
+		}
+
+		inline const const_iterator &
+		operator++() noexcept
+		{
+			node_ = node_->next_sibling();
+			return *this;
+		}
+
+		inline const_iterator
+		operator++(int) noexcept
+		{
+			auto node = node_;
+			node_ = node_->next_sibling();
+			return const_iterator(node);
+		}
+
+		inline bool
+		operator==(const const_iterator & other) const noexcept
+		{
+			return node_ == other.node_;
+		}
+
+		inline bool
+		operator!=(const const_iterator & other) const noexcept
+		{
+			return !(*this == other);
+		}
+
+		inline const ggraph::agg::node &
+		operator*() const noexcept
+		{
+			return *node_;
+		}
+
+		inline const ggraph::agg::node *
+		operator->() const noexcept
+		{
+			return node_;
+		}
+
+	private:
+		ggraph::agg::node * node_;
+	};
+
 public:
 	inline
 	~node()
@@ -41,6 +97,18 @@ public:
 
 	node &
 	operator=(node && other) = delete;
+
+	inline const_iterator
+	begin() const noexcept
+	{
+		return const_iterator(children.first);
+	}
+
+	inline const_iterator
+	end() const noexcept
+	{
+		return const_iterator(nullptr);
+	}
 
 	inline size_t
 	nchildren() const noexcept
