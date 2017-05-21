@@ -79,6 +79,9 @@ public:
 
 	virtual std::string
 	debug_string() const override;
+
+	virtual bool
+	reduce(node & n) const override;
 };
 
 static inline bool

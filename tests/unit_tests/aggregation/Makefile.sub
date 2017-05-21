@@ -1,3 +1,4 @@
 TESTS += \
 	unit_tests/aggregation/test-aggregation \
+	unit_tests/aggregation/test-normalization \
 	unit_tests/aggregation/test-pruning \
