@@ -17,13 +17,20 @@ class node final {
 public:
 	inline
 	~node()
-	{}
+	{
+		while (nchildren())
+			first_child()->detach();
+	}
 
 	inline
 	node(std::unique_ptr<ggraph::agg::type> type) noexcept
 	: parent_(nullptr)
+	, nchildren_(0)
 	, type_(std::move(type))
-	{}
+	{
+		sibling.prev = sibling.next = nullptr;
+		children.first = children.last = nullptr;
+	}
 
 	node(const node &) = delete;
 
@@ -38,14 +45,21 @@ public:
 	inline size_t
 	nchildren() const noexcept
 	{
-		return children_.size();
+		return nchildren_;
 	}
 
 	inline const node *
 	child(size_t n) const noexcept
 	{
 		GGRAPH_DEBUG_ASSERT(n < nchildren());
-		return children_[n].get();
+		size_t tmp = 0;
+		auto node  = children.first;
+		while (tmp != n) {
+			tmp++;
+			node = node->sibling.next;
+		}
+
+		return node;
 	}
 
 	inline const node *
@@ -74,19 +88,82 @@ public:
 		return *type_;
 	}
 
+	inline ggraph::agg::node *
+	first_child() noexcept
+	{
+		return children.first;
+	}
+
+	inline ggraph::agg::node *
+	last_child() noexcept
+	{
+		return children.last;
+	}
+
+	inline ggraph::agg::node *
+	prev_sibling() noexcept
+	{
+		return sibling.prev;
+	}
+
+	inline ggraph::agg::node *
+	next_sibling() noexcept
+	{
+		return sibling.next;
+	}
+
 	inline void
 	add_child(std::unique_ptr<node> n)
 	{
 		GGRAPH_DEBUG_ASSERT(n->parent() == nullptr);
+		auto child = n.release();
 
-		children_.emplace_back(std::move(n));
-		children_.back()->parent_ = this;
+		nchildren_++;
+		child->parent_ = this;
+		if (!children.last) {
+			GGRAPH_DEBUG_ASSERT(children.first == nullptr);
+			children.first = children.last = child;
+			child->sibling.prev = child->sibling.next = nullptr;
+		} else {
+			child->sibling.next = nullptr;
+			child->sibling.prev = children.last;
+			children.last->sibling.next = child;
+			children.last = child;
+		}
+	}
+
+	inline std::unique_ptr<node>
+	detach()
+	{
+		parent_->nchildren_--;
+		if (parent_->children.first == this)
+			parent_->children.first = sibling.next;
+		if (parent_->children.last == this)
+			parent_->children.last = sibling.prev;
+		parent_ = nullptr;
+
+		if (sibling.prev)
+			sibling.prev->sibling.next = sibling.next;
+		if (sibling.next)
+			sibling.next->sibling.prev = sibling.prev;
+		sibling.prev = sibling.next = nullptr;
+		return std::unique_ptr<node>(this);
 	}
 
 private:
-	const node * parent_;
+	struct {
+		node * first;
+		node * last;
+	} children;
+
+	struct {
+		node * prev;
+		node * next;
+	} sibling;
+
+	node * parent_;
+	size_t nchildren_;
 	std::unique_ptr<ggraph::agg::type> type_;
-	std::vector<std::unique_ptr<node>> children_;
 };
 
 static inline std::unique_ptr<node>
