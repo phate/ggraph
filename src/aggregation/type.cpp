@@ -1,3 +1,4 @@
+#include <ggraph/aggregation/node.hpp>
 #include <ggraph/aggregation/type.hpp>
 #include <ggraph/util/strfmt.hpp>
 
@@ -8,6 +9,12 @@ namespace agg {
 
 type::~type()
 {}
+
+bool
+type::reduce(node & n) const
+{
+	return false;
+}
 
 /* forkjoin type */
 

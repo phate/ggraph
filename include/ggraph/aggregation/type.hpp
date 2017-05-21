@@ -11,6 +11,8 @@
 namespace ggraph {
 namespace agg {
 
+class node;
+
 /* type */
 
 class type {
@@ -24,6 +26,9 @@ public:
 
 	virtual std::string
 	debug_string() const = 0;
+
+	virtual bool
+	reduce(node & n) const;
 };
 
 /* forkjoin type */
