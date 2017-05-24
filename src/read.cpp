@@ -8,51 +8,17 @@
 
 #include <unordered_map>
 
-static inline ggraph::node *
-create_grain(const igraph_t * igraph, igraph_integer_t vid, ggraph::graph & ggraph)
-{
-	ggraph::grain grain;
-	return ggraph.add_node(grain, {});
-}
+namespace ggraph {
 
-static inline ggraph::node *
-create_fork(const igraph_t * graph, igraph_integer_t vid, ggraph::graph & ggraph)
+static inline node *
+create_node(const igraph_t * igraph, igraph_integer_t vid, graph & ggraph)
 {
-	ggraph::fork fork;
-	return ggraph.add_node(fork, {});
-}
-
-static inline ggraph::node *
-create_join(const igraph_t * graph, igraph_integer_t vid, ggraph::graph & ggraph)
-{
-	ggraph::join join;
-	return ggraph.add_node(join, {});
-}
-
-static inline ggraph::node *
-get_entry(const igraph_t * graph, igraph_integer_t vid, ggraph::graph & ggraph)
-{
-	return ggraph.entry();
-}
-
-static inline ggraph::node *
-get_exit(const igraph_t * graph, igraph_integer_t vid, ggraph::graph & ggraph)
-{
-	return ggraph.exit();
-}
-
-static inline ggraph::node *
-create_node(const igraph_t * igraph, igraph_integer_t vid, ggraph::graph & ggraph)
-{
-	static std::unordered_map<
-		std::string,
-		std::function<ggraph::node*(const igraph_t*, igraph_integer_t, ggraph::graph&)>
-	> map({
-		{"start", get_entry}
-	, {"end", get_exit}
-	, {"task", create_grain}
-	, {"fork", create_fork}
-	, {"join", create_join}
+	static std::unordered_map<std::string, std::function<ggraph::node*(graph&)>> map({
+	  {"start", [](graph & ggraph){ return ggraph.entry(); }}
+	, {"end",   [](graph & ggraph){ return ggraph.exit(); }}
+	, {"task",  [](graph & ggraph){ ggraph::grain grain; return ggraph.add_node(grain, {}); }}
+	, {"fork",  [](graph & ggraph){ ggraph::fork fork; return ggraph.add_node(fork, {}); }}
+	, {"join",  [](graph & ggraph){ ggraph::join join; return ggraph.add_node(join, {}); }}
 	});
 
 	GGRAPH_DEBUG_ASSERT(igraph_cattribute_has_attr(igraph, IGRAPH_ATTRIBUTE_VERTEX, "type"));
@@ -60,11 +26,8 @@ create_node(const igraph_t * igraph, igraph_integer_t vid, ggraph::graph & ggrap
 
 	auto it = map.find(type);
 	GGRAPH_DEBUG_ASSERT(it != map.end());
-
-	return it->second(igraph, vid, ggraph);
+	return it->second(ggraph);
 }
-
-namespace ggraph {
 
 std::unique_ptr<graph>
 read_graphml(FILE * in)
