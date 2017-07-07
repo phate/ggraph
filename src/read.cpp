@@ -10,14 +10,16 @@
 
 namespace ggraph {
 
-static inline std::unordered_set<std::unique_ptr<attribute>>
+typedef std::unordered_set<std::unique_ptr<attribute>> attribute_set;
+
+static inline attribute_set
 create_attributes(
 	const igraph_t * igraph,
 	igraph_integer_t vid,
 	const igraph_strvector_t * vnames,
 	const igraph_vector_t * vtypes)
 {
-	std::unordered_set<std::unique_ptr<attribute>> attributes;
+	attribute_set attributes;
 	for (ssize_t n = 0; n < igraph_strvector_size(vnames); n++) {
 		if ("type" == std::string(STR(*vnames, n)))
 			continue;
@@ -33,6 +35,24 @@ create_attributes(
 }
 
 static inline node *
+create_grain_node(graph & ggraph, attribute_set set)
+{
+	return create_grain(ggraph, std::move(set));
+}
+
+static inline node *
+create_fork_node(graph & ggraph, attribute_set set)
+{
+	return create_fork(ggraph, std::move(set));
+}
+
+static inline node *
+create_join_node(graph & ggraph, attribute_set set)
+{
+	return create_join(ggraph, std::move(set));
+}
+
+static inline node *
 create_node(
 	const igraph_t * igraph,
 	igraph_integer_t vid,
@@ -40,12 +60,12 @@ create_node(
 	const igraph_vector_t * vtypes,
 	graph & ggraph)
 {
-	static std::unordered_map<std::string, std::function<ggraph::node*(graph&)>> map({
-	  {"start", [](graph & ggraph){ return ggraph.entry(); }}
-	, {"end",   [](graph & ggraph){ return ggraph.exit(); }}
-	, {"task",  [](graph & ggraph){ return create_grain(ggraph, {}); }}
-	, {"fork",  [](graph & ggraph){ return create_fork(ggraph, {}); }}
-	, {"join",  [](graph & ggraph){ return create_join(ggraph, {}); }}
+	static std::unordered_map<std::string, node*(*)(graph&, attribute_set set)> map({
+	  {"start", [](graph & ggraph, attribute_set set){ return ggraph.entry(); }}
+	, {"end",   [](graph & ggraph, attribute_set set){ return ggraph.exit(); }}
+	, {"task",  create_grain_node}
+	, {"fork",  create_fork_node}
+	, {"join",  create_join_node}
 	});
 
 	GGRAPH_DEBUG_ASSERT(igraph_cattribute_has_attr(igraph, IGRAPH_ATTRIBUTE_VERTEX, "type"));
@@ -53,7 +73,7 @@ create_node(
 
 	auto it = map.find(type);
 	GGRAPH_DEBUG_ASSERT(it != map.end());
-	auto node = it->second(ggraph);
+	auto node = it->second(ggraph, create_attributes(igraph, vid, vnames, vtypes));
 
 	return node;
 }
