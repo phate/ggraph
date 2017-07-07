@@ -28,6 +28,13 @@ create_attributes(
 		if (VECTOR(*vtypes)[n] == IGRAPH_ATTRIBUTE_STRING) {
 			std::string value(igraph_cattribute_VAS(igraph, name.c_str(), vid));
 			attributes.insert(create_string_attribute(name, value));
+			continue;
+		}
+
+		if (VECTOR(*vtypes)[n] == IGRAPH_ATTRIBUTE_NUMERIC) {
+			double value = igraph_cattribute_VAN(igraph, name.c_str(), vid);
+			attributes.insert(create_dblattribute(name, value));
+			continue;
 		}
 	}
 

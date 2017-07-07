@@ -6,6 +6,8 @@
 
 namespace ggraph {
 
+/* attribute */
+
 class attribute {
 public:
 	virtual
@@ -40,6 +42,8 @@ public:
 private:
 	std::string name_;
 };
+
+/* double attribute */
 
 class string_attribute final : public attribute {
 public:
@@ -81,6 +85,50 @@ static inline std::unique_ptr<attribute>
 create_string_attribute(const std::string & name, const std::string & value)
 {
 	return std::make_unique<string_attribute>(name, value);
+}
+
+/* double attribute */
+
+class dblattribute final : public attribute {
+public:
+	virtual
+	~dblattribute();
+
+	inline
+	dblattribute(const std::string & name, double value)
+	: attribute(name)
+	, value_(value)
+	{}
+
+	inline double
+	value() const noexcept
+	{
+		return value_;
+	}
+
+	virtual bool
+	operator==(const attribute & other) const noexcept override;
+
+	virtual std::string
+	debug_string() const override;
+
+	virtual std::unique_ptr<attribute>
+	copy() const override;
+
+private:
+	double value_;
+};
+
+static inline bool
+is_dblattribute(const ggraph::attribute & attribute) noexcept
+{
+	return dynamic_cast<const dblattribute*>(&attribute) != nullptr;
+}
+
+static inline std::unique_ptr<attribute>
+create_dblattribute(const std::string & name, double value)
+{
+	return std::make_unique<dblattribute>(name, value);
 }
 
 }

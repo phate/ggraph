@@ -19,6 +19,14 @@ emit_string_attribute(const ggraph::attribute & attribute)
 }
 
 static inline std::string
+emit_dblattribute(const ggraph::attribute & attribute)
+{
+	GGRAPH_DEBUG_ASSERT(is_dblattribute(attribute));
+	auto & da = *static_cast<const dblattribute*>(&attribute);
+	return strfmt(da.name(), "=", da.value());
+}
+
+static inline std::string
 emit_attribute(const ggraph::attribute & attribute)
 {
 	static std::unordered_map<
@@ -26,6 +34,7 @@ emit_attribute(const ggraph::attribute & attribute)
 		std::string(*)(const ggraph::attribute&)
 	> map({
 	  {std::type_index(typeid(string_attribute)), emit_string_attribute}
+	, {std::type_index(typeid(dblattribute)), emit_dblattribute}
 	});
 
 	GGRAPH_DEBUG_ASSERT(map.find(std::type_index(typeid(attribute))) != map.end());
