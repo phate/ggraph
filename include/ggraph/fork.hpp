@@ -12,8 +12,8 @@ public:
 	~fork();
 
 	inline
-	fork()
-	: operation({})
+	fork(std::unordered_set<std::unique_ptr<attribute>> attributes)
+	: operation(std::move(attributes))
 	{}
 
 	virtual std::string
@@ -30,10 +30,20 @@ is_fork(const ggraph::node * n) noexcept
 }
 
 static inline node *
-create_fork(ggraph::graph & graph, node * parent)
+create_fork(
+	ggraph::graph & graph,
+	std::unordered_set<std::unique_ptr<attribute>> attributes,
+	node * parent)
 {
-	ggraph::fork fork;
+	ggraph::fork fork(std::move(attributes));
 	return graph.add_node(fork, {parent});
+}
+
+static inline node *
+create_fork(ggraph::graph & graph, std::unordered_set<std::unique_ptr<attribute>> attributes)
+{
+	ggraph::fork fork(std::move(attributes));
+	return graph.add_node(fork, {});
 }
 
 }

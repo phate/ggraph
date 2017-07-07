@@ -13,9 +13,9 @@ test(const std::vector<std::string>&)
 
 	graph g;
 
-	auto fork = create_fork(g, g.entry());
-	auto grain = create_grain(g, fork);
-	auto join = create_join(g, {grain});
+	auto fork = create_fork(g, {}, g.entry());
+	auto grain = create_grain(g, {}, fork);
+	auto join = create_join(g, {}, {grain});
 
 	join->add_successor(g.exit());
 

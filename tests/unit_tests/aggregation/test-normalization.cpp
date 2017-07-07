@@ -8,14 +8,14 @@ test_linear_linear_reduction()
 {
 	using namespace ggraph::agg;
 
-	auto forkjoin = create_forkjoin_node(ggraph::fork(), ggraph::join());
-	forkjoin->add_child(std::move(create_grain_node(ggraph::grain())));
-	forkjoin->add_child(std::move(create_grain_node(ggraph::grain())));
+	auto forkjoin = create_forkjoin_node(ggraph::fork({}), ggraph::join({}));
+	forkjoin->add_child(std::move(create_grain_node(ggraph::grain({}))));
+	forkjoin->add_child(std::move(create_grain_node(ggraph::grain({}))));
 
-	auto grain = create_grain_node(ggraph::grain());
+	auto grain = create_grain_node(ggraph::grain({}));
 	auto linear = create_linear_node(std::move(forkjoin), std::move(grain));
 
-	grain = create_grain_node(ggraph::grain());
+	grain = create_grain_node(ggraph::grain({}));
 	auto root = create_linear_node(std::move(grain), std::move(linear));
 
 	view_str(*root, stdout);

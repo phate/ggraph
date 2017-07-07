@@ -12,8 +12,8 @@ public:
 	~join();
 
 	inline
-	join()
-	: operation({})
+	join(std::unordered_set<std::unique_ptr<attribute>> attributes)
+	: operation(std::move(attributes))
 	{}
 
 	virtual std::string
@@ -30,10 +30,20 @@ is_join(const ggraph::node * n) noexcept
 }
 
 static inline node *
-create_join(ggraph::graph & graph, const std::unordered_set<node*> & predecessors)
+create_join(
+	ggraph::graph & graph,
+	std::unordered_set<std::unique_ptr<attribute>> attributes,
+	const std::unordered_set<node*> & predecessors)
 {
-	ggraph::join join;
+	ggraph::join join(std::move(attributes));
 	return graph.add_node(join, predecessors);
+}
+
+static inline node *
+create_join(ggraph::graph & graph, std::unordered_set<std::unique_ptr<attribute>> attributes)
+{
+	ggraph::join join(std::move(attributes));
+	return graph.add_node(join, {});
 }
 
 }

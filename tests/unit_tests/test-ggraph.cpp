@@ -12,12 +12,12 @@ test(const std::vector<std::string>&)
 	using namespace ggraph;
 
 	graph g;
-	auto grain1 = create_grain(g, g.entry());
+	auto grain1 = create_grain(g, {}, g.entry());
 
-	auto fork = create_fork(g, grain1);
-	auto grain3 = create_grain(g, fork);
-	auto grain4 = create_grain(g, fork);
-	auto join = create_join(g, {grain3, grain4});
+	auto fork = create_fork(g, {}, grain1);
+	auto grain3 = create_grain(g, {}, fork);
+	auto grain4 = create_grain(g, {}, fork);
+	auto join = create_join(g, {}, {grain3, grain4});
 
 	join->add_successor(g.exit());
 

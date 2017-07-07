@@ -35,12 +35,12 @@ test1()
 	using namespace ggraph;
 
 	graph g;
-	auto grain1 = create_grain(g, g.entry());
+	auto grain1 = create_grain(g, {}, g.entry());
 
-	auto fork = create_fork(g, grain1);
-	auto grain3 = create_grain(g, fork);
-	auto grain4 = create_grain(g, fork);
-	auto join = create_join(g, {grain3, grain4});
+	auto fork = create_fork(g, {}, grain1);
+	auto grain3 = create_grain(g, {}, fork);
+	auto grain4 = create_grain(g, {}, fork);
+	auto join = create_join(g, {}, {grain3, grain4});
 
 	join->add_successor(g.exit());
 
@@ -73,20 +73,20 @@ test2()
 
 	/* FIXME: this graph is not valid */
 	graph g;
-	auto fork1 = create_fork(g, g.entry());
+	auto fork1 = create_fork(g, {}, g.entry());
 
-	auto fork2 = create_fork(g, fork1);
-	auto grain1 = create_grain(g, fork2);
-	auto grain2 = create_grain(g, fork2);
-	auto join2 = create_join(g, {grain1, grain2});
+	auto fork2 = create_fork(g, {}, fork1);
+	auto grain1 = create_grain(g, {}, fork2);
+	auto grain2 = create_grain(g, {}, fork2);
+	auto join2 = create_join(g, {}, {grain1, grain2});
 
-	auto fork3 = create_fork(g, fork1);
-	auto grain3 = create_grain(g, fork3);
-	auto grain4 = create_grain(g, fork3);
-	auto join3 = create_join(g, {grain3, grain4});
+	auto fork3 = create_fork(g, {}, fork1);
+	auto grain3 = create_grain(g, {}, fork3);
+	auto grain4 = create_grain(g, {}, fork3);
+	auto join3 = create_join(g, {}, {grain3, grain4});
 
-	auto join1 = create_join(g, {join2, join3});
-	auto grain5 = create_grain(g, join1);
+	auto join1 = create_join(g, {}, {join2, join3});
+	auto grain5 = create_grain(g, {}, join1);
 	grain5->add_successor(g.exit());
 
 	view(g, stdout);
