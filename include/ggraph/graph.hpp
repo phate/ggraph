@@ -16,9 +16,9 @@ public:
 	virtual
 	~entry();
 
-	inline constexpr
+	inline
 	entry()
-	: operation()
+	: operation({})
 	{}
 
 	virtual std::string
@@ -41,9 +41,9 @@ public:
 	virtual
 	~exit();
 
-	inline constexpr
+	inline
 	exit()
-	: operation()
+	: operation({})
 	{}
 
 	virtual std::string

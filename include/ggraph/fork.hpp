@@ -11,9 +11,9 @@ public:
 	virtual
 	~fork();
 
-	inline constexpr
+	inline
 	fork()
-	: operation()
+	: operation({})
 	{}
 
 	virtual std::string

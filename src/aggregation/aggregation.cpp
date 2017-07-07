@@ -18,9 +18,9 @@ public:
 	~group()
 	{}
 
-	inline constexpr
+	inline
 	group(const ggraph::node * entry, const ggraph::node * exit)
-	: operation()
+	: operation({})
 	, exit_(exit)
 	, entry_(entry)
 	{}

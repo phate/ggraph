@@ -11,9 +11,9 @@ public:
 	virtual
 	~grain();
 
-	inline constexpr
+	inline
 	grain()
-	: operation()
+	: operation({})
 	{}
 
 	virtual std::string

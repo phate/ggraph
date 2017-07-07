@@ -11,9 +11,9 @@ public:
 	virtual
 	~join();
 
-	inline constexpr
+	inline
 	join()
-	: operation()
+	: operation({})
 	{}
 
 	virtual std::string

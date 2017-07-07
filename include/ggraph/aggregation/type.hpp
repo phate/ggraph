@@ -35,7 +35,7 @@ public:
 
 class forkjoin_type final : public type {
 public:
-	inline constexpr
+	inline
 	forkjoin_type(const ggraph::fork & fork, const ggraph::join & join)
 	: type()
 	, fork_(fork)
@@ -72,7 +72,7 @@ is_forkjoin_type(const type & t) noexcept
 
 class linear_type final : public type {
 public:
-	inline constexpr
+	inline
 	linear_type()
 	: type()
 	{}
@@ -94,7 +94,7 @@ is_linear_type(const type & t) noexcept
 
 class grain_type final : public type {
 public:
-	inline constexpr
+	inline
 	grain_type(const ggraph::grain & grain)
 	: type()
 	, grain_(grain)
