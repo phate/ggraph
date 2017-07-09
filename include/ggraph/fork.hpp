@@ -24,9 +24,9 @@ public:
 };
 
 static inline bool
-is_fork(const ggraph::node * n) noexcept
+is_fork(const ggraph::operation & op) noexcept
 {
-	return dynamic_cast<const ggraph::fork*>(&n->operation()) != nullptr;
+	return dynamic_cast<const ggraph::fork*>(&op) != nullptr;
 }
 
 static inline node *

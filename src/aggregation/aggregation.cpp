@@ -82,7 +82,7 @@ reduce_fork(
 	std::unordered_map<ggraph::node*, std::unique_ptr<ggraph::agg::node>> & map)
 {
 	/* sanity checks */
-	GGRAPH_DEBUG_ASSERT(is_fork(fork));
+	GGRAPH_DEBUG_ASSERT(is_fork(fork->operation()));
 	GGRAPH_DEBUG_ASSERT(fork->nsuccessors() != 0);
 	GGRAPH_DEBUG_ASSERT(fork->successor(0)->nsuccessors() == 1);
 	GGRAPH_DEBUG_ASSERT(map.find(fork) == map.end());
@@ -147,7 +147,7 @@ aggregate(
 	ggraph::node * node,
 	std::unordered_map<ggraph::node*, std::unique_ptr<ggraph::agg::node>> & map)
 {
-	if (is_grain_or_group(node) && is_fork(node->successor(0))) {
+	if (is_grain_or_group(node) && is_fork(node->successor(0)->operation())) {
 		aggregate(graph, node->successor(0), map);
 		GGRAPH_DEBUG_ASSERT(is_group(node->successor(0)));
 		auto group = reduce_grain_or_group(graph, node, map);
@@ -161,7 +161,7 @@ aggregate(
 		return;
 	}
 
-	if (is_fork(node)) {
+	if (is_fork(node->operation())) {
 		for (size_t n = 0; n < node->nsuccessors(); n++)
 			aggregate(graph, node->successor(n), map);
 		auto group = reduce_fork(graph, node, map);
