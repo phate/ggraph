@@ -10,6 +10,45 @@ namespace agg {
 
 /* ascii */
 
+static inline std::string
+convert_string_attribute(const ggraph::attribute & attribute)
+{
+	GGRAPH_DEBUG_ASSERT(is_string_attribute(attribute));
+	auto & sa = *static_cast<const string_attribute*>(&attribute);
+	return strfmt(sa.name(), "=", sa.value());
+}
+
+static inline std::string
+convert_dblattribute(const ggraph::attribute & attribute)
+{
+	GGRAPH_DEBUG_ASSERT(is_dblattribute(attribute));
+	auto & da = *static_cast<const dblattribute*>(&attribute);
+	return strfmt(da.name(), "=", da.value());
+}
+
+static inline std::string
+convert_attribute(const ggraph::attribute & attribute)
+{
+	static std::unordered_map<std::type_index, std::string(*)(const ggraph::attribute&)> map({
+	  {std::type_index(typeid(ggraph::string_attribute)), convert_string_attribute}
+	, {std::type_index(typeid(ggraph::dblattribute)), convert_dblattribute}
+	});
+
+	GGRAPH_DEBUG_ASSERT(map.find(std::type_index(typeid(attribute))) != map.end());
+	return map[std::type_index(typeid(attribute))](attribute);
+}
+
+static inline std::string
+convert_attributes(const operation & op)
+{
+	std::string str("[");
+	for (const auto & attribute : op)
+		str += convert_attribute(attribute) + ", ";
+	str += "]";
+
+	return str;
+}
+
 std::string
 to_str(const node & n)
 {
@@ -18,7 +57,7 @@ to_str(const node & n)
 		size_t depth
 	) {
 		std::string subtree(depth, '-');
-		subtree += n.operation().debug_string() + "\n";
+		subtree += n.operation().debug_string() + convert_attributes(n.operation()) + "\n";
 
 		for (const auto & child : n)
 			subtree += f(child, depth+1);
