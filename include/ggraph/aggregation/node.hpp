@@ -3,6 +3,7 @@
 
 #include <ggraph/aggregation/type.hpp>
 #include <ggraph/fork.hpp>
+#include <ggraph/forkjoin.hpp>
 #include <ggraph/grain.hpp>
 #include <ggraph/join.hpp>
 

@@ -8,6 +8,7 @@ LIBGGRAPH_SRC = \
 	src/aggregation/view.cpp \
 	src/attribute.cpp \
 	src/fork.cpp \
+	src/forkjoin.cpp \
 	src/grain.cpp \
 	src/graph.cpp \
 	src/join.cpp \
