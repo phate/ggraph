@@ -25,7 +25,7 @@ check_forkjoin_node(const ggraph::agg::node * n, size_t nchildren)
 static inline void
 check_linear_node(const ggraph::agg::node * n, size_t nchildren)
 {
-	assert(ggraph::agg::is_linear(n->operation()));
+	assert(ggraph::is_linear(n->operation()));
 	assert(n->nchildren() == nchildren);
 }
 

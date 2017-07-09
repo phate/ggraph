@@ -4,7 +4,6 @@
 #include <ggraph/operation.hpp>
 
 namespace ggraph {
-namespace agg {
 
 class linear final : public operation {
 public:
@@ -29,6 +28,6 @@ is_linear(const ggraph::operation & operation) noexcept
 	return dynamic_cast<const linear*>(&operation) != nullptr;
 }
 
-}}
+}
 
 #endif

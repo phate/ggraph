@@ -295,7 +295,7 @@ visit_node(
 	)>> map({
 	  {std::type_index(typeid(ggraph::grain)), visit_grain_node}
 	, {std::type_index(typeid(ggraph::agg::forkjoin)), visit_forkjoin_node}
-	, {std::type_index(typeid(ggraph::agg::linear)), visit_linear_node}
+	, {std::type_index(typeid(ggraph::linear)), visit_linear_node}
 	});
 
 	auto it = map.find(std::type_index(typeid(n->operation())));

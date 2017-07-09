@@ -9,7 +9,7 @@ test(const std::vector<std::string> &)
 	using namespace ggraph::agg;
 
 	auto grain = create_grain_node(ggraph::grain({}));
-	auto linear = std::make_unique<node>(std::make_unique<ggraph::agg::linear>());
+	auto linear = std::make_unique<node>(std::make_unique<ggraph::linear>());
 	auto root = create_linear_node(std::move(linear), std::move(grain));
 
 	view_str(*root, stdout);
