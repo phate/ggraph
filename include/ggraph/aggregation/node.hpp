@@ -1,7 +1,6 @@
 #ifndef GGRAPH_AGGREGATION_NODE_HPP
 #define GGRAPH_AGGREGATION_NODE_HPP
 
-#include <ggraph/aggregation/type.hpp>
 #include <ggraph/fork.hpp>
 #include <ggraph/forkjoin.hpp>
 #include <ggraph/grain.hpp>
