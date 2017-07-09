@@ -18,7 +18,7 @@ check_grain_node(const ggraph::agg::node * n)
 static inline void
 check_forkjoin_node(const ggraph::agg::node * n, size_t nchildren)
 {
-	assert(ggraph::agg::is_forkjoin(n->operation()));
+	assert(ggraph::is_forkjoin(n->operation()));
 	assert(n->nchildren() == nchildren);
 }
 

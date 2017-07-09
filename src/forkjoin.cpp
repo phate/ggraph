@@ -2,7 +2,6 @@
 #include <ggraph/util/strfmt.hpp>
 
 namespace ggraph {
-namespace agg {
 
 forkjoin::~forkjoin()
 {}
@@ -19,4 +18,4 @@ forkjoin::copy() const
 	return std::unique_ptr<forkjoin>(new forkjoin(*this));
 }
 
-}}
+}

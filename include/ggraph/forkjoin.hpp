@@ -6,7 +6,6 @@
 #include <ggraph/operation.hpp>
 
 namespace ggraph {
-namespace agg {
 
 class forkjoin final : public operation {
 public:
@@ -49,6 +48,6 @@ is_forkjoin(const ggraph::operation & operation) noexcept
 	return dynamic_cast<const forkjoin*>(&operation) != nullptr;
 }
 
-}}
+}
 
 #endif

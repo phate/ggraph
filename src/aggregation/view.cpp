@@ -294,7 +294,7 @@ visit_node(
 		graphml_context & ctx
 	)>> map({
 	  {std::type_index(typeid(ggraph::grain)), visit_grain_node}
-	, {std::type_index(typeid(ggraph::agg::forkjoin)), visit_forkjoin_node}
+	, {std::type_index(typeid(ggraph::forkjoin)), visit_forkjoin_node}
 	, {std::type_index(typeid(ggraph::linear)), visit_linear_node}
 	});
 
