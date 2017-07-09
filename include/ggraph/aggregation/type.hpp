@@ -28,6 +28,49 @@ public:
 	debug_string() const = 0;
 };
 
+/* forkjoin operation */
+
+class forkjoin final : public operation {
+public:
+	virtual
+	~forkjoin();
+
+	inline
+	forkjoin(const ggraph::fork & fork, const ggraph::join & join)
+	: operation({})
+	, fork_(fork)
+	, join_(join)
+	{}
+
+	virtual std::string
+	debug_string() const override;
+
+	virtual std::unique_ptr<operation>
+	copy() const override;
+
+	inline const ggraph::fork &
+	fork() const noexcept
+	{
+		return fork_;
+	}
+
+	inline const ggraph::join &
+	join() const noexcept
+	{
+		return join_;
+	}
+
+private:
+	ggraph::fork fork_;
+	ggraph::join join_;
+};
+
+static inline bool
+is_forkjoin(const ggraph::operation & operation) noexcept
+{
+	return dynamic_cast<const forkjoin*>(&operation) != nullptr;
+}
+
 /* forkjoin type */
 
 class forkjoin_type final : public type {
@@ -63,6 +106,31 @@ static inline bool
 is_forkjoin_type(const type & t) noexcept
 {
 	return dynamic_cast<const forkjoin_type*>(&t) != nullptr;
+}
+
+/* linear operation */
+
+class linear final : public operation {
+public:
+	virtual
+	~linear();
+
+	inline
+	linear()
+	: operation({})
+	{}
+
+	virtual std::string
+	debug_string() const override;
+
+	virtual std::unique_ptr<operation>
+	copy() const override;
+};
+
+static inline bool
+is_linear(const ggraph::operation & operation) noexcept
+{
+	return dynamic_cast<const linear*>(&operation) != nullptr;
 }
 
 /* linear type */
