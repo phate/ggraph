@@ -11,21 +11,21 @@
 static inline void
 check_grain_node(const ggraph::agg::node * n)
 {
-	assert(is_grain_type(n->type()));
+	assert(is_grain(n->operation()));
 	assert(n->nchildren() == 0);
 }
 
 static inline void
 check_forkjoin_node(const ggraph::agg::node * n, size_t nchildren)
 {
-	assert(is_forkjoin_type(n->type()));
+	assert(ggraph::agg::is_forkjoin(n->operation()));
 	assert(n->nchildren() == nchildren);
 }
 
 static inline void
 check_linear_node(const ggraph::agg::node * n, size_t nchildren)
 {
-	assert(is_linear_type(n->type()));
+	assert(ggraph::agg::is_linear(n->operation()));
 	assert(n->nchildren() == nchildren);
 }
 

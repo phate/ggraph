@@ -79,10 +79,10 @@ public:
 	}
 
 	inline
-	node(std::unique_ptr<ggraph::agg::type> type) noexcept
+	node(std::unique_ptr<ggraph::operation> operation) noexcept
 	: parent_(nullptr)
 	, nchildren_(0)
-	, type_(std::move(type))
+	, operation_(std::move(operation))
 	{
 		sibling.prev = sibling.next = nullptr;
 		children.first = children.last = nullptr;
@@ -136,10 +136,10 @@ public:
 		return false;
 	}
 
-	inline const ggraph::agg::type &
-	type() const noexcept
+	inline const ggraph::operation &
+	operation() const noexcept
 	{
-		return *type_;
+		return *operation_;
 	}
 
 	inline ggraph::agg::node *
@@ -235,19 +235,19 @@ private:
 
 	node * parent_;
 	size_t nchildren_;
-	std::unique_ptr<ggraph::agg::type> type_;
+	std::unique_ptr<ggraph::operation> operation_;
 };
 
 static inline std::unique_ptr<node>
 create_forkjoin_node(const ggraph::fork & fork, const ggraph::join & join)
 {
-	return std::make_unique<node>(std::make_unique<forkjoin_type>(fork, join));
+	return std::make_unique<node>(std::make_unique<forkjoin>(fork, join));
 }
 
 static inline std::unique_ptr<node>
 create_linear_node(std::unique_ptr<node> n1, std::unique_ptr<node> n2)
 {
-	std::unique_ptr<node> ln(new node(std::make_unique<linear_type>()));
+	std::unique_ptr<node> ln(new node(std::make_unique<linear>()));
 	ln->add_child(std::move(n1));
 	ln->add_child(std::move(n2));
 	return ln;
@@ -256,7 +256,7 @@ create_linear_node(std::unique_ptr<node> n1, std::unique_ptr<node> n2)
 static inline std::unique_ptr<node>
 create_grain_node(const ggraph::grain & grain)
 {
-	return std::make_unique<node>(std::make_unique<grain_type>(grain));
+	return std::make_unique<node>(grain.copy());
 }
 
 void

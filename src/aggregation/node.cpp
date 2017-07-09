@@ -13,7 +13,7 @@ prune(ggraph::agg::node & n)
 		child = next;
 	}
 
-	if (n.nchildren() == 0 && !is_grain_type(n.type()))
+	if (n.nchildren() == 0 && !is_grain(n.operation()))
 		n.detach();
 }
 
