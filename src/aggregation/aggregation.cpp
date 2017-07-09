@@ -88,7 +88,7 @@ reduce_fork(
 	GGRAPH_DEBUG_ASSERT(map.find(fork) == map.end());
 
 	auto join = fork->successor(0)->successor(0);
-	GGRAPH_DEBUG_ASSERT(is_join(join));
+	GGRAPH_DEBUG_ASSERT(is_join(join->operation()));
 	GGRAPH_DEBUG_ASSERT(join->nsuccessors() == 1);
 	GGRAPH_DEBUG_ASSERT(map.find(join) == map.end());
 
@@ -169,7 +169,7 @@ aggregate(
 		return;
 	}
 
-	if (is_join(node))
+	if (is_join(node->operation()))
 		return;
 
 	if (node->nsuccessors() != 0) {

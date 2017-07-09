@@ -24,9 +24,9 @@ public:
 };
 
 static inline bool
-is_join(const ggraph::node * n) noexcept
+is_join(const ggraph::operation & op) noexcept
 {
-	return dynamic_cast<const ggraph::join*>(&n->operation()) != nullptr;
+	return dynamic_cast<const ggraph::join*>(&op) != nullptr;
 }
 
 static inline node *
