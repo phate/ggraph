@@ -6,6 +6,7 @@
 #include <ggraph/forkjoin.hpp>
 #include <ggraph/grain.hpp>
 #include <ggraph/join.hpp>
+#include <ggraph/linear.hpp>
 
 #include <memory>
 #include <string>

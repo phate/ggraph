@@ -12,6 +12,7 @@ LIBGGRAPH_SRC = \
 	src/grain.cpp \
 	src/graph.cpp \
 	src/join.cpp \
+	src/linear.cpp \
 	src/node.cpp \
 	src/operation.cpp \
 	src/read.cpp \
