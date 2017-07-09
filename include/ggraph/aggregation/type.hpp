@@ -26,9 +26,6 @@ public:
 
 	virtual std::string
 	debug_string() const = 0;
-
-	virtual bool
-	reduce(node & n) const;
 };
 
 /* forkjoin type */
@@ -79,9 +76,6 @@ public:
 
 	virtual std::string
 	debug_string() const override;
-
-	virtual bool
-	reduce(node & n) const override;
 };
 
 static inline bool

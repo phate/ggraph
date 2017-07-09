@@ -262,9 +262,6 @@ create_grain_node(const ggraph::grain & grain)
 void
 prune(ggraph::agg::node & n);
 
-void
-normalize(ggraph::agg::node & n);
-
 }}
 
 #endif
