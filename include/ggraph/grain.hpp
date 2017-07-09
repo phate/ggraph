@@ -24,9 +24,9 @@ public:
 };
 
 static inline bool
-is_grain(const ggraph::node * n) noexcept
+is_grain(const ggraph::operation & op) noexcept
 {
-	return dynamic_cast<const ggraph::grain*>(&n->operation()) != nullptr;
+	return dynamic_cast<const ggraph::grain*>(&op) != nullptr;
 }
 
 static inline node *

@@ -75,7 +75,7 @@ is_valid_exit(const ggraph::node * n)
 static inline bool
 is_valid_grain(const ggraph::node * n)
 {
-	GGRAPH_DEBUG_ASSERT(is_grain(n));
+	GGRAPH_DEBUG_ASSERT(is_grain(n->operation()));
 
 	if (n->npredecessors() != 1)
 		return false;
@@ -100,14 +100,16 @@ is_valid_fork(const ggraph::node * n)
 	if (n->npredecessors() != 1)
 		return false;
 
-	if (!is_grain(n->predecessor(0)) && !is_join(n->predecessor(0)) && !is_entry(n->predecessor(0)))
+	if (!is_grain(n->predecessor(0)->operation())
+	&& !is_join(n->predecessor(0))
+	&& !is_entry(n->predecessor(0)))
 		return false;
 
 	if (n->nsuccessors() == 0)
 		return false;
 
 	for (size_t s = 0; s < n->nsuccessors(); s++) {
-		if (!is_grain(n->successor(s)) && !is_join(n->successor(s)))
+		if (!is_grain(n->successor(s)->operation()) && !is_join(n->successor(s)))
 			return false;
 	}
 
@@ -123,7 +125,7 @@ is_valid_join(const ggraph::node * n)
 		return false;
 
 	for (size_t p = 0; p < n->npredecessors(); p++) {
-		if (!is_join(n->predecessor(p)) && !is_grain(n->predecessor(p)))
+		if (!is_join(n->predecessor(p)) && !is_grain(n->predecessor(p)->operation()))
 			return false;
 	}
 

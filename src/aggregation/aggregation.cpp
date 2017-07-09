@@ -72,7 +72,7 @@ is_group(const ggraph::node * n)
 static inline bool
 is_grain_or_group(const ggraph::node * n)
 {
-	return is_grain(n) || is_group(n);
+	return is_grain(n->operation()) || is_group(n);
 }
 
 static inline ggraph::node *
@@ -185,7 +185,7 @@ aggregate(ggraph::graph & graph)
 	std::unordered_map<ggraph::node*, std::unique_ptr<ggraph::agg::node>> map;
 	for (size_t n = 0; n < graph.nnodes(); n++) {
 		auto node = graph.node(n);
-		if (is_grain(node)) {
+		if (is_grain(node->operation())) {
 			auto grain = static_cast<const ggraph::grain*>(&node->operation());
 			map[node] = create_grain_node(*grain);
 		}
