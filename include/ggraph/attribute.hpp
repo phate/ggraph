@@ -39,6 +39,9 @@ public:
 	virtual std::unique_ptr<attribute>
 	copy() const = 0;
 
+	virtual std::string
+	value_str() const noexcept = 0;
+
 private:
 	std::string name_;
 };
@@ -70,6 +73,9 @@ public:
 
 	virtual std::unique_ptr<attribute>
 	copy() const override;
+
+	virtual std::string
+	value_str() const noexcept override;
 
 private:
 	std::string value_;
@@ -114,6 +120,9 @@ public:
 
 	virtual std::unique_ptr<attribute>
 	copy() const override;
+
+	virtual std::string
+	value_str() const noexcept override;
 
 private:
 	double value_;

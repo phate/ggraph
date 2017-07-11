@@ -11,42 +11,11 @@
 namespace ggraph {
 
 static inline std::string
-emit_strattribute(const ggraph::attribute & attribute)
-{
-	GGRAPH_DEBUG_ASSERT(is_strattribute(attribute));
-	auto & sa = *static_cast<const strattribute*>(&attribute);
-	return strfmt(sa.name(), "=", sa.value());
-}
-
-static inline std::string
-emit_dblattribute(const ggraph::attribute & attribute)
-{
-	GGRAPH_DEBUG_ASSERT(is_dblattribute(attribute));
-	auto & da = *static_cast<const dblattribute*>(&attribute);
-	return strfmt(da.name(), "=", da.value());
-}
-
-static inline std::string
-emit_attribute(const ggraph::attribute & attribute)
-{
-	static std::unordered_map<
-		std::type_index,
-		std::string(*)(const ggraph::attribute&)
-	> map({
-	  {std::type_index(typeid(strattribute)), emit_strattribute}
-	, {std::type_index(typeid(dblattribute)), emit_dblattribute}
-	});
-
-	GGRAPH_DEBUG_ASSERT(map.find(std::type_index(typeid(attribute))) != map.end());
-	return map[std::type_index(typeid(attribute))](attribute);
-}
-
-static inline std::string
 emit_attributes(const operation & op)
 {
 	std::string str;
 	for (const auto & attribute : op) {
-		str += emit_attribute(attribute) + "\\n";
+		str += strfmt(attribute.name(), "=", attribute.value_str()) + "\\n";
 	}
 
 	return str;

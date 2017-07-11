@@ -44,6 +44,12 @@ strattribute::copy() const
 	return std::unique_ptr<attribute>(new strattribute(*this));
 }
 
+std::string
+strattribute::value_str() const noexcept
+{
+	return value_;
+}
+
 /* double attribute */
 
 dblattribute::~dblattribute()
@@ -66,6 +72,12 @@ std::unique_ptr<attribute>
 dblattribute::copy() const
 {
 	return std::unique_ptr<attribute>(new dblattribute(*this));
+}
+
+std::string
+dblattribute::value_str() const noexcept
+{
+	return strfmt(value());
 }
 
 }
