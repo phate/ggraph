@@ -27,7 +27,7 @@ create_attributes(
 		std::string name(STR(*vnames, n));
 		if (VECTOR(*vtypes)[n] == IGRAPH_ATTRIBUTE_STRING) {
 			std::string value(igraph_cattribute_VAS(igraph, name.c_str(), vid));
-			attributes.insert(create_string_attribute(name, value));
+			attributes.insert(create_strattribute(name, value));
 			continue;
 		}
 

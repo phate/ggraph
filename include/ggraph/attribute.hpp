@@ -43,15 +43,15 @@ private:
 	std::string name_;
 };
 
-/* double attribute */
+/* string attribute */
 
-class string_attribute final : public attribute {
+class strattribute final : public attribute {
 public:
 	virtual
-	~string_attribute();
+	~strattribute();
 
 	inline
-	string_attribute(const std::string & name, const std::string & value)
+	strattribute(const std::string & name, const std::string & value)
 	: attribute(name)
 	, value_(value)
 	{}
@@ -76,15 +76,15 @@ private:
 };
 
 static inline bool
-is_string_attribute(const attribute & attr) noexcept
+is_strattribute(const attribute & attr) noexcept
 {
-	return dynamic_cast<const string_attribute*>(&attr) != nullptr;
+	return dynamic_cast<const strattribute*>(&attr) != nullptr;
 }
 
 static inline std::unique_ptr<attribute>
-create_string_attribute(const std::string & name, const std::string & value)
+create_strattribute(const std::string & name, const std::string & value)
 {
-	return std::make_unique<string_attribute>(name, value);
+	return std::make_unique<strattribute>(name, value);
 }
 
 /* double attribute */

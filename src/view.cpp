@@ -11,10 +11,10 @@
 namespace ggraph {
 
 static inline std::string
-emit_string_attribute(const ggraph::attribute & attribute)
+emit_strattribute(const ggraph::attribute & attribute)
 {
-	GGRAPH_DEBUG_ASSERT(is_string_attribute(attribute));
-	auto & sa = *static_cast<const string_attribute*>(&attribute);
+	GGRAPH_DEBUG_ASSERT(is_strattribute(attribute));
+	auto & sa = *static_cast<const strattribute*>(&attribute);
 	return strfmt(sa.name(), "=", sa.value());
 }
 
@@ -33,7 +33,7 @@ emit_attribute(const ggraph::attribute & attribute)
 		std::type_index,
 		std::string(*)(const ggraph::attribute&)
 	> map({
-	  {std::type_index(typeid(string_attribute)), emit_string_attribute}
+	  {std::type_index(typeid(strattribute)), emit_strattribute}
 	, {std::type_index(typeid(dblattribute)), emit_dblattribute}
 	});
 

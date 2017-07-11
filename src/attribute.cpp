@@ -22,26 +22,26 @@ attribute::debug_string() const
 
 /* string attribute */
 
-string_attribute::~string_attribute()
+strattribute::~strattribute()
 {}
 
 bool
-string_attribute::operator==(const attribute & other) const noexcept
+strattribute::operator==(const attribute & other) const noexcept
 {
-	auto attr = dynamic_cast<const string_attribute*>(&other);
+	auto attr = dynamic_cast<const strattribute*>(&other);
 	return value() == attr->value() && attribute::operator==(other);
 }
 
 std::string
-string_attribute::debug_string() const
+strattribute::debug_string() const
 {
 	return name() + ":" + value();
 }
 
 std::unique_ptr<attribute>
-string_attribute::copy() const
+strattribute::copy() const
 {
-	return std::unique_ptr<attribute>(new string_attribute(*this));
+	return std::unique_ptr<attribute>(new strattribute(*this));
 }
 
 /* double attribute */
