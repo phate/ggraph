@@ -215,9 +215,15 @@ group_endtag(graphml_context & ctx)
 }
 
 static inline std::string
-join_tag(const node * n, graphml_context & ctx)
+join_starttag(const node * n, graphml_context & ctx)
 {
 	return node_tag(ctx.join_id(n), ctx);
+}
+
+static inline std::string
+join_endtag(const graphml_context & ctx)
+{
+	return node_endtag(ctx);
 }
 
 static inline std::string
@@ -307,7 +313,14 @@ visit_forkjoin_node(
 	ctx.pop_ancestor();
 
 	/* join node */
-	subgraph += join_tag(n, ctx);
+	subgraph += join_starttag(n, ctx);
+
+	ctx.push_nesting();
+	for (const auto & a : fjop->join())
+		subgraph += data_tag(a, ctx) + "\n";
+	ctx.pop_nesting();
+
+	subgraph += join_endtag(ctx);
 	ctx.pop_nesting();
 	ctx.set_last_id(ctx.join_id(n));
 
