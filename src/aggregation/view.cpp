@@ -221,9 +221,15 @@ join_tag(const node * n, graphml_context & ctx)
 }
 
 static inline std::string
-fork_tag(const node * n, graphml_context & ctx)
+fork_starttag(const node * n, graphml_context & ctx)
 {
 	return node_tag(ctx.fork_id(n), ctx);
+}
+
+static inline std::string
+fork_endtag(const graphml_context & ctx)
+{
+	return node_endtag(ctx);
 }
 
 static inline std::string
@@ -275,12 +281,23 @@ visit_forkjoin_node(
 	graphml_context & ctx)
 {
 	GGRAPH_DEBUG_ASSERT(is_forkjoin(n->operation()));
+	auto fjop = static_cast<const forkjoin*>(&n->operation());
+
 	std::string subgraph = group_starttag(n, ctx);
 
+	/* fork node */
 	ctx.push_nesting();
-	subgraph += fork_tag(n, ctx);
+	subgraph += fork_starttag(n, ctx);
+
+	ctx.push_nesting();
+	for (const auto & a : fjop->fork())
+		subgraph += data_tag(a, ctx) + "\n";
+	ctx.pop_nesting();
+
+	subgraph += fork_endtag(ctx);
 	subgraph += edge_tag(ctx.last_id(), ctx.fork_id(n), ctx);
 
+	/* children */
 	ctx.push_ancestor(n);
 	for (const auto & child : *n) {
 		ctx.set_last_id(ctx.fork_id(n));
@@ -289,6 +306,7 @@ visit_forkjoin_node(
 	}
 	ctx.pop_ancestor();
 
+	/* join node */
 	subgraph += join_tag(n, ctx);
 	ctx.pop_nesting();
 	ctx.set_last_id(ctx.join_id(n));
