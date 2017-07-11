@@ -21,9 +21,6 @@ create_attributes(
 {
 	attribute_set attributes;
 	for (ssize_t n = 0; n < igraph_strvector_size(vnames); n++) {
-		if ("type" == std::string(STR(*vnames, n)))
-			continue;
-
 		std::string name(STR(*vnames, n));
 		if (VECTOR(*vtypes)[n] == IGRAPH_ATTRIBUTE_STRING) {
 			std::string value(igraph_cattribute_VAS(igraph, name.c_str(), vid));
