@@ -263,6 +263,35 @@ edge_tag(const std::string & s, const std::string & t, graphml_context & ctx)
 	return ctx.indent() + "<edge source=\"" + s + "\" target=\"" + t + "\"/>\n";
 }
 
+static inline std::string
+emit_string_attribute_value(const ggraph::attribute & attribute)
+{
+	GGRAPH_DEBUG_ASSERT(is_string_attribute(attribute));
+	return static_cast<const string_attribute*>(&attribute)->value();
+}
+
+static inline std::string
+emit_dblattribute_value(const ggraph::attribute & attribute)
+{
+	GGRAPH_DEBUG_ASSERT(is_dblattribute(attribute));
+	return strfmt(static_cast<const dblattribute*>(&attribute)->value());
+}
+
+static inline std::string
+data_tag(const attribute & attribute, const graphml_context & ctx)
+{
+	static std::unordered_map<std::type_index, std::string(*)(const ggraph::attribute&)> value({
+	  {std::type_index(typeid(string_attribute)), emit_string_attribute_value}
+	, {std::type_index(typeid(dblattribute)), emit_dblattribute_value}
+	});
+
+	GGRAPH_DEBUG_ASSERT(value.find(std::type_index(typeid(attribute))) != value.end());
+	return ctx.indent()
+			 + "<data key=\"v_" + attribute.name() + "\">"
+			 + value[std::type_index(typeid(attribute))](attribute)
+			 + "</data>";
+}
+
 static std::string
 visit_node(const node*, graphml_context&);
 
@@ -274,7 +303,14 @@ visit_grain_node(
 	GGRAPH_DEBUG_ASSERT(is_grain(n->operation()));
 
 	std::string subgraph;
-	subgraph += node_tag(n, ctx);
+	subgraph += node_starttag(n, ctx);
+
+	ctx.push_nesting();
+	for (const auto & a : n->operation())
+		subgraph += data_tag(a, ctx) + "\n";
+	ctx.pop_nesting();
+
+	subgraph += node_endtag(ctx);
 	subgraph += edge_tag(ctx.last_id(), ctx.node_id(n), ctx);
 
 	ctx.set_last_id(ctx.node_id(n));
@@ -342,12 +378,57 @@ visit_node(
 	return it->second(n, ctx);
 }
 
+static inline std::string
+emit_key(const ggraph::attribute & attribute, const graphml_context & ctx)
+{
+	static std::unordered_map<std::type_index, std::string> types({
+	  {std::type_index(typeid(string_attribute)), std::string("string")}
+	, {std::type_index(typeid(dblattribute)), std::string("double")}
+	});
+
+	GGRAPH_DEBUG_ASSERT(types.find(std::type_index(typeid(attribute))) != types.end());
+	return ctx.indent()
+				 + "<key id=\"v_" + attribute.name() + "\" "
+				 + "for=\"node\" "
+				 + "attr.name=\"" + attribute.name() + "\" "
+				 + "attr.type=\"" + types[std::type_index(typeid(attribute))] + "\"\\>";
+}
+
+static inline std::string
+graph_attributes(const node & n, const graphml_context & ctx)
+{
+	std::function<void(const node &, std::unordered_map<std::string, const attribute*>&)>
+	collect = [&](
+		const node & n,
+		std::unordered_map<std::string, const attribute*> & nattributes
+	){
+		for (const auto & a : n.operation()) {
+			if (nattributes.find(a.name()) == nattributes.end())
+				nattributes[a.name()] = &a;
+		}
+
+		for (const auto & child : n)
+			collect(child, nattributes);
+	};
+
+
+	std::unordered_map<std::string, const attribute*> nattributes;
+	collect(n, nattributes);
+
+	std::string str;
+	for (const auto & pair : nattributes)
+		str += emit_key(*pair.second, ctx) + "\n";
+
+	return str;
+}
+
 std::string
 to_graphml(const node & n)
 {
 	graphml_context ctx;
 
 	std::string graph = graphml_header();
+	graph += graph_attributes(n, ctx);
 	graph += graph_starttag("G", ctx);
 
 	ctx.push_nesting();
