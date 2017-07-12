@@ -1,6 +1,8 @@
 #ifndef GGRAPH_ATTRIBUTE_HPP
 #define GGRAPH_ATTRIBUTE_HPP
 
+#include <ggraph/common.hpp>
+
 #include <memory>
 #include <string>
 
@@ -87,6 +89,13 @@ is_strattribute(const attribute & attr) noexcept
 	return dynamic_cast<const strattribute*>(&attr) != nullptr;
 }
 
+static inline std::string
+strvalue(const attribute & attribute) noexcept
+{
+	GGRAPH_DEBUG_ASSERT(is_strattribute(attribute));
+	return static_cast<const strattribute*>(&attribute)->value();
+}
+
 static inline std::unique_ptr<attribute>
 create_strattribute(const std::string & name, const std::string & value)
 {
@@ -132,6 +141,13 @@ static inline bool
 is_dblattribute(const ggraph::attribute & attribute) noexcept
 {
 	return dynamic_cast<const dblattribute*>(&attribute) != nullptr;
+}
+
+static inline double
+dblvalue(const ggraph::attribute & attribute) noexcept
+{
+	GGRAPH_DEBUG_ASSERT(is_dblattribute(attribute));
+	return static_cast<const dblattribute*>(&attribute)->value();
 }
 
 static inline std::unique_ptr<attribute>
