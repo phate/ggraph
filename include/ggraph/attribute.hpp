@@ -67,6 +67,12 @@ public:
 		return value_;
 	}
 
+	inline void
+	set_value(const std::string & v) noexcept
+	{
+		value_ = v;
+	}
+
 	virtual bool
 	operator==(const attribute & other) const noexcept override;
 
@@ -119,6 +125,12 @@ public:
 	value() const noexcept
 	{
 		return value_;
+	}
+
+	inline void
+	set_value(double v) noexcept
+	{
+		value_ = v;
 	}
 
 	virtual bool
