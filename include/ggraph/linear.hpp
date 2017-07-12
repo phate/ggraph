@@ -10,10 +10,7 @@ public:
 	virtual
 	~linear();
 
-	inline
-	linear()
-	: operation({})
-	{}
+	linear();
 
 	virtual std::string
 	debug_string() const override;
