@@ -102,6 +102,20 @@ strvalue(const attribute & attribute) noexcept
 	return static_cast<const strattribute*>(&attribute)->value();
 }
 
+static inline strattribute &
+to_strattribute(attribute & a)
+{
+	GGRAPH_DEBUG_ASSERT(is_strattribute(a));
+	return *static_cast<strattribute*>(&a);
+}
+
+static inline const strattribute &
+to_strattribute(const attribute & a) noexcept
+{
+	GGRAPH_DEBUG_ASSERT(is_strattribute(a));
+	return *static_cast<const strattribute*>(&a);
+}
+
 static inline std::unique_ptr<attribute>
 create_strattribute(const std::string & name, const std::string & value)
 {
@@ -160,6 +174,20 @@ dblvalue(const ggraph::attribute & attribute) noexcept
 {
 	GGRAPH_DEBUG_ASSERT(is_dblattribute(attribute));
 	return static_cast<const dblattribute*>(&attribute)->value();
+}
+
+static inline const dblattribute &
+to_dblattribute(const attribute & a) noexcept
+{
+	GGRAPH_DEBUG_ASSERT(is_dblattribute(a));
+	return *static_cast<const dblattribute*>(&a);
+}
+
+static inline dblattribute &
+to_dblattribute(attribute & a) noexcept
+{
+	GGRAPH_DEBUG_ASSERT(is_dblattribute(a));
+	return *static_cast<dblattribute*>(&a);
 }
 
 static inline std::unique_ptr<attribute>
