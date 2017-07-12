@@ -12,12 +12,7 @@ public:
 	virtual
 	~forkjoin();
 
-	inline
-	forkjoin(const ggraph::fork & fork, const ggraph::join & join)
-	: operation({})
-	, fork_(fork)
-	, join_(join)
-	{}
+	forkjoin(const ggraph::fork & fork, const ggraph::join & join);
 
 	virtual std::string
 	debug_string() const override;
