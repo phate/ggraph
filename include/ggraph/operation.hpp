@@ -5,6 +5,7 @@
 
 #include <memory>
 #include <string>
+#include <unordered_map>
 #include <unordered_set>
 
 namespace ggraph {
@@ -13,7 +14,8 @@ class operation {
 	class const_iterator final {
 	public:
 		inline
-		const_iterator(const std::unordered_set<std::unique_ptr<attribute>>::const_iterator & it)
+		const_iterator(
+			const std::unordered_map<std::string, std::unique_ptr<attribute>>::const_iterator & it)
 		: it_(it)
 		{}
 
@@ -47,17 +49,17 @@ class operation {
 		inline const attribute *
 		operator->() const noexcept
 		{
-			return (*it_).get();
+			return it_->second.get();
 		}
 
 		inline const attribute &
 		operator*() const noexcept
 		{
-			return *(*it_).get();
+			return *it_->second;
 		}
 
 	private:
-		std::unordered_set<std::unique_ptr<attribute>>::const_iterator it_;
+		std::unordered_map<std::string, std::unique_ptr<attribute>>::const_iterator it_;
 	};
 
 public:
@@ -66,14 +68,21 @@ public:
 
 	inline
 	operation(std::unordered_set<std::unique_ptr<attribute>> attributes)
-	: attributes_(std::move(attributes))
-	{}
+	{
+		for (const auto & attribute : attributes) {
+			GGRAPH_DEBUG_ASSERT(attributes_.find(attribute->name()) == attributes_.end());
+			/* FIXME: I would not like to copy the attribute but move it instead */
+			attributes_[attribute->name()] = std::move(attribute->copy());
+		}
+	}
 
 	inline
 	operation(const operation & other)
 	{
-		for (const auto & attribute: other.attributes_)
-			attributes_.insert(std::move(attribute->copy()));
+		for (const auto & pair : other.attributes_) {
+			GGRAPH_DEBUG_ASSERT(attributes_.find(pair.second->name()) == attributes_.end());
+			attributes_[pair.second->name()] = std::move(pair.second->copy());
+		}
 	}
 
 	inline
@@ -87,8 +96,9 @@ public:
 		if (this == &other)
 			return *this;
 
-		for (const auto & attribute : other.attributes_)
-			attributes_.insert(std::move(attribute->copy()));
+		attributes_.clear();
+		for (const auto & pair : other.attributes_)
+			attributes_[pair.second->name()] = std::move(pair.second->copy());
 
 		return *this;
 	}
@@ -114,6 +124,13 @@ public:
 		return const_iterator(attributes_.end());
 	}
 
+	inline attribute *
+	find(const std::string & name) const noexcept
+	{
+		auto it = attributes_.find(name);
+		return it != attributes_.end() ? it->second.get() : nullptr;
+	}
+
 	virtual std::string
 	debug_string() const = 0;
 
@@ -121,7 +138,7 @@ public:
 	copy() const = 0;
 
 private:
-	std::unordered_set<std::unique_ptr<attribute>> attributes_;
+	std::unordered_map<std::string, std::unique_ptr<attribute>> attributes_;
 };
 
 }
