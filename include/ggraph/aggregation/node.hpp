@@ -261,6 +261,9 @@ create_grain_node(const ggraph::grain & grain)
 }
 
 void
+propagate(const ggraph::agg::node & n);
+
+void
 prune(ggraph::agg::node & n);
 
 }}
