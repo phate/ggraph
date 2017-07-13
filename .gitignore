@@ -2,4 +2,5 @@ check.log
 *.a
 *.la
 *.o
+ggraph-viewer
 tests/test-runner

@@ -17,9 +17,16 @@ LIBGGRAPH_SRC = \
 	src/read.cpp \
 	src/view.cpp \
 
-all: check
+GGRAPH_VIEWER_SRC = \
+	src/ggraph-viewer.cpp
+
+all: libggraph.a ggraph-viewer check
 
 libggraph.a: $(patsubst %.cpp, %.la, $(LIBGGRAPH_SRC))
+
+ggraph-viewer: LDFLAGS+=-L. -lggraph -ligraph
+ggraph-viewer: $(patsubst %.cpp, %.o, $(GGRAPH_VIEWER_SRC)) libggraph.a
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -o $@ $^ $(LDFLAGS)
 
 include tests/Makefile.sub
 
@@ -36,5 +43,6 @@ include tests/Makefile.sub
 
 clean:
 	rm -f check.log
+	rm -rf ggraph-viewer
 	rm -rf tests/test-runner
 	find . -name *.o -o -name *.la -o -name *.a | xargs rm -f
