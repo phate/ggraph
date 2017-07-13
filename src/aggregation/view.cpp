@@ -204,8 +204,7 @@ graph_endtag(const graphml_context & ctx)
 static inline std::string
 group_starttag(const node * n, graphml_context & ctx)
 {
-	return ctx.indent() + "<node id=\"g::" + ctx.group_id(n) + "\">\n" +
-				 ctx.indent() + "<graph id=\"" + ctx.graph_id(n) + "\" edgedefault=\"undirected\">\n";
+	return ctx.indent() + "<node id=\"g::" + ctx.group_id(n) + "\">\n";
 }
 
 static inline std::string
@@ -256,6 +255,16 @@ data_tag(const attribute & attribute, const graphml_context & ctx)
 			 + "</data>";
 }
 
+static inline std::string
+emit_attributes(const operation & op, const graphml_context & ctx)
+{
+	std::string str;
+	for (const auto & attribute : op)
+		str += data_tag(attribute, ctx) + "\n";
+
+	return str;
+}
+
 static std::string
 visit_node(const node*, graphml_context&);
 
@@ -270,8 +279,7 @@ visit_grain_node(
 	subgraph += node_starttag(n, ctx);
 
 	ctx.push_nesting();
-	for (const auto & a : n->operation())
-		subgraph += data_tag(a, ctx) + "\n";
+	subgraph += emit_attributes(n->operation(), ctx);
 	ctx.pop_nesting();
 
 	subgraph += node_endtag(ctx);
@@ -290,14 +298,17 @@ visit_forkjoin_node(
 	auto fjop = static_cast<const forkjoin*>(&n->operation());
 
 	std::string subgraph = group_starttag(n, ctx);
+	ctx.push_nesting();
+
+	subgraph += emit_attributes(n->operation(), ctx);
+	subgraph += graph_starttag(n, ctx);
 
 	/* fork node */
 	ctx.push_nesting();
 	subgraph += fork_starttag(n, ctx);
 
 	ctx.push_nesting();
-	for (const auto & a : fjop->fork())
-		subgraph += data_tag(a, ctx) + "\n";
+	subgraph += emit_attributes(fjop->fork(), ctx);
 	ctx.pop_nesting();
 
 	subgraph += fork_endtag(ctx);
@@ -316,14 +327,14 @@ visit_forkjoin_node(
 	subgraph += join_starttag(n, ctx);
 
 	ctx.push_nesting();
-	for (const auto & a : fjop->join())
-		subgraph += data_tag(a, ctx) + "\n";
+	subgraph += emit_attributes(fjop->join(), ctx);
 	ctx.pop_nesting();
 
 	subgraph += join_endtag(ctx);
 	ctx.pop_nesting();
 	ctx.set_last_id(ctx.join_id(n));
 
+	ctx.pop_nesting();
 	subgraph += group_endtag(ctx);
 	return subgraph;
 }
