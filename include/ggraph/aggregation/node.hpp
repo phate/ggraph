@@ -264,6 +264,9 @@ void
 propagate(const ggraph::agg::node & n);
 
 void
+segregate(ggraph::agg::node & n);
+
+void
 prune(ggraph::agg::node & n);
 
 }}
