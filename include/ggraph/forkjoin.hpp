@@ -43,6 +43,12 @@ is_forkjoin(const ggraph::operation & operation) noexcept
 	return dynamic_cast<const forkjoin*>(&operation) != nullptr;
 }
 
+static inline std::unique_ptr<operation>
+create_forkjoin(const ggraph::fork & fork, const ggraph::join & join)
+{
+	return std::unique_ptr<operation>(new forkjoin(fork, join));
+}
+
 }
 
 #endif
