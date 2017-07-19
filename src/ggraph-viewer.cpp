@@ -6,24 +6,54 @@
 #include <iostream>
 
 static inline void
-print_usage(const char * file)
+print_usage(const std::string & exec)
 {
-	std::cout << "Grain graph viewer\n";
-	std::cout << "Usage:" << file << " FILE\n";
+	std::cerr << "Grain graph viewer\n";
+	std::cerr << "Usage: " << exec << " [OPTIONS] FILE\n";
+	std::cerr << "Options:\n";
+	std::cerr << "-s\tSegregate grain graph.\n";
 }
 
-int
-main(int argc, char * argv[])
+typedef struct cmdflags {
+bool segregate;
+std::string exec;
+std::string ggraph;
+} cmdflags;
+
+cmdflags
+parse_cmdflags(int argc, char * argv[])
 {
 	if (argc < 2) {
 		print_usage(argv[0]);
 		exit(1);
 	}
 
-	std::string file(argv[1]);
-	auto f = fopen(file.c_str(), "r");
+	cmdflags flags;
+	flags.exec= argv[0];
+	flags.ggraph = argv[argc-1];
+	for (int n = 1; n < argc-1; n++) {
+		std::string flag(argv[n]);
+		if (flag == "-s") {
+			flags.segregate = true;
+			continue;
+		}
+
+		std::cerr << "ERROR: Unknown command line flag.\n";
+		print_usage(flags.exec);
+		exit(1);
+	}
+
+	return flags;
+}
+
+int
+main(int argc, char * argv[])
+{
+	cmdflags flags = parse_cmdflags(argc, argv);
+
+	auto f = fopen(flags.ggraph.c_str(), "r");
 	if (!f) {
-		std::cerr << "Error: Cannot open file" << file << "\n";
+		std::cerr << "Error: Cannot open file" << flags.ggraph << "\n";
 		exit(1);
 	}
 
@@ -35,6 +65,9 @@ main(int argc, char * argv[])
 
 	auto root = ggraph::agg::aggregate(*graph);
 	ggraph::agg::propagate(*root);
+	if (flags.segregate)
+		ggraph::agg::segregate(*root);
+
 	ggraph::agg::view_graphml(*root, stdout);
 
 	fclose(f);
