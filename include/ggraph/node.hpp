@@ -5,8 +5,54 @@
 #include <ggraph/operation.hpp>
 
 #include <unordered_set>
+#include <vector>
 
 namespace ggraph {
+
+class node;
+
+class edge final {
+public:
+	inline
+	edge(node * source, node * sink)
+	: sink_(sink)
+	, source_(source)
+	{}
+
+	edge(const edge &) = delete;
+
+	edge(edge &&) = delete;
+
+	edge &
+	operator=(const edge &) = delete;
+
+	edge &
+	operator=(edge &&) = delete;
+
+	inline node *
+	source() const noexcept
+	{
+		return source_;
+	}
+
+	inline node *
+	sink() const noexcept
+	{
+		return sink_;
+	}
+
+private:
+	node * sink_;
+	node * source_;
+
+	friend node;
+};
+
+static inline std::unique_ptr<edge>
+create_edge(node * source, node * sink)
+{
+	return std::make_unique<edge>(source, sink);
+}
 
 class node final {
 public:
@@ -37,39 +83,49 @@ public:
 	inline size_t
 	npredecessors() const noexcept
 	{
-		return predecessors_.size();
+		return inedges_.size();
 	}
 
 	inline node *
 	predecessor(size_t n) const noexcept
 	{
 		GGRAPH_DEBUG_ASSERT(n < npredecessors());
-		return *std::next(predecessors_.begin(), n);
+		return (*std::next(inedges_.begin(), n))->source();
 	}
 
 	inline bool
 	has_predecessor(node * n) const noexcept
 	{
-		return predecessors_.find(n) != predecessors_.end();
+		for (const auto & edge : inedges_) {
+			if (edge->source() == n)
+				return true;
+		}
+
+		return false;
 	}
 
 	inline size_t
 	nsuccessors() const noexcept
 	{
-		return successors_.size();
+		return outedges_.size();
 	}
 
 	inline node *
 	successor(size_t n) const noexcept
 	{
 		GGRAPH_DEBUG_ASSERT(n < nsuccessors());
-		return *std::next(successors_.begin(), n);
+		return outedges_[n]->sink();
 	}
 
 	inline bool
 	has_successor(node * n) const noexcept
 	{
-		return successors_.find(n) != successors_.end();
+		for (const auto & edge : outedges_) {
+			if (edge->sink() == n)
+				return true;
+		}
+
+		return false;
 	}
 
 	inline void
@@ -77,39 +133,33 @@ public:
 	{
 		GGRAPH_DEBUG_ASSERT(!has_successor(successor));
 		GGRAPH_DEBUG_ASSERT(!successor->has_predecessor(this));
-		successor->predecessors_.insert(this);
-		successors_.insert(successor);
+		auto edge = create_edge(this, successor);
+		successor->inedges_.insert(edge.get());
+		outedges_.push_back(std::move(edge));
 	}
 
 	inline void
 	remove_successors()
 	{
-		if (nsuccessors() == 0)
-			return;
-
-		for (size_t n = 0; n < nsuccessors(); n++) {
-			auto s = successor(n);
-			GGRAPH_DEBUG_ASSERT(s->has_predecessor(this));
-			successors_.erase(s);
-			s->predecessors_.erase(this);
-		}
+		for (const auto & edge : outedges_)
+			edge->sink()->inedges_.erase(edge.get());
+		outedges_.clear();
 	}
 
 	inline void
 	divert_predecessors(ggraph::node * new_successor)
 	{
-		for (size_t n = 0; n < npredecessors(); n++) {
-			auto p = predecessor(n);
-			GGRAPH_DEBUG_ASSERT(p->has_successor(this));
-			p->successors_.erase(this);
-			p->add_successor(new_successor);
+		for (const auto & edge : inedges_) {
+			edge->sink_ = new_successor;
+			new_successor->inedges_.insert(edge);
 		}
+		inedges_.clear();
 	}
 
 private:
+	std::unordered_set<edge*> inedges_;
 	std::unique_ptr<ggraph::operation> op_;
-	std::unordered_set<node*> successors_;
-	std::unordered_set<node*> predecessors_;
+	std::vector<std::unique_ptr<edge>> outedges_;
 };
 
 }
