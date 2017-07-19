@@ -28,5 +28,5 @@ test(const std::vector<std::string> & files)
 
 GGRAPH_TEST_REGISTER(
 	"unit_tests/test-read",
-	{"tests/graphs/tiny.graphml" C "tests/graphs/big.graphml" C "tests/graphs/huge.graphml"},
+	{"tests/graphs/tiny.graphml"},
 	test);
