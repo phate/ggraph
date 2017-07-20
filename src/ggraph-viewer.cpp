@@ -12,6 +12,7 @@ print_usage(const std::string & exec)
 	std::cerr << "Usage: " << exec << " [OPTIONS] FILE\n";
 	std::cerr << "Options:\n";
 	std::cerr << "-a\tAggregate grain graph.\n";
+	std::cerr << "-m\tPrint maximum number of open nodes.\n";
 	std::cerr << "-n\tPrint number of nodes.\n";
 	std::cerr << "-s\tSegregate grain graph.\n";
 }
@@ -21,11 +22,13 @@ public:
 	inline
 	cmdflags()
 	: nnodes(false)
+	, maxnodes(false)
 	, aggregate(false)
 	, segregate(false)
 	{}
 
 	bool nnodes;
+	bool maxnodes;
 	bool aggregate;
 	bool segregate;
 	std::string exec;
@@ -48,6 +51,11 @@ parse_cmdflags(int argc, char * argv[])
 		if (flag == "-s") {
 			flags.aggregate = true;
 			flags.segregate = true;
+			continue;
+		}
+
+		if (flag == "-m") {
+			flags.maxnodes = true;
 			continue;
 		}
 
@@ -90,10 +98,13 @@ main(int argc, char * argv[])
 		std::cout << graph->nnodes() << "\n";
 
 	std::unique_ptr<ggraph::agg::node> root;
-	if (flags.aggregate) {
+	if (flags.aggregate || flags.maxnodes) {
 		root = ggraph::agg::aggregate(*graph);
 		ggraph::agg::propagate(*root);
 	}
+
+	if (flags.maxnodes)
+		std::cout << max_open_nodes(*root) << "\n";
 
 	if (flags.segregate)
 		ggraph::agg::segregate(*root);
