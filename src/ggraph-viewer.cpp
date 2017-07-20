@@ -12,6 +12,7 @@ print_usage(const std::string & exec)
 	std::cerr << "Usage: " << exec << " [OPTIONS] FILE\n";
 	std::cerr << "Options:\n";
 	std::cerr << "-a\tAggregate grain graph.\n";
+	std::cerr << "-n\tPrint number of nodes.\n";
 	std::cerr << "-s\tSegregate grain graph.\n";
 }
 
@@ -19,10 +20,12 @@ class cmdflags final {
 public:
 	inline
 	cmdflags()
-	: aggregate(false)
+	: nnodes(false)
+	, aggregate(false)
 	, segregate(false)
 	{}
 
+	bool nnodes;
 	bool aggregate;
 	bool segregate;
 	std::string exec;
@@ -48,6 +51,10 @@ parse_cmdflags(int argc, char * argv[])
 			continue;
 		}
 
+		if (flag == "-n") {
+			flags.nnodes = true;
+			continue;
+		}
 
 		if (flag == "-a") {
 			flags.aggregate = true;
@@ -78,6 +85,9 @@ main(int argc, char * argv[])
 		std::cerr << "Error: Invalid grain graph.";
 		exit(1);
 	}
+
+	if (flags.nnodes)
+		std::cout << graph->nnodes() << "\n";
 
 	std::unique_ptr<ggraph::agg::node> root;
 	if (flags.aggregate) {
