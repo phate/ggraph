@@ -11,14 +11,23 @@ print_usage(const std::string & exec)
 	std::cerr << "Grain graph viewer\n";
 	std::cerr << "Usage: " << exec << " [OPTIONS] FILE\n";
 	std::cerr << "Options:\n";
+	std::cerr << "-a\tAggregate grain graph.\n";
 	std::cerr << "-s\tSegregate grain graph.\n";
 }
 
-typedef struct cmdflags {
-bool segregate;
-std::string exec;
-std::string ggraph;
-} cmdflags;
+class cmdflags final {
+public:
+	inline
+	cmdflags()
+	: aggregate(false)
+	, segregate(false)
+	{}
+
+	bool aggregate;
+	bool segregate;
+	std::string exec;
+	std::string ggraph;
+};
 
 cmdflags
 parse_cmdflags(int argc, char * argv[])
@@ -34,7 +43,14 @@ parse_cmdflags(int argc, char * argv[])
 	for (int n = 1; n < argc-1; n++) {
 		std::string flag(argv[n]);
 		if (flag == "-s") {
+			flags.aggregate = true;
 			flags.segregate = true;
+			continue;
+		}
+
+
+		if (flag == "-a") {
+			flags.aggregate = true;
 			continue;
 		}
 
@@ -63,12 +79,17 @@ main(int argc, char * argv[])
 		exit(1);
 	}
 
-	auto root = ggraph::agg::aggregate(*graph);
-	ggraph::agg::propagate(*root);
+	std::unique_ptr<ggraph::agg::node> root;
+	if (flags.aggregate) {
+		root = ggraph::agg::aggregate(*graph);
+		ggraph::agg::propagate(*root);
+	}
+
 	if (flags.segregate)
 		ggraph::agg::segregate(*root);
 
-	ggraph::agg::view_graphml(*root, stdout);
+	if (flags.aggregate)
+		ggraph::agg::view_graphml(*root, stdout);
 
 	fclose(f);
 
