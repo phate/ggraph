@@ -112,7 +112,7 @@ public:
 	inline std::string
 	group_id(const node * n) noexcept
 	{
-		GGRAPH_DEBUG_ASSERT(is_forkjoin(n->operation()));
+		GGRAPH_DEBUG_ASSERT(is_forkjoin(n->operation()) || is_linear(n->operation()));
 		return "g::" + node_id(n);
 	}
 
@@ -340,10 +340,17 @@ visit_linear_node(
 {
 	GGRAPH_DEBUG_ASSERT(is_linear(n->operation()));
 
-	std::string subgraph;
+	std::string subgraph = group_starttag(n, ctx);
+	ctx.push_nesting();
+
+	subgraph += emit_attributes(n->operation(), ctx);
+	subgraph += graph_starttag(n, ctx);
+
 	for (const auto & child : *n)
 		subgraph += visit_node(&child, ctx);
 
+	ctx.pop_nesting();
+	subgraph += group_endtag(ctx);
 	return subgraph;
 }
 
