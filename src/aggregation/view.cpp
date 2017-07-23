@@ -160,21 +160,15 @@ graphml_footer()
 }
 
 static inline std::string
-node_tag(const std::string & id, graphml_context & ctx)
+node_starttag(const std::string & id, graphml_context & ctx)
 {
-	return ctx.indent() + "<node id=\"" + id + "\"/>\n";
-}
-
-static inline std::string
-node_tag(const node * n, graphml_context & ctx)
-{
-	return node_tag(ctx.node_id(n), ctx);
+	return ctx.indent() + "<node id=\"" + id + "\">\n";
 }
 
 static inline std::string
 node_starttag(const node * n, graphml_context & ctx)
 {
-	return ctx.indent() + "<node id=\"" + ctx.node_id(n) + "\">\n";
+	return node_starttag(ctx.node_id(n), ctx);
 }
 
 static inline std::string
@@ -216,7 +210,7 @@ group_endtag(graphml_context & ctx)
 static inline std::string
 join_starttag(const node * n, graphml_context & ctx)
 {
-	return node_tag(ctx.join_id(n), ctx);
+	return node_starttag(ctx.join_id(n), ctx);
 }
 
 static inline std::string
@@ -228,7 +222,7 @@ join_endtag(const graphml_context & ctx)
 static inline std::string
 fork_starttag(const node * n, graphml_context & ctx)
 {
-	return node_tag(ctx.fork_id(n), ctx);
+	return node_starttag(ctx.fork_id(n), ctx);
 }
 
 static inline std::string
