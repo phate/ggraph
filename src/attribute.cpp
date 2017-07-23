@@ -29,7 +29,7 @@ bool
 strattribute::operator==(const attribute & other) const noexcept
 {
 	auto attr = dynamic_cast<const strattribute*>(&other);
-	return value() == attr->value() && attribute::operator==(other);
+	return attr && value() == attr->value() && attribute::operator==(other);
 }
 
 std::string
@@ -59,7 +59,7 @@ bool
 dblattribute::operator==(const attribute & other) const noexcept
 {
 	auto attr = dynamic_cast<const dblattribute*>(&other);
-	return value() == attr->value() && attribute::operator==(other);
+	return attr && value() == attr->value() && attribute::operator==(other);
 }
 
 std::string
