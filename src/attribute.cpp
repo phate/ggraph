@@ -1,6 +1,7 @@
 #include <ggraph/attribute.hpp>
 #include <ggraph/util/strfmt.hpp>
 
+#include <cmath>
 namespace ggraph {
 
 /* attribute */
@@ -77,7 +78,7 @@ dblattribute::copy() const
 std::string
 dblattribute::value_str() const noexcept
 {
-	return strfmt(value());
+	return std::isnan(value()) ? "0.0" : strfmt(value());
 }
 
 }
