@@ -27,6 +27,7 @@ create_attributes()
 	attributes.insert(std::make_unique<dblattribute>("chunk_work_balance", std::nan("")));
 	attributes.insert(std::make_unique<dblattribute>("problematic", std::nan("")));
 	attributes.insert(std::make_unique<dblattribute>("on_crit_path", std::nan("")));
+	attributes.insert(std::make_unique<ngsattribute>("group_realizer"));
 
 	return attributes;
 }

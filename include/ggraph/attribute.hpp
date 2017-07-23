@@ -196,6 +196,153 @@ create_dblattribute(const std::string & name, double value)
 	return std::make_unique<dblattribute>(name, value);
 }
 
+/* nodegraphics attribute */
+
+typedef struct geometry {
+	inline
+	geometry()
+	: width(50)
+	, height(50)
+	{}
+
+	size_t width;
+	size_t height;
+} geometry;
+
+typedef struct fill {
+	inline
+	fill()
+	: has_color(false)
+	, transparent(false)
+	{}
+
+	bool has_color;
+	bool transparent;
+} fill;
+
+typedef struct node_label {
+	inline
+	node_label()
+	: visible(false)
+	{}
+
+	bool visible;
+} node_label;
+
+typedef struct borderstyle {
+	inline
+	borderstyle()
+	: width(2.0)
+	, color(0x00000000)
+	, type("line")
+	{}
+
+	float width;
+	uint32_t color;
+	std::string type;
+} borderstyle;
+
+typedef struct shape {
+	inline
+	shape()
+	: type("roundrectangle")
+	{}
+
+	std::string type;
+} shape;
+
+typedef struct graphics {
+	ggraph::fill fill;
+	ggraph::shape shape;
+	ggraph::geometry geometry;
+	ggraph::node_label node_label;
+	ggraph::borderstyle borderstyle;
+} graphics;
+
+class ngsattribute final : public attribute {
+public:
+	virtual
+	~ngsattribute();
+
+	inline
+	ngsattribute(const std::string & name)
+	: attribute(name)
+	{}
+
+	inline
+	ngsattribute(const std::string & name, const graphics & open, const graphics & closed)
+	: attribute(name)
+	, open_(open)
+	, closed_(closed)
+	{}
+
+	inline graphics &
+	open() noexcept
+	{
+		return open_;
+	}
+
+	inline const graphics &
+	open() const noexcept
+	{
+		return open_;
+	}
+
+	inline graphics &
+	closed() noexcept
+	{
+		return closed_;
+	}
+
+	inline const graphics &
+	closed() const noexcept
+	{
+		return closed_;
+	}
+
+	virtual bool
+	operator==(const attribute & other) const noexcept override;
+
+	virtual std::string
+	debug_string() const override;
+
+	virtual std::unique_ptr<attribute>
+	copy() const override;
+
+	virtual std::string
+	value_str() const noexcept override;
+
+private:
+	ggraph::graphics open_;
+	ggraph::graphics closed_;
+};
+
+static inline bool
+is_ngsattribute(const attribute & a) noexcept
+{
+	return dynamic_cast<const ngsattribute*>(&a) != nullptr;
+}
+
+static inline ngsattribute &
+to_ngsattribute(attribute & a) noexcept
+{
+	GGRAPH_DEBUG_ASSERT(is_ngsattribute(a));
+	return *static_cast<ngsattribute*>(&a);
+}
+
+static inline const ngsattribute &
+to_ngsattribute(const attribute & a) noexcept
+{
+	GGRAPH_DEBUG_ASSERT(is_ngsattribute(a));
+	return *static_cast<const ngsattribute*>(&a);
+}
+
+static inline std::unique_ptr<attribute>
+create_ngsattribute(const std::string & name)
+{
+	return std::make_unique<ngsattribute>(name);
+}
+
 }
 
 #endif

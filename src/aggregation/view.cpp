@@ -147,10 +147,10 @@ static inline std::string
 graphml_header()
 {
 	return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-         "<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\" "
+         "<graphml xmlns:y=\"http://www.yworks.com/xml/graphml\" "
          "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
          "xsi:schemaLocation=\"http://graphml.graphdrawing.org/xmlns "
-         "http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd\">\n";
+         "http://www.yworks.com/xml/schema/graphml/1.1/ygraphml.xsd\">\n";
 }
 
 static inline std::string
@@ -198,7 +198,7 @@ graph_endtag(const graphml_context & ctx)
 static inline std::string
 group_starttag(const node * n, graphml_context & ctx)
 {
-	return ctx.indent() + "<node id=\"g::" + ctx.group_id(n) + "\">\n";
+	return ctx.indent() + "<node id=\"g::" + ctx.group_id(n) + "\" yfiles.foldertype=\"folder\">\n";
 }
 
 static inline std::string
@@ -369,17 +369,19 @@ visit_node(
 static inline std::string
 emit_key(const ggraph::attribute & attribute, const graphml_context & ctx)
 {
-	static std::unordered_map<std::type_index, std::string> types({
-	  {std::type_index(typeid(strattribute)), std::string("string")}
-	, {std::type_index(typeid(dblattribute)), std::string("double")}
+	static std::unordered_map<std::type_index, std::pair<std::string, std::string>> types({
+	  {std::type_index(typeid(strattribute)), {"attr.type", "string"}}
+	, {std::type_index(typeid(dblattribute)), {"attr.type", "double"}}
+	, {std::type_index(typeid(ngsattribute)), {"yfiles.type", "nodegraphics"}}
 	});
 
-	GGRAPH_DEBUG_ASSERT(types.find(std::type_index(typeid(attribute))) != types.end());
+	auto t = std::type_index(typeid(attribute));
+	GGRAPH_DEBUG_ASSERT(types.find(t) != types.end());
 	return ctx.indent()
 				 + "<key id=\"v_" + attribute.name() + "\" "
 				 + "for=\"node\" "
 				 + "attr.name=\"" + attribute.name() + "\" "
-				 + "attr.type=\"" + types[std::type_index(typeid(attribute))] + "\"\\>";
+				 + types[t].first + "=\"" + types[t].second + "\"/>";
 }
 
 static inline std::string
