@@ -77,6 +77,39 @@ parse_cmdflags(int argc, char * argv[])
 	return flags;
 }
 
+typedef struct nnodes {
+	inline
+	nnodes()
+	: nexits(0)
+	, nentries(0)
+	, njoins(0)
+	, nforks(0)
+	, ngrains(0)
+	{}
+
+	size_t nexits;
+	size_t nentries;
+	size_t njoins;
+	size_t nforks;
+	size_t ngrains;
+} nnodes;
+
+static inline nnodes
+count_nodes(const ggraph::graph & graph)
+{
+	struct nnodes nnodes;
+	for (const auto & node : graph) {
+		if (is_grain(node.operation())) nnodes.ngrains++;
+		else if (is_join(node.operation())) nnodes.njoins++;
+		else if (is_fork(node.operation())) nnodes.nforks++;
+		else if (is_entry(node.operation())) nnodes.nentries++;
+		else if (is_exit(node.operation())) nnodes.nexits++;
+		else GGRAPH_ASSERT(0);
+	}
+
+	return nnodes;
+}
+
 int
 main(int argc, char * argv[])
 {
@@ -94,8 +127,15 @@ main(int argc, char * argv[])
 		exit(1);
 	}
 
-	if (flags.nnodes)
+	if (flags.nnodes) {
+		struct nnodes nnodes = count_nodes(*graph);
+		std::cout << "Entries: " << nnodes.nentries << "\n";
+		std::cout << "Grains: " << nnodes.ngrains << "\n";
+		std::cout << "Forks: " << nnodes.nforks << "\n";
+		std::cout << "Joins: " << nnodes.njoins << "\n";
+		std::cout << "Exits: " << nnodes.nexits << "\n";
 		std::cout << graph->nnodes() << "\n";
+	}
 
 	std::unique_ptr<ggraph::agg::node> root;
 	if (flags.aggregate || flags.maxnodes) {
