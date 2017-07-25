@@ -1,5 +1,5 @@
-CPPFLAGS = -Iinclude -DGGRAPH_DEBUG
-CXXFLAGS = -Wall -Werror -g --std=c++14
+CPPFLAGS = -Iinclude
+CXXFLAGS = -Wall -Werror --std=c++14
 
 LIBGGRAPH_SRC = \
 	src/aggregation/aggregation.cpp \
@@ -20,7 +20,14 @@ LIBGGRAPH_SRC = \
 GGRAPH_VIEWER_SRC = \
 	src/ggraph-viewer.cpp
 
-all: libggraph.a ggraph-viewer check
+all: debug
+
+release: CXXFLAGS += -O3
+release: libggraph.a ggraph-viewer check
+
+debug: CPPFLAGS += -DGGRAPH_DEBUG
+debug: CXXFLAGS += -O0 -g
+debug: libggraph.a ggraph-viewer check
 
 libggraph.a: $(patsubst %.cpp, %.la, $(LIBGGRAPH_SRC))
 
