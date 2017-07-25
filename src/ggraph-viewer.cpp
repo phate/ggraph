@@ -12,6 +12,7 @@ print_usage(const std::string & exec)
 	std::cerr << "Usage: " << exec << " [OPTIONS] FILE\n";
 	std::cerr << "Options:\n";
 	std::cerr << "-a\tAggregate grain graph.\n";
+	std::cerr << "-d\tPrint maximum depth of aggregation tree.\n";
 	std::cerr << "-m\tPrint maximum number of open nodes.\n";
 	std::cerr << "-n\tPrint number of nodes.\n";
 	std::cerr << "-s\tSegregate grain graph.\n";
@@ -22,12 +23,14 @@ public:
 	inline
 	cmdflags()
 	: nnodes(false)
+	, maxdepth(false)
 	, maxnodes(false)
 	, aggregate(false)
 	, segregate(false)
 	{}
 
 	bool nnodes;
+	bool maxdepth;
 	bool maxnodes;
 	bool aggregate;
 	bool segregate;
@@ -66,6 +69,11 @@ parse_cmdflags(int argc, char * argv[])
 
 		if (flag == "-a") {
 			flags.aggregate = true;
+			continue;
+		}
+
+		if (flag == "-d") {
+			flags.maxdepth = true;
 			continue;
 		}
 
@@ -110,6 +118,19 @@ count_nodes(const ggraph::graph & graph)
 	return nnodes;
 }
 
+static inline size_t
+max_depth(const ggraph::agg::node & node)
+{
+	if (node.nchildren() == 0)
+		return 0;
+
+	size_t max = 0;
+	for (const auto & child : node)
+		max = std::max(max, max_depth(child));
+
+	return max+1;
+}
+
 int
 main(int argc, char * argv[])
 {
@@ -138,13 +159,16 @@ main(int argc, char * argv[])
 	}
 
 	std::unique_ptr<ggraph::agg::node> root;
-	if (flags.aggregate || flags.maxnodes) {
+	if (flags.aggregate || flags.maxnodes || flags.maxdepth) {
 		root = ggraph::agg::aggregate(*graph);
 		ggraph::agg::propagate(*root);
 	}
 
 	if (flags.maxnodes)
 		std::cout << max_open_nodes(*root) << "\n";
+
+	if (flags.maxdepth)
+		std::cout << max_depth(*root) << "\n";
 
 	if (flags.segregate)
 		ggraph::agg::segregate(*root);
