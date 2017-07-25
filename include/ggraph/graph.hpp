@@ -60,6 +60,106 @@ is_exit(const ggraph::node * n) noexcept
 }
 
 class graph final {
+	class iterator final {
+	public:
+		inline
+		iterator(const std::unordered_set<std::unique_ptr<ggraph::node>>::iterator & it)
+		: it_(it)
+		{}
+
+		inline bool
+		operator==(const iterator & other) const noexcept
+		{
+			return it_ == other.it_;
+		}
+
+		inline bool
+		operator!=(const iterator & other) const noexcept
+		{
+			return !(*this == other);
+		}
+
+		inline iterator &
+		operator++() noexcept
+		{
+			it_++;
+			return *this;
+		}
+
+		inline iterator
+		operator++(int) noexcept
+		{
+			auto tmp = *this;
+			it_++;
+			return tmp;
+		}
+
+		inline ggraph::node &
+		operator*() const
+		{
+			return *it_->get();
+		}
+
+		inline ggraph::node *
+		operator->() const
+		{
+			return it_->get();
+		}
+
+	private:
+		std::unordered_set<std::unique_ptr<ggraph::node>>::iterator it_;
+	};
+
+	class const_iterator final {
+	public:
+		inline
+		const_iterator(const std::unordered_set<std::unique_ptr<ggraph::node>>::const_iterator & it)
+		: it_(it)
+		{}
+
+		inline bool
+		operator==(const const_iterator & other) const noexcept
+		{
+			return it_ == other.it_;
+		}
+
+		inline bool
+		operator!=(const const_iterator & other) const noexcept
+		{
+			return !(*this == other);
+		}
+
+		inline const_iterator &
+		operator++() noexcept
+		{
+			it_++;
+			return *this;
+		}
+
+		inline const_iterator
+		operator++(int) noexcept
+		{
+			auto tmp = *this;
+			it_++;
+			return tmp;
+		}
+
+		inline const ggraph::node &
+		operator*() const
+		{
+			return *it_->get();
+		}
+
+		inline const ggraph::node *
+		operator->() const
+		{
+			return it_->get();
+		}
+
+	private:
+		std::unordered_set<std::unique_ptr<ggraph::node>>::const_iterator it_;
+	};
+
 public:
 	inline
 	~graph()
@@ -83,6 +183,30 @@ public:
 
 	graph &
 	operator=(graph &&) = delete;
+
+	inline iterator
+	begin()
+	{
+		return iterator(nodes_.begin());
+	}
+
+	inline const_iterator
+	begin() const
+	{
+		return const_iterator(nodes_.begin());
+	}
+
+	inline iterator
+	end()
+	{
+		return iterator(nodes_.end());
+	}
+
+	inline const_iterator
+	end() const
+	{
+		return const_iterator(nodes_.end());
+	}
 
 	inline ggraph::node *
 	entry() const noexcept
