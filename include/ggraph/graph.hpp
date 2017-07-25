@@ -54,9 +54,9 @@ public:
 };
 
 static inline bool
-is_exit(const ggraph::node * n) noexcept
+is_exit(const ggraph::operation & op) noexcept
 {
-	return dynamic_cast<const ggraph::exit*>(&n->operation()) != nullptr;
+	return dynamic_cast<const ggraph::exit*>(&op) != nullptr;
 }
 
 class graph final {
