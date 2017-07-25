@@ -133,18 +133,14 @@ size_t
 max_open_nodes(const node & n)
 {
 	size_t max = 0;
-	size_t sum = 0;
-	for (const auto & child : n) {
-		size_t tmp = max_open_nodes(child);
-		max = std::max(max, tmp);
-		sum += tmp;
-	}
+	for (const auto & child : n)
+		max = std::max(max, max_open_nodes(child));
 
 	if (is_grain(n.operation()))
 		return 1;
 
 	if (is_linear(n.operation()))
-		return sum;
+		return max + (n.nchildren()-1);
 
 	if (is_forkjoin(n.operation()))
 		return max + (n.nchildren()-1) + 2;

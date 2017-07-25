@@ -1,4 +1,5 @@
 TESTS += \
 	unit_tests/aggregation/test-aggregation \
+	unit_tests/aggregation/test-mon \
 	unit_tests/aggregation/test-pruning \
 	unit_tests/aggregation/test-segregation \
