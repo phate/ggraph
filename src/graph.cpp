@@ -47,7 +47,7 @@ exit::copy() const
 static inline bool
 is_valid_entry(const ggraph::node * n)
 {
-	GGRAPH_DEBUG_ASSERT(is_entry(n));
+	GGRAPH_DEBUG_ASSERT(is_entry(n->operation()));
 
 	if (n->npredecessors() != 0)
 		return false;
@@ -82,7 +82,7 @@ is_valid_grain(const ggraph::node * n)
 
 	if (!is_fork(n->predecessor(0)->operation())
 	&& !is_join(n->predecessor(0)->operation())
-	&& !is_entry(n->predecessor(0)))
+	&& !is_entry(n->predecessor(0)->operation()))
 		return false;
 
 	if (n->nsuccessors() != 1)
@@ -106,7 +106,7 @@ is_valid_fork(const ggraph::node * n)
 
 	if (!is_grain(n->predecessor(0)->operation())
 	&& !is_join(n->predecessor(0)->operation())
-	&& !is_entry(n->predecessor(0)))
+	&& !is_entry(n->predecessor(0)->operation()))
 		return false;
 
 	if (n->nsuccessors() == 0)

@@ -29,9 +29,9 @@ public:
 };
 
 static inline bool
-is_entry(const ggraph::node * n) noexcept
+is_entry(const ggraph::operation & op) noexcept
 {
-	return dynamic_cast<const ggraph::entry*>(&n->operation()) != nullptr;
+	return dynamic_cast<const ggraph::entry*>(&op) != nullptr;
 }
 
 /* exit node */
