@@ -62,13 +62,12 @@ to_dot(const graph & g)
 
 	std::string dot("graph ggraph {");
 
-	for (size_t n = 0; n < g.nnodes(); n++)
-		dot.append(strfmt(emit_node(g.node(n)), "\n"));
+	for (const auto & node : g)
+		dot.append(strfmt(emit_node(&node), "\n"));
 
-	for (size_t n = 0; n < g.nnodes(); n++) {
-		auto node = g.node(n);
-		for (size_t s = 0; s < node->nsuccessors(); s++)
-			dot.append(strfmt(emit_edge(node, node->successor(s)), "\n"));
+	for (const auto & node : g) {
+		for (size_t s = 0; s < node.nsuccessors(); s++)
+			dot.append(strfmt(emit_edge(&node, node.successor(s)), "\n"));
 	}
 
 	dot.append("}\n");

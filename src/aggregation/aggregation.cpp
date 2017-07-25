@@ -183,11 +183,10 @@ aggregate(ggraph::graph & graph)
 {
 	/* insert all aggregation tree leaves into the map */
 	std::unordered_map<ggraph::node*, std::unique_ptr<ggraph::agg::node>> map;
-	for (size_t n = 0; n < graph.nnodes(); n++) {
-		auto node = graph.node(n);
-		if (is_grain(node->operation())) {
-			auto grain = static_cast<const ggraph::grain*>(&node->operation());
-			map[node] = create_grain_node(*grain);
+	for (auto & node : graph) {
+		if (is_grain(node.operation())) {
+			auto grain = static_cast<const ggraph::grain*>(&node.operation());
+			map[&node] = create_grain_node(*grain);
 		}
 	}
 

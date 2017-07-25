@@ -226,13 +226,6 @@ public:
 		return nodes_.size();
 	}
 
-	inline ggraph::node *
-	node(size_t n) const noexcept
-	{
-		GGRAPH_DEBUG_ASSERT(n < nnodes());
-		return std::next(nodes_.begin(), n)->get();
-	}
-
 	ggraph::node *
 	add_node(operation & op, const std::unordered_set<ggraph::node*> & predecessors)
 	{

@@ -158,10 +158,10 @@ is_valid(const ggraph::graph & g)
 	});
 
 	bool is_valid = true;
-	for (size_t n = 0; n < g.nnodes(); n++) {
-		auto it = map.find(std::type_index(typeid(g.node(n)->operation())));
+	for (const auto & node : g) {
+		auto it = map.find(std::type_index(typeid(node.operation())));
 		GGRAPH_DEBUG_ASSERT(it != map.end());
-		is_valid = it->second(g.node(n));
+		is_valid = it->second(&node);
 		if (!is_valid) break;
 	}
 
