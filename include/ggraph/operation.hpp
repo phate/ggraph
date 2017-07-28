@@ -141,6 +141,16 @@ private:
 	std::unordered_map<std::string, std::unique_ptr<attribute>> attributes_;
 };
 
+static inline bool
+is_problematic(const operation & op)
+{
+	auto attribute = op.find("problematic");
+	if (!attribute)
+		return false;
+
+	return dblvalue(*attribute) ? true : false;
+}
+
 }
 
 #endif
