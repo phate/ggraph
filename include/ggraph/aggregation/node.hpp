@@ -296,6 +296,9 @@ size_t
 max_open_nodes(const ggraph::agg::node & n);
 
 void
+normalize(ggraph::agg::node & n);
+
+void
 prune(ggraph::agg::node & n);
 
 }}

@@ -150,6 +150,26 @@ max_open_nodes(const node & n)
 }
 
 void
+normalize(ggraph::agg::node & n)
+{
+	node * child, * next;
+	ITERATE_CHILDREN_SAFE(&n, child, next)
+		normalize(*child);
+
+	if (!is_linear(n.operation()))
+		return;
+
+	ITERATE_CHILDREN_SAFE(&n, child, next) {
+		if (is_linear(child->operation())) {
+			node * gchild, * next2;
+			ITERATE_CHILDREN_SAFE(child, gchild, next2)
+				child->add_prev_sibling(gchild->detach());
+			child->detach();
+		}
+	}
+}
+
+void
 prune(ggraph::agg::node & n)
 {
 	auto child = n.first_child();
