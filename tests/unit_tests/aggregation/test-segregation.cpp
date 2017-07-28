@@ -30,8 +30,9 @@ test(const std::vector<std::string> &)
 	auto fork = create_fork(g, {}, g1);
 	auto g2 = create_grain(g, create_attributes(true), fork);
 	auto g3 = create_grain(g, create_attributes(false), fork);
-	auto g4 = create_grain(g, create_attributes(true), fork);
-	auto join = create_join(g, {}, {g2, g3, g4});
+	auto g4 = create_grain(g, create_attributes(false), fork);
+	auto g5 = create_grain(g, create_attributes(true), fork);
+	auto join = create_join(g, {}, {g2, g3, g4, g5});
 
 	join->add_successor(g.exit());
 
@@ -39,10 +40,10 @@ test(const std::vector<std::string> &)
 	assert(is_valid(g));
 
 	auto root = agg::aggregate(g);
+	propagate(*root);
 	agg::view_str(*root, stdout);
 
 	segregate(*root);
-	propagate(*root);
 	agg::view_str(*root, stdout);
 
 	assert(root->nchildren() == 2);
@@ -52,7 +53,7 @@ test(const std::vector<std::string> &)
 	assert(fjn->nchildren() == 3);
 
 	auto fjn2 = fjn->last_child();
-	assert(is_forkjoin(fjn2->operation()) && fjn2->nchildren() == 1);
+	assert(is_forkjoin(fjn2->operation()) && fjn2->nchildren() == 2);
 
 	return 0;
 }

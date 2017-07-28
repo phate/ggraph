@@ -95,38 +95,46 @@ propagate(const ggraph::agg::node & n)
 	map[std::type_index(typeid(n.operation()))](n);
 }
 
+static inline void
+segregate_forkjoin(node * n)
+{
+	GGRAPH_DEBUG_ASSERT(is_forkjoin(n->operation()));
+	auto fjop = static_cast<const ggraph::forkjoin*>(&n->operation());
+
+	/* Do nothing if all children are non-problematic */
+	if (!is_problematic(n->operation()))
+		return;
+
+	/* Do nothing if there is only one child */
+	if (n->nchildren() == 1)
+		return;
+
+	/* collect all non-problematic children */
+	std::vector<node*> npchildren;
+	for (auto child = n->first_child(); child != nullptr; child = child->next_sibling()) {
+		if (!is_problematic(child->operation()))
+			npchildren.push_back(child);
+	}
+	GGRAPH_DEBUG_ASSERT(npchildren.size() != n->nchildren());
+
+	/* Do nothing if there is zero or one non-problematic child */
+	if (npchildren.size() < 2)
+		return;
+
+	auto fjnode = create_forkjoin_node(fjop->fork(), fjop->join());
+	for (const auto & child : npchildren)
+		fjnode->add_child(child->detach());
+	n->add_child(std::move(fjnode));
+}
+
 void
 segregate(node & n)
 {
-	auto is_problematic = [](const node * n)
-	{
-		auto attribute = n->operation().find("problematic");
-		if (!attribute) return false;
-
-		return dblvalue(*attribute) ? true : false;
-	};
-
 	for (auto child = n.first_child(); child != nullptr; child = child->next_sibling())
 		segregate(*child);
 
-	if (is_forkjoin(n.operation())) {
-		auto fjop = static_cast<const ggraph::forkjoin*>(&n.operation());
-
-		/* collect all non-problematic children */
-		std::vector<node*> npchildren;
-		for (auto child = n.first_child(); child != nullptr; child = child->next_sibling()) {
-			if (!is_problematic(child))
-				npchildren.push_back(child);
-		}
-
-		/* if we have problematic children, segregate */
-		if (npchildren.size() != n.nchildren()) {
-			auto fjnode = create_forkjoin_node(fjop->fork(), fjop->join());
-			for (const auto & child : npchildren)
-				fjnode->add_child(child->detach());
-			n.add_child(std::move(fjnode));
-		}
-	}
+	if (is_forkjoin(n.operation()))
+		segregate_forkjoin(&n);
 }
 
 size_t
