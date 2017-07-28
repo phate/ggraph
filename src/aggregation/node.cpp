@@ -127,6 +127,43 @@ segregate_forkjoin(node * n)
 	n->add_child(std::move(fjnode));
 }
 
+static inline void
+segregate_linear(node * n)
+{
+	GGRAPH_DEBUG_ASSERT(is_linear(n->operation()));
+
+	/* Do nothing if all children are non-problematic */
+	if (!is_problematic(n->operation()))
+		return;
+
+	/* Do nothing if there are only two children */
+	if (n->nchildren() <= 2)
+		return;
+
+	/* segregate children */
+	std::vector<std::vector<node*>> children(1, std::vector<node*>());
+	bool problematic = is_problematic(n->first_child()->operation());
+	for (auto child = n->first_child(); child != nullptr; child = child->next_sibling()) {
+		if (is_problematic(child->operation()) != problematic) {
+			children.push_back({child});
+			problematic = !problematic;
+		} else
+			children.back().push_back(child);
+	}
+
+	for (const auto & set : children) {
+		GGRAPH_DEBUG_ASSERT(!set.empty());
+		if (set.size() == 1)
+			continue;
+		if (is_problematic(set[0]->operation()))
+			continue;
+
+		auto ln = set[0]->add_prev_sibling(std::make_unique<node>(std::make_unique<linear>()));
+		for (auto & child : set)
+			ln->add_child(child->detach());
+	}
+}
+
 void
 segregate(node & n)
 {
@@ -135,6 +172,9 @@ segregate(node & n)
 
 	if (is_forkjoin(n.operation()))
 		segregate_forkjoin(&n);
+
+	if (is_linear(n.operation()))
+		segregate_linear(&n);
 }
 
 size_t
