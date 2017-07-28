@@ -187,7 +187,7 @@ public:
 		}
 	}
 
-	inline void
+	inline node *
 	add_next_sibling(std::unique_ptr<node> n)
 	{
 		GGRAPH_DEBUG_ASSERT(parent() != nullptr);
@@ -203,6 +203,8 @@ public:
 			ns->sibling.next->sibling.prev = ns;
 		else
 			parent_->children.last = ns;
+
+		return ns;
 	}
 
 	inline std::unique_ptr<node>
