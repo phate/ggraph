@@ -161,6 +161,7 @@ main(int argc, char * argv[])
 	std::unique_ptr<ggraph::agg::node> root;
 	if (flags.aggregate || flags.maxnodes || flags.maxdepth) {
 		root = ggraph::agg::aggregate(*graph);
+		normalize(*root);
 		ggraph::agg::propagate(*root);
 	}
 
