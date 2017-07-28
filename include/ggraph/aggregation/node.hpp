@@ -261,6 +261,10 @@ private:
 	std::unique_ptr<ggraph::operation> operation_;
 };
 
+#define ITERATE_CHILDREN_SAFE(node, child, next) \
+	for (child = (node)->first_child(), next = child ? child->next_sibling() : nullptr; \
+		child != nullptr; child = next, next = next ? next->next_sibling() : nullptr)
+
 static inline std::unique_ptr<node>
 create_forkjoin_node(const ggraph::fork & fork, const ggraph::join & join)
 {
