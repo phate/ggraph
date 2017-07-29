@@ -69,6 +69,8 @@ test(const std::vector<std::string> &)
 	assert(is_forkjoin(ln->first_child()->operation()));
 	assert(is_forkjoin(ln->last_child()->operation()));
 
+	agg::view_graphml(*root, stdout);
+
 	return 0;
 }
 

@@ -112,7 +112,9 @@ public:
 	inline std::string
 	group_id(const node * n) noexcept
 	{
-		GGRAPH_DEBUG_ASSERT(is_forkjoin(n->operation()) || is_linear(n->operation()));
+		GGRAPH_DEBUG_ASSERT(is_forkjoin(n->operation())
+		                 || is_linear(n->operation())
+		                 || is_sibling(n->operation()));
 		return "g::" + node_id(n);
 	}
 
@@ -334,6 +336,28 @@ visit_forkjoin_node(
 }
 
 static inline std::string
+visit_sibling_node(const node * n, graphml_context & ctx)
+{
+	GGRAPH_DEBUG_ASSERT(is_sibling(n->operation()));
+
+	auto subgraph = group_starttag(n, ctx);
+	ctx.push_nesting();
+
+	subgraph += emit_attributes(n->operation(), ctx);
+	subgraph += graph_starttag(n, ctx);
+
+	for (const auto & child : *n) {
+		ctx.set_last_id(ctx.fork_id(n->parent()));
+		subgraph += visit_node(&child, ctx);
+		subgraph += edge_tag(ctx.last_id(), ctx.join_id(n->parent()), ctx);
+	}
+
+	ctx.pop_nesting();
+	subgraph += group_endtag(ctx);
+	return subgraph;
+}
+
+static inline std::string
 visit_linear_node(
 	const node * n,
 	graphml_context & ctx)
@@ -366,6 +390,7 @@ visit_node(
 	  {std::type_index(typeid(ggraph::grain)), visit_grain_node}
 	, {std::type_index(typeid(ggraph::forkjoin)), visit_forkjoin_node}
 	, {std::type_index(typeid(ggraph::linear)), visit_linear_node}
+	, {std::type_index(typeid(ggraph::sibling)), visit_sibling_node}
 	});
 
 	auto it = map.find(std::type_index(typeid(n->operation())));
