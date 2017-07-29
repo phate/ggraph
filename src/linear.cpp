@@ -11,7 +11,7 @@ create_attributes()
 	attributes.insert(std::make_unique<dblattribute>("width", 50));
 	attributes.insert(std::make_unique<dblattribute>("height", 50));
 	attributes.insert(std::make_unique<strattribute>("shape", "roundrectangle"));
-	attributes.insert(std::make_unique<strattribute>("type", "family"));
+	attributes.insert(std::make_unique<strattribute>("type", "linear"));
 	attributes.insert(std::make_unique<dblattribute>("ngrains", std::nan("")));
 	attributes.insert(std::make_unique<dblattribute>("nmembers", std::nan("")));
 	attributes.insert(std::make_unique<dblattribute>("work_cycles", std::nan("")));
