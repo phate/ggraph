@@ -1,5 +1,5 @@
-#ifndef GGRAPH_AGGREGATION_LINEAR_HPP
-#define GGRAPH_AGGREGATION_LINEAR_HPP
+#ifndef GGRAPH_LINEAR_HPP
+#define GGRAPH_LINEAR_HPP
 
 #include <ggraph/operation.hpp>
 
