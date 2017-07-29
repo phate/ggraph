@@ -15,6 +15,7 @@ LIBGGRAPH_SRC = \
 	src/node.cpp \
 	src/operation.cpp \
 	src/read.cpp \
+	src/sibling.cpp \
 	src/view.cpp \
 
 GGRAPH_VIEWER_SRC = \

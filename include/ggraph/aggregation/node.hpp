@@ -6,6 +6,7 @@
 #include <ggraph/grain.hpp>
 #include <ggraph/join.hpp>
 #include <ggraph/linear.hpp>
+#include <ggraph/sibling.hpp>
 
 #include <memory>
 #include <string>
@@ -278,6 +279,12 @@ create_linear_node(std::unique_ptr<node> n1, std::unique_ptr<node> n2)
 	ln->add_child(std::move(n1));
 	ln->add_child(std::move(n2));
 	return ln;
+}
+
+static inline std::unique_ptr<node>
+create_sibling_node()
+{
+	return std::make_unique<node>(std::make_unique<sibling>());
 }
 
 static inline std::unique_ptr<node>
