@@ -62,7 +62,7 @@ test(const std::vector<std::string> &)
 	assert(is_forkjoin(fjn->operation()));
 	assert(fjn->nchildren() == 3);
 	auto fjn2 = fjn->last_child();
-	assert(is_forkjoin(fjn2->operation()) && fjn2->nchildren() == 2);
+	assert(is_sibling(fjn2->operation()) && fjn2->nchildren() == 2);
 
 	auto ln = root->last_child();
 	assert(ln->nchildren() == 2);

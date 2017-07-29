@@ -99,7 +99,6 @@ static inline void
 segregate_forkjoin(node * n)
 {
 	GGRAPH_DEBUG_ASSERT(is_forkjoin(n->operation()));
-	auto fjop = static_cast<const ggraph::forkjoin*>(&n->operation());
 
 	/* Do nothing if all children are non-problematic */
 	if (!is_problematic(n->operation()))
@@ -121,10 +120,10 @@ segregate_forkjoin(node * n)
 	if (npchildren.size() < 2)
 		return;
 
-	auto fjnode = create_forkjoin_node(fjop->fork(), fjop->join());
+	auto snode = create_sibling_node();
 	for (const auto & child : npchildren)
-		fjnode->add_child(child->detach());
-	n->add_child(std::move(fjnode));
+		snode->add_child(child->detach());
+	n->add_child(std::move(snode));
 }
 
 static inline void
