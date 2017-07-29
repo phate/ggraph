@@ -1,5 +1,5 @@
-#ifndef GGRAPH_AGGREGATION_FORKJOIN_HPP
-#define GGRAPH_AGGREGATION_FORKJOIN_HPP
+#ifndef GGRAPH_FORKJOIN_HPP
+#define GGRAPH_FORKJOIN_HPP
 
 #include <ggraph/fork.hpp>
 #include <ggraph/join.hpp>
