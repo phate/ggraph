@@ -65,6 +65,11 @@ update_aggregate_node(const ggraph::agg::node & n)
 	if (cwb != dblmin) to_dblattribute(*op.find("chunk_work_balance")).set_value(cwb);
 	to_dblattribute(*op.find("problematic")).set_value(problematic ? 1.0 : 0.0);
 	to_dblattribute(*op.find("on_crit_path")).set_value(on_crit_path ? 1.0 : 0.0);
+
+	if (problematic)
+		to_ngsattribute(*op.find("group_realizer")).closed().borderstyle.color = 0x00FF0000;
+	else
+		to_ngsattribute(*op.find("group_realizer")).closed().borderstyle.color = 0x0000FF00;
 }
 
 static inline void
