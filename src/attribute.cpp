@@ -128,7 +128,7 @@ color(uint32_t c)
 	std::string s("#");
 	uint32_t mask = 0x00F00000;
 	for (size_t n = 0; n < 6; n++) {
-		uint32_t v = c & mask;
+		uint32_t v = (c & mask) >> ((5-n)*4);
 		GGRAPH_DEBUG_ASSERT(map.find(v) != map.end());
 		s += map[v];
 		mask = mask >> 4;
