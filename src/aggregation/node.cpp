@@ -199,6 +199,9 @@ max_open_nodes(const node & n)
 	if (is_forkjoin(n.operation()))
 		return max + (n.nchildren()-1) + 2;
 
+	if (is_sibling(n.operation()))
+		return max + (n.nchildren()-1);
+
 	GGRAPH_DEBUG_ASSERT(0);
 	return 0;
 }
