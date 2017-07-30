@@ -300,6 +300,9 @@ void
 segregate(ggraph::agg::node & n);
 
 size_t
+theta(const ggraph::agg::node & n);
+
+size_t
 max_open_nodes(const ggraph::agg::node & n);
 
 void

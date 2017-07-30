@@ -184,6 +184,27 @@ segregate(node & n)
 }
 
 size_t
+theta(const node & n)
+{
+	size_t t = n.parent() ? theta(*n.parent()) : 0;
+
+	if (is_grain(n.operation()))
+		return t + 1;
+
+	if (is_linear(n.operation()))
+		return t + n.nchildren()-1;
+
+	if (is_forkjoin(n.operation()))
+		return t + n.nchildren()-1 + 2;
+
+	if (is_sibling(n.operation()))
+		return t + n.nchildren()-1;
+
+	GGRAPH_DEBUG_ASSERT(0);
+	return 0;
+}
+
+size_t
 max_open_nodes(const node & n)
 {
 	size_t max = 0;
