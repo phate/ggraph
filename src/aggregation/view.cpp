@@ -310,6 +310,15 @@ visit_forkjoin_node(
 	subgraph += fork_endtag(ctx);
 	subgraph += edge_tag(ctx.last_id(), ctx.fork_id(n), ctx);
 
+	/* join node */
+	subgraph += join_starttag(n, ctx);
+
+	ctx.push_nesting();
+	subgraph += emit_attributes(fjop->join(), ctx);
+	ctx.pop_nesting();
+
+	subgraph += join_endtag(ctx);
+
 	/* children */
 	ctx.push_ancestor(n);
 	for (const auto & child : *n) {
@@ -319,14 +328,6 @@ visit_forkjoin_node(
 	}
 	ctx.pop_ancestor();
 
-	/* join node */
-	subgraph += join_starttag(n, ctx);
-
-	ctx.push_nesting();
-	subgraph += emit_attributes(fjop->join(), ctx);
-	ctx.pop_nesting();
-
-	subgraph += join_endtag(ctx);
 	ctx.pop_nesting();
 	ctx.set_last_id(ctx.join_id(n));
 
