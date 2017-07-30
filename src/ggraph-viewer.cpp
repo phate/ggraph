@@ -16,13 +16,15 @@ print_usage(const std::string & exec)
 	std::cerr << "-m\tPrint maximum number of open nodes.\n";
 	std::cerr << "-n\tPrint number of nodes.\n";
 	std::cerr << "-s\tSegregate grain graph.\n";
+	std::cerr << "-t\tPrint theta of problematic grains.\n";
 }
 
 class cmdflags final {
 public:
 	inline
 	cmdflags()
-	: nnodes(false)
+	: theta(false)
+	, nnodes(false)
 	, graphml(false)
 	, maxdepth(false)
 	, maxnodes(false)
@@ -30,6 +32,7 @@ public:
 	, segregate(false)
 	{}
 
+	bool theta;
 	bool nnodes;
 	bool graphml;
 	bool maxdepth;
@@ -78,6 +81,12 @@ parse_cmdflags(int argc, char * argv[])
 
 		if (flag == "-d") {
 			flags.maxdepth = true;
+			flags.aggregate = true;
+			continue;
+		}
+
+		if (flag == "-t") {
+			flags.theta = true;
 			flags.aggregate = true;
 			continue;
 		}
@@ -136,6 +145,18 @@ max_depth(const ggraph::agg::node & node)
 	return max+1;
 }
 
+static inline void
+theta_problematic_grains(
+	const ggraph::agg::node & n,
+	std::unordered_map<const ggraph::agg::node*, size_t> & map)
+{
+	for (const auto & child : n)
+		theta_problematic_grains(child, map);
+
+	if (is_grain(n.operation()) && is_problematic(n.operation()))
+		map[&n] = ggraph::agg::theta(n);
+}
+
 int
 main(int argc, char * argv[])
 {
@@ -180,6 +201,19 @@ main(int argc, char * argv[])
 
 	if (flags.maxdepth)
 		std::cout << max_depth(*root) << "\n";
+
+	if (flags.theta) {
+		std::unordered_map<const ggraph::agg::node*, size_t> map;
+		theta_problematic_grains(*root, map);
+
+		size_t max = 0;
+		for (const auto & pair : map) {
+			std::cout << strvalue(*pair.first->operation().find("name")) << ": " << pair.second << "\n";
+			max = std::max(max, pair.second);
+		}
+		std::cout << "\n# Grains: " << map.size() << "\n";
+		std::cout << "Max: " << max << "\n";
+	}
 
 	if (flags.graphml)
 		ggraph::agg::view_graphml(*root, stdout);
