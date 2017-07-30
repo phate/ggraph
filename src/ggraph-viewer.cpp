@@ -11,8 +11,8 @@ print_usage(const std::string & exec)
 	std::cerr << "Grain graph viewer\n";
 	std::cerr << "Usage: " << exec << " [OPTIONS] FILE\n";
 	std::cerr << "Options:\n";
-	std::cerr << "-a\tAggregate grain graph.\n";
 	std::cerr << "-d\tPrint maximum depth of aggregation tree.\n";
+	std::cerr << "-g\tPrint aggregated grain graph as graphml.\n";
 	std::cerr << "-m\tPrint maximum number of open nodes.\n";
 	std::cerr << "-n\tPrint number of nodes.\n";
 	std::cerr << "-s\tSegregate grain graph.\n";
@@ -23,6 +23,7 @@ public:
 	inline
 	cmdflags()
 	: nnodes(false)
+	, graphml(false)
 	, maxdepth(false)
 	, maxnodes(false)
 	, aggregate(false)
@@ -30,6 +31,7 @@ public:
 	{}
 
 	bool nnodes;
+	bool graphml;
 	bool maxdepth;
 	bool maxnodes;
 	bool aggregate;
@@ -59,6 +61,7 @@ parse_cmdflags(int argc, char * argv[])
 
 		if (flag == "-m") {
 			flags.maxnodes = true;
+			flags.aggregate = true;
 			continue;
 		}
 
@@ -67,13 +70,15 @@ parse_cmdflags(int argc, char * argv[])
 			continue;
 		}
 
-		if (flag == "-a") {
+		if (flag == "-g") {
+			flags.graphml = true;
 			flags.aggregate = true;
 			continue;
 		}
 
 		if (flag == "-d") {
 			flags.maxdepth = true;
+			flags.aggregate = true;
 			continue;
 		}
 
@@ -159,9 +164,14 @@ main(int argc, char * argv[])
 	}
 
 	std::unique_ptr<ggraph::agg::node> root;
-	if (flags.aggregate || flags.maxnodes || flags.maxdepth) {
+	if (flags.aggregate) {
 		root = ggraph::agg::aggregate(*graph);
 		normalize(*root);
+		ggraph::agg::propagate(*root);
+	}
+
+	if (flags.segregate) {
+		ggraph::agg::segregate(*root);
 		ggraph::agg::propagate(*root);
 	}
 
@@ -171,10 +181,7 @@ main(int argc, char * argv[])
 	if (flags.maxdepth)
 		std::cout << max_depth(*root) << "\n";
 
-	if (flags.segregate)
-		ggraph::agg::segregate(*root);
-
-	if (flags.aggregate)
+	if (flags.graphml)
 		ggraph::agg::view_graphml(*root, stdout);
 
 	fclose(f);
