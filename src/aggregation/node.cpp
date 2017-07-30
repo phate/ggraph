@@ -79,6 +79,12 @@ update_linear(const ggraph::agg::node & n)
 	update_aggregate_node(n);
 }
 
+static inline void
+update_sibling(const ggraph::agg::node & n)
+{
+	update_aggregate_node(n);
+}
+
 void
 propagate(const ggraph::agg::node & n)
 {
@@ -89,6 +95,7 @@ propagate(const ggraph::agg::node & n)
 	  {std::type_index(typeid(ggraph::grain)), update_grain}
 	, {std::type_index(typeid(ggraph::forkjoin)), update_forkjoin}
 	, {std::type_index(typeid(ggraph::linear)), update_linear}
+	, {std::type_index(typeid(ggraph::sibling)), update_sibling}
 	});
 
 	GGRAPH_DEBUG_ASSERT(map.find(std::type_index(typeid(n.operation()))) != map.end());
