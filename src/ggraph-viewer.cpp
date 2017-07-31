@@ -3,6 +3,7 @@
 #include <ggraph/graph.hpp>
 #include <ggraph/read.hpp>
 
+#include <typeindex>
 #include <iostream>
 
 static inline void
@@ -28,7 +29,6 @@ public:
 	, graphml(false)
 	, maxdepth(false)
 	, maxnodes(false)
-	, aggregate(false)
 	, segregate(false)
 	{}
 
@@ -37,7 +37,6 @@ public:
 	bool graphml;
 	bool maxdepth;
 	bool maxnodes;
-	bool aggregate;
 	bool segregate;
 	std::string exec;
 	std::string ggraph;
@@ -57,14 +56,12 @@ parse_cmdflags(int argc, char * argv[])
 	for (int n = 1; n < argc-1; n++) {
 		std::string flag(argv[n]);
 		if (flag == "-s") {
-			flags.aggregate = true;
 			flags.segregate = true;
 			continue;
 		}
 
 		if (flag == "-m") {
 			flags.maxnodes = true;
-			flags.aggregate = true;
 			continue;
 		}
 
@@ -75,19 +72,16 @@ parse_cmdflags(int argc, char * argv[])
 
 		if (flag == "-g") {
 			flags.graphml = true;
-			flags.aggregate = true;
 			continue;
 		}
 
 		if (flag == "-d") {
 			flags.maxdepth = true;
-			flags.aggregate = true;
 			continue;
 		}
 
 		if (flag == "-t") {
 			flags.theta = true;
-			flags.aggregate = true;
 			continue;
 		}
 
@@ -102,33 +96,43 @@ parse_cmdflags(int argc, char * argv[])
 typedef struct nnodes {
 	inline
 	nnodes()
-	: nexits(0)
-	, nentries(0)
-	, njoins(0)
-	, nforks(0)
-	, ngrains(0)
+	: ngrain(0)
+	, nlinear(0)
+	, nsibling(0)
+	, nforkjoin(0)
 	{}
 
-	size_t nexits;
-	size_t nentries;
-	size_t njoins;
-	size_t nforks;
-	size_t ngrains;
+	size_t ngrain;
+	size_t nlinear;
+	size_t nsibling;
+	size_t nforkjoin;
 } nnodes;
 
 static inline nnodes
-count_nodes(const ggraph::graph & graph)
+count_nodes(const ggraph::agg::node & node)
 {
-	struct nnodes nnodes;
-	for (const auto & node : graph) {
-		if (is_grain(node.operation())) nnodes.ngrains++;
-		else if (is_join(node.operation())) nnodes.njoins++;
-		else if (is_fork(node.operation())) nnodes.nforks++;
-		else if (is_entry(node.operation())) nnodes.nentries++;
-		else if (is_exit(node.operation())) nnodes.nexits++;
-		else GGRAPH_ASSERT(0);
-	}
+	using namespace ggraph;
 
+	std::function<void(const agg::node&, struct nnodes&)> count = [&](
+		const agg::node & node,
+		struct nnodes & nnodes
+	){
+		static std::unordered_map<std::type_index, void(*)(struct nnodes&)> map({
+		  {std::type_index(typeid(grain)), [](struct nnodes & n){ n.ngrain++; }}
+		, {std::type_index(typeid(forkjoin)), [](struct nnodes & n){ n.nforkjoin++; }}
+		, {std::type_index(typeid(linear)), [](struct nnodes & n){ n.nlinear++; }}
+		, {std::type_index(typeid(sibling)), [](struct nnodes & n){ n.nsibling++; }}
+		});
+
+		for (const auto & child : node)
+			count(child, nnodes);
+
+		GGRAPH_ASSERT(map.find(std::type_index(typeid(node.operation()))) != map.end());
+		map[std::type_index(typeid(node.operation()))](nnodes);
+	};
+
+	struct nnodes nnodes;
+	count(node, nnodes);
 	return nnodes;
 }
 
@@ -174,26 +178,24 @@ main(int argc, char * argv[])
 		exit(1);
 	}
 
-	if (flags.nnodes) {
-		struct nnodes nnodes = count_nodes(*graph);
-		std::cout << "Entries: " << nnodes.nentries << "\n";
-		std::cout << "Grains: " << nnodes.ngrains << "\n";
-		std::cout << "Forks: " << nnodes.nforks << "\n";
-		std::cout << "Joins: " << nnodes.njoins << "\n";
-		std::cout << "Exits: " << nnodes.nexits << "\n";
-		std::cout << graph->nnodes() << "\n";
-	}
-
-	std::unique_ptr<ggraph::agg::node> root;
-	if (flags.aggregate) {
-		root = ggraph::agg::aggregate(*graph);
-		normalize(*root);
-		ggraph::agg::propagate(*root);
-	}
+	auto root = ggraph::agg::aggregate(*graph);
+	normalize(*root);
+	ggraph::agg::propagate(*root);
 
 	if (flags.segregate) {
 		ggraph::agg::segregate(*root);
 		ggraph::agg::propagate(*root);
+	}
+
+	if (flags.nnodes) {
+		struct nnodes nnodes = count_nodes(*root);
+		size_t ngroup = nnodes.nforkjoin + nnodes.nlinear + nnodes.nsibling;
+		std::cout << "Grain nodes: " << nnodes.ngrain << "\n";
+		std::cout << "Fork-Join nodes: " << nnodes.nforkjoin << "\n";
+		std::cout << "Linear nodes: " << nnodes.nlinear << "\n";
+		std::cout << "Sibling nodes: " << nnodes.nsibling << "\n";
+		std::cout << "Group nodes: " << ngroup << "\n";
+		std::cout << "Total nodes: " << ngroup + nnodes.ngrain << "\n";
 	}
 
 	if (flags.maxnodes)
