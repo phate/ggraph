@@ -1,4 +1,5 @@
 #include <ggraph/linear.hpp>
+#include <ggraph/util/strfmt.hpp>
 
 #include <cmath>
 
@@ -10,6 +11,7 @@ create_attributes()
 	std::unordered_set<std::unique_ptr<attribute>> attributes;
 	attributes.insert(std::make_unique<dblattribute>("width", 50));
 	attributes.insert(std::make_unique<dblattribute>("height", 50));
+	attributes.insert(std::make_unique<strattribute>("name", ""));
 	attributes.insert(std::make_unique<strattribute>("shape", "roundrectangle"));
 	attributes.insert(std::make_unique<strattribute>("type", "linear"));
 	attributes.insert(std::make_unique<dblattribute>("ngrains", std::nan("")));
@@ -37,7 +39,9 @@ linear::~linear()
 
 linear::linear()
 : operation(create_attributes())
-{}
+{
+	to_strattribute(*find("name")).set_value(strfmt("l", (intptr_t)this));
+}
 
 std::string
 linear::debug_string() const

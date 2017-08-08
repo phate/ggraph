@@ -11,6 +11,7 @@ create_attributes()
 	std::unordered_set<std::unique_ptr<attribute>> attributes;
 	attributes.insert(std::make_unique<dblattribute>("width", 50));
 	attributes.insert(std::make_unique<dblattribute>("height", 50));
+	attributes.insert(std::make_unique<strattribute>("name", ""));
 	attributes.insert(std::make_unique<strattribute>("shape", "roundrectangle"));
 	attributes.insert(std::make_unique<strattribute>("type", "forkjoin"));
 	attributes.insert(std::make_unique<dblattribute>("ngrains", std::nan("")));
@@ -40,7 +41,9 @@ forkjoin::forkjoin(const ggraph::fork & fork, const ggraph::join & join)
 : operation(create_attributes())
 , fork_(fork)
 , join_(join)
-{}
+{
+	to_strattribute(*find("name")).set_value(strfmt("fj", (intptr_t)this));
+}
 
 std::string
 forkjoin::debug_string() const
