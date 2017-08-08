@@ -2,6 +2,7 @@
 #include <ggraph/aggregation/view.hpp>
 #include <ggraph/graph.hpp>
 #include <ggraph/read.hpp>
+#include <ggraph/util/strfmt.hpp>
 
 #include <typeindex>
 #include <iostream>
@@ -18,6 +19,7 @@ print_usage(const std::string & exec)
 	std::cerr << "-n\tPrint number of nodes.\n";
 	std::cerr << "-s\tSegregate grain graph.\n";
 	std::cerr << "-t\tPrint theta of problematic grains.\n";
+	std::cerr << "-k\tPrint aggregation tree as table.\n";
 }
 
 class cmdflags final {
@@ -25,6 +27,7 @@ public:
 	inline
 	cmdflags()
 	: theta(false)
+	, table(false)
 	, nnodes(false)
 	, graphml(false)
 	, maxdepth(false)
@@ -33,6 +36,7 @@ public:
 	{}
 
 	bool theta;
+	bool table;
 	bool nnodes;
 	bool graphml;
 	bool maxdepth;
@@ -82,6 +86,11 @@ parse_cmdflags(int argc, char * argv[])
 
 		if (flag == "-t") {
 			flags.theta = true;
+			continue;
+		}
+
+		if (flag == "-k") {
+			flags.table = true;
 			continue;
 		}
 
@@ -161,6 +170,47 @@ theta_problematic_grains(
 		map[&n] = ggraph::agg::theta(n);
 }
 
+static inline std::string
+as_table(const ggraph::agg::node & n)
+{
+	static std::unordered_map<std::type_index, std::string> map({
+	  {std::type_index(typeid(ggraph::grain)), "grain"}
+	, {std::type_index(typeid(ggraph::forkjoin)), "forkjoin"}
+	, {std::type_index(typeid(ggraph::linear)), "linear"}
+	, {std::type_index(typeid(ggraph::sibling)), "sibling"}
+	});
+
+	std::function<void(const ggraph::agg::node&, std::string&)> convert = [&](
+		const ggraph::agg::node & node,
+		std::string & str)
+	{
+		for (const auto & child : node)
+			convert(child, str);
+
+		if (ggraph::is_grain(node.operation()))
+			return;
+
+		std::string children("[");
+		for (const auto & child : node) {
+			children += strvalue(*child.operation().find("name")) + "|";
+			if (auto fjop = dynamic_cast<const ggraph::forkjoin*>(&child.operation())) {
+				children += strvalue(*fjop->fork().find("name")) + "|";
+				children += strvalue(*fjop->join().find("name")) + "|";
+			}
+		}
+		children += "]";
+
+		GGRAPH_DEBUG_ASSERT(map.find(std::type_index(typeid(node.operation()))) != map.end());
+		str += strvalue(*node.operation().find("name")) + "\t"
+		    + children + "\t"
+		    + map[std::type_index(typeid(node.operation()))] + "\n";
+	};
+
+	std::string str;
+	convert(n, str);
+	return str;
+}
+
 int
 main(int argc, char * argv[])
 {
@@ -216,6 +266,9 @@ main(int argc, char * argv[])
 		std::cout << "\n# Grains: " << map.size() << "\n";
 		std::cout << "Max: " << max << "\n";
 	}
+
+	if (flags.table)
+		std::cout << as_table(*root);
 
 	if (flags.graphml)
 		ggraph::agg::view_graphml(*root, stdout);
